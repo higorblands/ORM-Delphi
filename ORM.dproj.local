@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/12/10 09:24:21.000.166,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/12/16 11:42:19.000.943,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/12/17 08:06:54.000.017,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/03/03 10:51:48.832,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/03/03 10:52:25.275,C:\Users\higor\Documents\Delphi\ORM-Delphi\UMainForm.pas=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/03/03 10:52:25.275,C:\Users\higor\Documents\Delphi\ORM-Delphi\UMainForm.dfm=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2021/03/03 10:52:58.244,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/03/03 10:53:51.413,C:\Users\higor\Documents\Delphi\ORM-Delphi\UORM.pas=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/03/03 11:55:54.380,C:\Users\higor\Documents\Delphi\ORM-Delphi\ORM.dproj=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
