@@ -34,7 +34,8 @@ Type
     Property Descricao: String Read getDescricao Write setDescricao;
 
     Function Insert: Boolean;
-    Function Delete: Boolean;
+    Function Delete(Value: Integer): Boolean;
+    Function Update(ID: Integer ; Curso : String): Boolean;
 
   end;
 
@@ -42,12 +43,11 @@ implementation
 
 { TCursoSQL }
 
-
-function TCursoSQL.Delete: Boolean;
+function TCursoSQL.Delete(Value: Integer): Boolean;
 begin
   FDQListagem := TFDQuery.Create(nil);
   FDQListagem.Connection := Conexao;
-
+  IdCurso := Value;
   with FDQListagem.SQL do
   begin
     Clear;
@@ -96,6 +96,22 @@ procedure TCursoSQL.setIDCurso(Value: Integer);
 begin
 
   FIdCurso := Value;
+
+end;
+
+function TCursoSQL.Update(ID: Integer ; Curso : String): Boolean;
+begin
+  FDQListagem := TFDQuery.Create(nil);
+  FDQListagem.Connection := Conexao;
+  IdCurso := ID;
+  with FDQListagem.SQL do
+  begin
+    Clear;
+  Add('UPDATE CursosCadastro');
+  Add('SET IdCurso = '+inttoStr(IdCurso)+'  Curso = '''+Curso+'''');
+  Add('WHERE IdCurso = ''' + inttoStr(IdCurso) + '''');
+  SaveToFile('D:\X.SQL');
+  end;
 
 end;
 

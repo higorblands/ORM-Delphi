@@ -19,7 +19,6 @@ Type
     FDQListagem: TFDQuery;
     FIdCurso: Integer;
     FCurso: String;
-    idcursobd , cursobd : String;
 
     Function getIDCurso: Integer;
     Procedure setIDCurso(Value: Integer);
@@ -33,9 +32,10 @@ Type
     Conexao: TFDConnection;
     Property IdCurso: Integer Read getIDCurso Write setIDCurso;
     Property Descricao: String Read getDescricao Write setDescricao;
-    Procedure BdCall;
+
     Function Insert: Boolean;
-    Function Delete: Boolean;
+    Function Delete(Value: Integer): Boolean;
+    Function Update(ID: Integer ; Curso : String): Boolean;
 
   end;
 
@@ -43,28 +43,11 @@ implementation
 
 { TCursoSQL }
 
-procedure TCursoSQL.BdCall;
+function TCursoSQL.Delete(Value: Integer): Boolean;
 begin
   FDQListagem := TFDQuery.Create(nil);
   FDQListagem.Connection := Conexao;
-  With FDQListagem.SQL Do
-  Begin
-  Add('select * from CursosCadastro');
-
-
-  End;
-   FDQListagem.ExecSQL;
-   idcursobd := FDQListagem.FieldByName('IDCURSO').AsString;
-  cursobd := FDQListagem.FieldByName('CURSO').AsString;
-
-
-end;
-
-function TCursoSQL.Delete: Boolean;
-begin
-  FDQListagem := TFDQuery.Create(nil);
-  FDQListagem.Connection := Conexao;
-
+  IdCurso := Value;
   with FDQListagem.SQL do
   begin
     Clear;
@@ -113,6 +96,22 @@ procedure TCursoSQL.setIDCurso(Value: Integer);
 begin
 
   FIdCurso := Value;
+
+end;
+
+function TCursoSQL.Update(ID: Integer ; Curso : String): Boolean;
+begin
+  FDQListagem := TFDQuery.Create(nil);
+  FDQListagem.Connection := Conexao;
+  IdCurso := ID;
+  with FDQListagem.SQL do
+  begin
+    Clear;
+  Add('UPDATE CursosCadastro');
+  Add('SET IdCurso = '+inttoStr(IdCurso)+',  Curso = '''+Curso+'''');
+  Add('WHERE IdCurso = ''' + inttoStr(IdCurso) + '''');
+  SaveToFile('D:\X.SQL');
+  end;
 
 end;
 

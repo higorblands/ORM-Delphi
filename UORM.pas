@@ -108,10 +108,10 @@ begin
   begin
     Clear;
   Add('UPDATE CursosCadastro');
-  Add('SET IdCurso = '+inttoStr(IdCurso)+'  Curso = '''+Curso+'''');
+  Add('SET IdCurso = '+inttoStr(IdCurso)+',  Curso = '''+Curso+'''');
   Add('WHERE IdCurso = ''' + inttoStr(IdCurso) + '''');
-  SaveToFile('D:\X.SQL');
   end;
+  FDQListagem.ExecSQL;
 
 end;
 
