@@ -3,8 +3,8 @@ object FMain: TFMain
   Top = 0
   Align = alCustom
   Caption = 'Main'
-  ClientHeight = 276
-  ClientWidth = 448
+  ClientHeight = 262
+  ClientWidth = 533
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FMain: TFMain
   object DBGrid1: TDBGrid
     Left = 0
     Top = 0
-    Width = 448
+    Width = 533
     Height = 120
     Align = alTop
     DataSource = DataSource
@@ -47,16 +47,34 @@ object FMain: TFMain
   end
   object btAdd: TButton
     Left = 88
-    Top = 181
+    Top = 161
     Width = 256
     Height = 25
     Caption = 'Adicionar'
     TabOrder = 3
     OnClick = btAddClick
   end
-  object FDConnection: TFDConnection
+  object btDelete: TButton
+    Left = 88
+    Top = 192
+    Width = 256
+    Height = 25
+    Caption = 'Delete'
+    TabOrder = 4
+    OnClick = btDeleteClick
+  end
+  object btUpdate: TButton
+    Left = 88
+    Top = 223
+    Width = 256
+    Height = 25
+    Caption = 'Update'
+    TabOrder = 5
+    OnClick = btUpdateClick
+  end
+  object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=DbStu'
+      'Database=DbSTU'
       'User_Name=sa'
       'Password=admserver01'
       'Server=localhost'
@@ -68,7 +86,7 @@ object FMain: TFMain
   end
   object FDQListagem: TFDQuery
     Active = True
-    Connection = FDConnection
+    Connection = FDConnection1
     SQL.Strings = (
       'select * from CursosCadastro')
     Left = 328
@@ -76,11 +94,12 @@ object FMain: TFMain
   end
   object DataSource: TDataSource
     DataSet = FDQListagem
+    OnDataChange = DataSourceDataChange
     Left = 392
     Top = 8
   end
   object FDQComandos: TFDQuery
-    Connection = FDConnection
+    Connection = FDConnection1
     Left = 328
     Top = 64
   end
