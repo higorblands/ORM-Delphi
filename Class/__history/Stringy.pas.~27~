@@ -1,0 +1,70 @@
+unit Stringy;
+
+interface
+
+uses
+  StrUtils, System.SysUtils, System.Classes;
+
+Type
+  TStringy = Class
+
+  private
+    stText: String;
+    Function CheckString(N: String): Boolean;
+    Function GETstText: String;
+    Procedure SETstText(Word: String);
+
+  Public
+    Property Text: String read GETstText write SETstText;
+  end;
+
+implementation
+
+{ TStringy }
+
+function TStringy.CheckString(N: String): Boolean;
+var
+  I: Integer;
+begin
+  Result := True;
+  if Trim(N) = '' then
+    Exit(False);
+
+  if (Length(Trim(N)) > 1) and (Trim(N)[1] = '0') then
+    Exit(False);
+
+  for I := 1 to Length(N) do
+  begin
+    if not(N[I] in ['0' .. '9']) then
+    begin
+      Result := False;
+      Break;
+    end;
+  end;
+end;
+
+function TStringy.GETstText: String;
+begin
+  Result := stText;
+end;
+
+procedure TStringy.SETstText(Word: String);
+begin
+  CheckString(Word);
+  if CheckString then
+  begin
+    stText := Word;
+  end
+  Else
+  Begin
+    stText := 'Não é uma string';
+  End;
+
+  if (ContainsText(Word)) then
+  begin
+
+  end
+
+end;
+
+end.

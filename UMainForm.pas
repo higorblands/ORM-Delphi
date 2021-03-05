@@ -31,6 +31,7 @@ type
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure btDeleteClick(Sender: TObject);
     procedure btUpdateClick(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -91,6 +92,7 @@ begin
   FDQListagem.Open;
   Obj.Free;
 end;
+
 
 procedure TFMain.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
