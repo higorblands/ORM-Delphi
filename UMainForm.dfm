@@ -79,13 +79,11 @@ object FMain: TFMain
       'Password=admserver01'
       'Server=localhost'
       'DriverID=MSSQL')
-    Connected = True
     LoginPrompt = False
     Left = 256
     Top = 8
   end
   object FDQListagem: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select * from CursosCadastro')
