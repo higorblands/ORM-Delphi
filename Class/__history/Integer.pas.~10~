@@ -30,7 +30,6 @@ begin
   if (Trim(Value) <> '') then
   begin
     vInteger := Value;
-    FAssigned := True;
   end;
 end;
 
