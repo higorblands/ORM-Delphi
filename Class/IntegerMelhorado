@@ -1,0 +1,40 @@
+type
+  TIntegerMelhorado = class
+
+  private
+    FAssigned: boolean;
+    FValue: integer;
+    function getValue: integer;
+    procedure setValue(const Value: integer);
+    function getAssigned: boolean;
+    procedure setAssigned(const Value: boolean);
+
+  public
+    Procedure LoadFromField(Field: TField);
+    property Assigned: boolean read getAssigned write setAssigned;
+    property Value: integer read getValue write setValue;
+    procedure clear;
+  end;
+procedure TIntegerMelhorado.clear;
+begin
+  FValue := 0;
+  Assigned := false;
+end;
+
+function TIntegerMelhorado.getAssigned: boolean;
+begin
+  result := FAssigned;
+end;
+
+function TIntegerMelhorado.getValue: integer;
+begin
+  result := FValue;
+end;
+
+procedure TIntegerMelhorado.LoadFromField(Field: TField);
+begin
+  if Not(Field.IsNull) then
+  BEGIN
+    Value := Field.AsInteger;
+  END;
+end;
