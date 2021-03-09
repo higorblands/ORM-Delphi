@@ -1,0 +1,74 @@
+unit ClassInteger;
+
+interface
+
+Uses
+  System.SysUtils, System.Classes,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+Type
+
+  TInteger = Class(TObject)
+
+  private
+    FAssigned: Boolean;
+    FValue: Integer;
+    function getValue: Integer;
+    procedure setValue(const Value: Integer);
+    function getAssigned: Boolean;
+    procedure setAssigned(const Value: Boolean);
+    TField: TComponent;
+
+  public
+    Procedure LoadFromField(Field: TField);
+    property Assigned: Boolean read getAssigned write setAssigned;
+    property Value: Integer read getValue write setValue;
+    procedure clear;
+  published
+  end;
+
+implementation
+
+{ TInteger }
+
+procedure TInteger.clear;
+begin
+  FValue := 0;
+  Assigned := false;
+end;
+
+function TInteger.getAssigned: Boolean;
+begin
+  result := FAssigned;
+end;
+
+function TInteger.getValue: Integer;
+begin
+  result := FValue;
+end;
+
+procedure TInteger.LoadFromField(Field: TField);
+begin
+  if Not(Field.IsNull) then
+  BEGIN
+    Value := Field.AsInteger;
+  END;
+
+end;
+
+procedure TInteger.setAssigned(const Value: Boolean);
+begin
+
+end;
+
+procedure TInteger.setValue(const Value: Integer);
+begin
+
+end;
+
+end.

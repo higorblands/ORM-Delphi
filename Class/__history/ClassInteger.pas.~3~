@@ -1,0 +1,20 @@
+unit ClassInteger;
+
+interface
+
+Uses
+  StrUtils, System.SysUtils, System.Classes;
+
+Type
+
+  TInteger = Class
+
+  Protected
+  Private
+  Public
+  Published
+  End;
+
+implementation
+
+end.

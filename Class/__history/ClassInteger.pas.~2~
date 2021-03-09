@@ -1,0 +1,12 @@
+unit ClassInteger;
+
+interface
+
+Uses
+  StrUtils, System.SysUtils, System.Classes;
+
+Type
+
+implementation
+
+end.
