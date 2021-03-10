@@ -5,10 +5,13 @@
     <Transaction>2020/12/16 11:42:19.000.943,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2020/12/17 08:06:54.000.017,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2021/03/03 10:51:48.000.832,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2021/03/03 10:52:25.000.275,C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\higor\Documents\Delphi\ORM-Delphi\UMainForm.dfm</Transaction>
     <Transaction>2021/03/03 10:52:25.000.275,C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\higor\Documents\Delphi\ORM-Delphi\UMainForm.pas</Transaction>
+    <Transaction>2021/03/03 10:52:25.000.275,C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\higor\Documents\Delphi\ORM-Delphi\UMainForm.dfm</Transaction>
     <Transaction>2021/03/03 10:52:58.000.244,=C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2021/03/03 10:53:51.000.413,C:\Users\higor\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\higor\Documents\Delphi\ORM-Delphi\UORM.pas</Transaction>
     <Transaction>2021/03/03 11:55:54.000.380,C:\Users\higor\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\higor\Documents\Delphi\ORM-Delphi\ORM.dproj</Transaction>
+    <Transaction>2021/03/10 09:08:15.000.084,=C:\Users\higor\Documents\Delphi\ORM-Delphi\Unit1.pas</Transaction>
+    <Transaction>2021/03/10 10:51:59.249,=C:\Users\higor\Documents\Delphi\ORM-Delphi\Unit1.pas</Transaction>
+    <Transaction>2021/03/10 10:55:14.171,C:\Users\higor\Documents\Delphi\ORM-Delphi\Class\UTiposDados.pas=C:\Users\higor\Documents\Delphi\ORM-Delphi\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

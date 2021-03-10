@@ -1,0 +1,53 @@
+unit UTiposDados;
+
+interface
+
+Uses
+  StrUtils, System.SysUtils, System.Classes;
+
+var
+  FAssigned: Boolean;
+
+Type
+  TInteger = Class
+    // Protected
+  private
+    vInteger: Integer;
+    Procedure SETvInteger(const Value: Integer);
+  Public
+    Property Number: Integer read vInteger write SETvInteger;
+  end;
+Type
+    TString = Class
+    Private
+    vString : String;
+    Procedure SETvString (const Value : String);
+    Public
+    Property Word : String read vString write SETvString;
+end;
+
+implementation
+
+{ TInteger }
+
+procedure TInteger.SETvInteger(const Value: Integer);
+begin
+ if (vInteger <> Value) then
+  begin
+    vInteger := Value;
+    FAssigned := True;
+  end;
+end;
+
+{ TString }
+
+procedure TString.SETvString(const Value: String);
+begin
+  if (vString <> Value) then
+  begin
+    vString := Value;
+    FAssigned := True;
+  end;
+end;
+
+end.

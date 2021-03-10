@@ -3,8 +3,7 @@ program ORM;
 uses
   Vcl.Forms,
   UMainForm in 'UMainForm.pas' {FMain},
-  UORM in 'UORM.pas',
-  UTiposDados in 'Class\UTiposDados.pas';
+  UORM in 'UORM.pas';
 
 {$R *.res}
 

@@ -11,7 +11,7 @@ Type
     FAssigned: Boolean;
   private
     vInteger: Integer;
-    Procedure SETvInteger(const Value: Integer);
+    Procedure SETvInteger( const Value: Integer);
   Public
     Property Number: Integer read vInteger write SETvInteger;
   end;
@@ -20,9 +20,10 @@ implementation
 
 { CInteger }
 
+
 procedure TInteger.SETvInteger(const Value: Integer);
 begin
-  if (vInteger <> Value) then
+  if ( vInteger <> Value) then
   begin
     vInteger := Value;
     FAssigned := True;

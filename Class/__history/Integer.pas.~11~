@@ -11,18 +11,23 @@ Type
     FAssigned: Boolean;
   private
     vInteger: Integer;
-    Procedure SETvInteger(const Value: Integer);
+    Function GETvInteger: Integer;
+    Procedure SETvInteger(Value: Integer);
   Public
-    Property Number: Integer read vInteger write SETvInteger;
+    Property Number: Integer read GETvInteger write SETvInteger;
   end;
 
 implementation
 
 { CInteger }
-
-procedure TInteger.SETvInteger(const Value: Integer);
+function TInteger.GETvInteger: Integer;
 begin
-  if (vInteger <> Value) then
+  Result := vInteger;
+end;
+
+procedure TInteger.SETvInteger(Value: Integer);
+begin
+  if (Trim(Value) <> '') then
   begin
     vInteger := Value;
     FAssigned := True;
