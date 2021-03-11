@@ -9,12 +9,12 @@ var
   FAssigned: Boolean;
 
 Type
-  TIntegerPlusPlus = Class // Integer
+  TInteger = Class // Integer
   private
-    vDataValue: Integer;
-    Procedure SETvDataValue(const Value: Integer);
+    vInteger: Integer;
+    Procedure SETvInteger(const Value: Integer);
   Public
-    Property Value: Integer read vDataValue write SETvDataValue;
+    Property Value: Integer read vInteger write SETvInteger;
   end;
 
 Type
@@ -31,18 +31,19 @@ Type
   TDate = class(TDateTime) // DateTime
   private
     vDateTime: TDate;
-    Procedure SETvDateTime(const Value: TDateTime);
+    Procedure SETvDateTime(const Value: Double);
+    procedure SETvDate(const Value: Double);
   Public
-    Property Value: TDateTime read vDateTime write SETvDateTime;
+    Property Value: Double read vDateTime write SETvDateTime;
   end;
 
 Type
   TDateWithoutTime = class(TDateTime) // Date
   private
     vDate: TDateWithoutTime;
-    procedure SETvDate(const Value: TDateTime);
+    procedure SETvDate(const Value: Double);
   public
-    Property Value: TDateTime read vDate write SETvDate;
+    Property Value: Double read vDate write SETvDate;
   End;
 
 Type
@@ -58,12 +59,11 @@ implementation
 
 { TInteger }
 
-procedure TIntegerPlusPlus.SETvDataValue(const Value: Integer);
+procedure TInteger.SETvInteger(const Value: Integer);
 begin
-  FAssigned := False;
-  if ((vDataValue <> Value)) then
+  if (vInteger <> Value) then
   begin
-    vDataValue := Value;
+    vInteger := Value;
     FAssigned := True;
   end;
 end;
@@ -72,7 +72,6 @@ end;
 
 procedure TString.SETvString(const Value: String);
 begin
-  FAssigned := False;
   if (vString <> Value) then
   begin
     vString := Value;
@@ -81,9 +80,8 @@ begin
 end;
 
 { TDateTime }
-procedure TDate.SETvDateTime(const Value: TDateTime);
+procedure TDate.SETvDateTime(const Value: Double);
 begin
-  FAssigned := False;
   if (vDateTime <> Value) then
   begin
     vDateTime := Value;
@@ -95,7 +93,6 @@ end;
 
 procedure TBoolean.SETvBoolean(const Value: Boolean);
 begin
-  FAssigned := False;
   if (vBoolean <> Value) then
   begin
     vBoolean := Value;
@@ -106,9 +103,8 @@ end;
 
 { TDateWithoutTime }
 
-procedure TDateWithoutTime.SETvDate(const Value: TDateTime);
+procedure TDateWithoutTime.SETvDate(const Value: Double);
 begin
-  FAssigned := False;
   if (vDate <> Value) then
   begin
     vDate := Value;
@@ -117,4 +113,3 @@ begin
 end;
 
 end.
-

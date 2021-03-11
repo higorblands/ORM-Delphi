@@ -9,12 +9,12 @@ var
   FAssigned: Boolean;
 
 Type
-  TIntegerPlusPlus = Class // Integer
+  TInteger = Class // Integer
   private
-    vDataValue: Integer;
-    Procedure SETvDataValue(const Value: Integer);
+    vInteger: Integer;
+    Procedure SETvInteger(const Value: Integer);
   Public
-    Property Value: Integer read vDataValue write SETvDataValue;
+    Property Value: Integer read vInteger write SETvInteger;
   end;
 
 Type
@@ -58,12 +58,12 @@ implementation
 
 { TInteger }
 
-procedure TIntegerPlusPlus.SETvDataValue(const Value: Integer);
+procedure TInteger.SETvInteger(const Value: Integer);
 begin
   FAssigned := False;
-  if ((vDataValue <> Value)) then
+  if ((vInteger <> Value)) then
   begin
-    vDataValue := Value;
+    vInteger := Value;
     FAssigned := True;
   end;
 end;
@@ -117,4 +117,3 @@ begin
 end;
 
 end.
-

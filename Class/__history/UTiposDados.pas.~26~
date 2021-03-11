@@ -3,7 +3,7 @@ unit UTiposDados; // Class para tratar tipos de dados //
 interface
 
 Uses
-  StrUtils, System.SysUtils, System.Classes;
+  StrUtils, System.SysUtils, System.Classes, System.UITypes;
 
 var
   FAssigned: Boolean;
@@ -14,7 +14,7 @@ Type
     vInteger: Integer;
     Procedure SETvInteger(const Value: Integer);
   Public
-    Property Number: Integer read vInteger write SETvInteger;
+    Property Value: Integer read vInteger write SETvInteger;
   end;
 
 Type
@@ -23,34 +23,35 @@ Type
     vString: String;
     Procedure SETvString(const Value: String);
   Public
-    Property Word: String read vString write SETvString;
+    Property Value: String read vString write SETvString;
   end;
 
 Type
-  TDateTime = class // DateTime
+
+  TDate = class(TDateTime) // DateTime
   private
-    vDateTime: Double;
-    Procedure SETvDateTime(const Value: Double);
+    vDateTime: TDate;
+    Procedure SETvDateTime(const Value: TDateTime);
   Public
-    Property DateTime: Double read vDateTime write SETvDateTime;
+    Property Value: TDateTime read vDateTime write SETvDateTime;
   end;
 
 Type
-  TDate = Class // Date
+  TDateWithoutTime = class(TDateTime) // Date
   private
-    vDate: Double;
-    procedure SETvDate(const Value: Double);
+    vDate: TDateWithoutTime;
+    procedure SETvDate(const Value: TDateTime);
   public
-    Property Date: Double read vDate write SETvDate;
+    Property Value: TDateTime read vDate write SETvDate;
   End;
 
 Type
-  TBoolean = Class
+  TBoolean = Class // Boolean
   private
     vBoolean: Boolean;
     procedure SETvBoolean(const Value: Boolean);
   public
-    property Boolean: Boolean read vBoolean write SETvBoolean;
+    property Value: Boolean read vBoolean write SETvBoolean;
   end;
 
 implementation
@@ -59,7 +60,8 @@ implementation
 
 procedure TInteger.SETvInteger(const Value: Integer);
 begin
-  if (vInteger <> Value) then
+  FAssigned := False;
+  if ((vInteger <> Value)) then
   begin
     vInteger := Value;
     FAssigned := True;
@@ -70,6 +72,7 @@ end;
 
 procedure TString.SETvString(const Value: String);
 begin
+  FAssigned := False;
   if (vString <> Value) then
   begin
     vString := Value;
@@ -78,23 +81,12 @@ begin
 end;
 
 { TDateTime }
-
-procedure TDateTime.SETvDateTime(const Value: Double);
+procedure TDate.SETvDateTime(const Value: TDateTime);
 begin
+  FAssigned := False;
   if (vDateTime <> Value) then
   begin
     vDateTime := Value;
-    FAssigned := True;
-  end;
-end;
-
-{ TDate }
-
-procedure TDate.SETvDate(const Value: Double);
-begin
-  if (vDate <> Value) then
-  begin
-    vDate := Value;
     FAssigned := True;
   end;
 end;
@@ -103,12 +95,25 @@ end;
 
 procedure TBoolean.SETvBoolean(const Value: Boolean);
 begin
+  FAssigned := False;
   if (vBoolean <> Value) then
   begin
     vBoolean := Value;
     FAssigned := True;
   end;
 
+end;
+
+{ TDateWithoutTime }
+
+procedure TDateWithoutTime.SETvDate(const Value: TDateTime);
+begin
+  FAssigned := False;
+  if (vDate <> Value) then
+  begin
+    vDate := Value;
+    FAssigned := True;
+  end;
 end;
 
 end.

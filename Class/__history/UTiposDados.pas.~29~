@@ -9,21 +9,21 @@ var
   FAssigned: Boolean;
 
 Type
-  TIntegerPlusPlus = Class // Integer
+  TInteger = Class // Integer
   private
     vDataValue: Integer;
     Procedure SETvDataValue(const Value: Integer);
   Public
-    Property Value: Integer read vDataValue write SETvDataValue;
+    Property ValidateData: Integer read vDataValue write SETvDataValue;
   end;
 
 Type
   TString = Class // String
   Private
-    vString: String;
+    vDataValue: String;
     Procedure SETvString(const Value: String);
   Public
-    Property Value: String read vString write SETvString;
+    Property ValidateData: String read vDataValue write SETvString;
   end;
 
 Type
@@ -58,7 +58,7 @@ implementation
 
 { TInteger }
 
-procedure TIntegerPlusPlus.SETvDataValue(const Value: Integer);
+procedure TInteger.SETvDataValue(const Value: Integer);
 begin
   FAssigned := False;
   if ((vDataValue <> Value)) then
@@ -73,9 +73,9 @@ end;
 procedure TString.SETvString(const Value: String);
 begin
   FAssigned := False;
-  if (vString <> Value) then
+  if (vDataValue <> Value) then
   begin
-    vString := Value;
+    vDataValue := Value;
     FAssigned := True;
   end;
 end;
@@ -117,4 +117,3 @@ begin
 end;
 
 end.
-
