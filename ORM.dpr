@@ -4,7 +4,7 @@ uses
   Vcl.Forms,
   UMainForm in 'UMainForm.pas' {FMain},
   UORM in 'UORM.pas',
-  UTiposDados in 'Class\UTiposDados.pas';
+  UTypeData in 'Class\UTypeData.pas';
 
 {$R *.res}
 

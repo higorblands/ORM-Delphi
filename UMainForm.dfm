@@ -74,19 +74,21 @@ object FMain: TFMain
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=DbSTU'
+      'Database=dbAlunos'
       'User_Name=sa'
       'Password=admserver01'
       'Server=localhost'
       'DriverID=MSSQL')
+    Connected = True
     LoginPrompt = False
     Left = 256
     Top = 8
   end
   object FDQListagem: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from CursosCadastro')
+      'select * from Aluno')
     Left = 328
     Top = 8
   end
