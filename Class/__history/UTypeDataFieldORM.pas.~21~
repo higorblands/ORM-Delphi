@@ -6,6 +6,7 @@ Uses
   StrUtils, System.SysUtils, System.Classes, System.UITypes;
 
 Type
+
   TIntegerFieldORM = Class // Integer
   private
     vDataValue: Integer;
@@ -47,7 +48,7 @@ Type
     procedure SETvDateTime(const Value: TDateTime);
     Function GETvDateTime: TDateTime;
   public
-    Property Value: TDateTime read vDateTime write SETvDateTime;
+    Property Value: TDateTime read GETvDateTime write SETvDateTime;
   End;
 
 Type
@@ -56,8 +57,9 @@ Type
     vBoolean: Boolean;
     FAssigned: Boolean;
     procedure SETvBoolean(const Value: Boolean);
+    Function GETvBoolean: Boolean;
   public
-    property Value: Boolean read vBoolean write SETvBoolean;
+    property Value: Boolean read GETvBoolean write SETvBoolean;
   end;
 
 implementation
@@ -71,12 +73,8 @@ end;
 
 procedure TIntegerFieldORM.SETvDataValue(const Value: Integer);
 begin
-  FAssigned := False;
-  if ((vDataValue <> Value)) then
-  begin
-    vDataValue := Value;
-    FAssigned := True;
-  end;
+  vDataValue := Value;
+  FAssigned := True;
 end;
 
 { TString }
@@ -88,12 +86,8 @@ end;
 
 procedure TStringFieldORM.SETvString(const Value: String);
 begin
-  FAssigned := False;
-  if (vString <> Value) then
-  begin
-    vString := Value;
-    FAssigned := True;
-  end;
+  vString := Value;
+  FAssigned := True;
 end;
 
 { TDateTime }
@@ -104,25 +98,21 @@ end;
 
 procedure TDateFieldORM.SETvDate(const Value: TDate);
 begin
-  FAssigned := False;
-  if (vDate <> Value) then
-  begin
-    vDate := Value;
-    FAssigned := True;
-  end;
+  vDate := Value;
+  FAssigned := True;
 end;
 
 { TBoolean }
 
+function TBooleanFieldORM.GETvBoolean: Boolean;
+begin
+  Result := vBoolean;
+end;
+
 procedure TBooleanFieldORM.SETvBoolean(const Value: Boolean);
 begin
-  FAssigned := False;
-  if (vBoolean <> Value) then
-  begin
-    vBoolean := Value;
-    FAssigned := True;
-  end;
-
+  vBoolean := Value;
+  FAssigned := True;
 end;
 
 { TDateWithoutTime }
@@ -134,12 +124,11 @@ end;
 
 procedure TDateTimeFieldORM.SETvDateTime(const Value: TDateTime);
 begin
-  FAssigned := False;
-  if (vDateTime <> Value) then
-  begin
-    vDateTime := Value;
-    FAssigned := True;
-  end;
+  vDateTime := Value;
+  FAssigned := True;
 end;
+
+
+
 
 end.

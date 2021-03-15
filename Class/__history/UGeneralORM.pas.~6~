@@ -8,12 +8,12 @@ uses
 Type
   Table = class // Table
   private
-    FName: TStringFieldORM;
-    function getTableName: TStringFieldORM;
-    procedure setTableName(const Value: TStringFieldORM);
+    FName: string;
+    function getTableName: String;
+    procedure setTableName(const Value: String);
   public
-    constructor Create(aName: TStringFieldORM);
-    property Name: TStringFieldORM read getTableName write setTableName;
+    constructor Create(aName: string);
+    property Name: string read getTableName write setTableName;
   end;
 
   Field = class // Field ( Table )
@@ -23,24 +23,24 @@ Type
     function getFieldName: TStringFieldORM;
     procedure setFieldName(Const Value: TStringFieldORM);
     Constructor Create(aName: TStringFieldORM);
-    property Name: TStringFieldORM read getFieldName write setFieldName;
+    property Name: string read getFieldName write setFieldName;
   end;
 
 implementation
 
 { Table }
 
-constructor Table.Create(aName: TStringFieldORM);
+constructor Table.Create(aName: string);
 begin
   FName := aName;
 end;
 
-function Table.getTableName: TStringFieldORM;
+function Table.getTableName: String;
 begin
   Result := FName;
 end;
 
-procedure Table.setTableName(const Value: TStringFieldORM);
+procedure Table.setTableName(const Value: String);
 begin
   FName := Value;
 end;
