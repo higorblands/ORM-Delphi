@@ -1,0 +1,27 @@
+unit UGeneralORM;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, System.UITypes;
+
+Type
+  Table = class // Table
+  private
+    FName: string;
+  public
+    constructor Create(aName: string);
+    property Name: string read FName;
+  end;
+
+  Field = class // Field ( Table )
+  private
+    FName: string;
+  public
+    Constructor Create(aName: string);
+    property Name: string read FName;
+  end;
+
+implementation
+
+end.

@@ -45,9 +45,9 @@ Type
     vDateTime: TDateTime;
     FAssigned: Boolean;
     procedure SETvDateTime(const Value: TDateTime);
-    Function GETvDateTime : TDateTime;
+    Function GETvDateTime: TDateTime;
   public
-    Property Value: TDateTime read vDateTime write SETvDateTime;
+    Property Value: TDateTime read GETvDateTime write SETvDateTime;
   End;
 
 Type
@@ -56,8 +56,9 @@ Type
     vBoolean: Boolean;
     FAssigned: Boolean;
     procedure SETvBoolean(const Value: Boolean);
+    Function GETvBoolean: Boolean;
   public
-    property Value: Boolean read vBoolean write SETvBoolean;
+    property Value: Boolean read GETvBoolean write SETvBoolean;
   end;
 
 implementation
@@ -114,6 +115,11 @@ end;
 
 { TBoolean }
 
+function TBooleanFieldORM.GETvBoolean: Boolean;
+begin
+  Result := vBoolean;
+end;
+
 procedure TBooleanFieldORM.SETvBoolean(const Value: Boolean);
 begin
   FAssigned := False;
@@ -129,7 +135,7 @@ end;
 
 function TDateTimeFieldORM.GETvDateTime: TDateTime;
 begin
- Result := vDateTime;
+  Result := vDateTime;
 end;
 
 procedure TDateTimeFieldORM.SETvDateTime(const Value: TDateTime);
