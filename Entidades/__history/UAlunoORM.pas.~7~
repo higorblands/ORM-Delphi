@@ -43,17 +43,17 @@ Type
   public
 
     property ID_Aluno: TIntegerFieldORM read getID_Aluno;
-    property Nome_Aluno: TStringFieldORM read getNome_Aluno;
-    property Curso: TStringFieldORM read getCurso;
-    property Turno: TStringFieldORM read getTurno;
-    property Periodo: TIntegerFieldORM read getPeriodo;
-    property Data_Ingresso: TDateFieldORM read getData_Ingresso;
-    property Situacao: TStringFieldORM read getSituacao;
-    property Cadeirante: TBooleanFieldORM read getCadeirante;
-    property Data_Hora_Inclusao: TStringFieldORM read getData_Hora_Inclusao;
-    property Usuario_Inclusao: TStringFieldORM read getUsuario_Inclusao;
-    property Data_Hora_Alteracao: TDateTimeFieldORM read getData_Hora_Alteracao;
-    property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao;
+    property Nome_Aluno : TStringFieldORM read getNome_Aluno;
+    property Curso : TStringFieldORM read getCurso;
+    property Turno : TStringFieldORM read getTurno;
+    property Periodo : TIntegerFieldORM read getPeriodo;
+    property Data_Ingresso : TDateFieldORM read getData_Ingresso;
+    property Situacao : TStringFieldORM read getSituacao;
+    property Cadeirante : TBooleanFieldORM read getCadeirante;
+    property Data_Hora_Inclusao : TStringFieldORM read getData_Hora_Inclusao;
+    property Usuario_Inclusao : TStringFieldORM read getUsuario_Inclusao;
+    property Data_Hora_Alteracao : TDateTimeFieldORM read getData_Hora_Alteracao;
+    property Usuario_Alteracao : TStringFieldORM read getUsuario_Alteracao;
 
   end;
 
