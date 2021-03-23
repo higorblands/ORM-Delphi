@@ -21,6 +21,7 @@ Type
     function getTableName: TStringFieldORM; // Table
     procedure setTableName(const Value: TStringFieldORM); // Table
   public
+    FReturnDataORM: TFDMemTable;
     QueryORM: TFDQuery;
     conn: TFDconnection;
 

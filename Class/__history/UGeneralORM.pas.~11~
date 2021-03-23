@@ -21,12 +21,12 @@ Type
     function getTableName: TStringFieldORM; // Table
     procedure setTableName(const Value: TStringFieldORM); // Table
   public
+  FReturnDataORM: TFDMemTable;
     QueryORM: TFDQuery;
     conn: TFDconnection;
 
     constructor Create(aName: TStringFieldORM)virtual;
-    property TableName: TStringFieldORM read getTableName write setTableName;
-    // Table
+    property TableName: TStringFieldORM read getTableName write setTableName;// Table
     function Insert: TBooleanFieldORM; virtual;
     function Delete: TBooleanFieldORM; virtual;
     function Update: TBooleanFieldORM; virtual;

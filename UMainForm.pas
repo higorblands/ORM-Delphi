@@ -3,7 +3,7 @@ unit UMainForm;
 interface
 
 uses
-  UORM,
+  UORM,UAlonoORM,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
@@ -57,7 +57,7 @@ end;
 
 procedure TFMain.btAddClick(Sender: TObject);
 var
-  Obj: TCursoSQL;
+  Obj: TAluno;
 begin
   Obj := TCursoSQL.Create;
   Obj.Conexao := FDConnection1;

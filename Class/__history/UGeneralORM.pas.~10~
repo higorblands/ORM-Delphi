@@ -14,9 +14,7 @@ uses
 
 Type
   TORM = class
-
   private
-
     FName: TStringFieldORM; // Table
     function getTableName: TStringFieldORM; // Table
     procedure setTableName(const Value: TStringFieldORM); // Table
@@ -25,8 +23,7 @@ Type
     conn: TFDconnection;
 
     constructor Create(aName: TStringFieldORM)virtual;
-    property TableName: TStringFieldORM read getTableName write setTableName;
-    // Table
+    property TableName: TStringFieldORM read getTableName write setTableName;// Table
     function Insert: TBooleanFieldORM; virtual;
     function Delete: TBooleanFieldORM; virtual;
     function Update: TBooleanFieldORM; virtual;

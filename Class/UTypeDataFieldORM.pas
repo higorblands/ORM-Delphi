@@ -22,10 +22,14 @@ Type
   Private
     vString: String;
     FAssigned: Boolean;
+    FLength: Integer;
     Procedure SETvString(const Value: String);
     Function GETvString: String;
+    function getLength: Integer;
+    procedure setLength(const Value: Integer);
   Public
     Property Value: String read GETvString write SETvString;
+    property Length: Integer read getLength write setLength;
   end;
 
 Type
@@ -79,9 +83,19 @@ end;
 
 { TString }
 
+function TStringFieldORM.getLength: Integer;
+begin
+  Result := FLength;
+end;
+
 function TStringFieldORM.GETvString: String;
 begin
   Result := vString;
+end;
+
+procedure TStringFieldORM.setLength(const Value: Integer);
+begin
+  FLength := Value;
 end;
 
 procedure TStringFieldORM.SETvString(const Value: String);

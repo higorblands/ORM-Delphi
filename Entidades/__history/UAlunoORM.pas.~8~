@@ -33,11 +33,27 @@ Type
     function getCurso: TStringFieldORM;
     function getTurno: TStringFieldORM;
     function getPeriodo: TIntegerFieldORM;
-    function getData_Ingresso: TDateTimeFieldORM;
+    function getData_Ingresso: TDateFieldORM;
     function getSituacao: TStringFieldORM;
     function getCadeirante: TBooleanFieldORM;
-    function getData_Hora_Inclusao: TDateFieldORM;
+    function getData_Hora_Inclusao: TDateTimeFieldORM;
     function getUsuario_Inclusao: TStringFieldORM;
+    function getData_Hora_Alteracao: TDateTimeFieldORM;
+    function getUsuario_Alteracao: TStringFieldORM;
+  public
+
+    property ID_Aluno: TIntegerFieldORM read getID_Aluno;
+    property Nome_Aluno: TStringFieldORM read getNome_Aluno;
+    property Curso: TStringFieldORM read getCurso;
+    property Turno: TStringFieldORM read getTurno;
+    property Periodo: TIntegerFieldORM read getPeriodo;
+    property Data_Ingresso: TDateFieldORM read getData_Ingresso;
+    property Situacao: TStringFieldORM read getSituacao;
+    property Cadeirante: TBooleanFieldORM read getCadeirante;
+    property Data_Hora_Inclusao: TStringFieldORM read getData_Hora_Inclusao;
+    property Usuario_Inclusao: TStringFieldORM read getUsuario_Inclusao;
+    property Data_Hora_Alteracao: TDateTimeFieldORM read getData_Hora_Alteracao;
+    property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao;
 
   end;
 
@@ -65,6 +81,11 @@ begin
   Result := FTurno;
 end;
 
+function TAluno.getUsuario_Alteracao: TStringFieldORM;
+begin
+  Result := FUsuario_alteracao;
+end;
+
 function TAluno.getUsuario_Inclusao: TStringFieldORM;
 begin
   Result := FUsuario_Inclusao;
@@ -82,12 +103,17 @@ begin
   Result := FCurso;
 end;
 
-function TAluno.getData_Hora_Inclusao: TDateFieldORM;
+function TAluno.getData_Hora_Alteracao: TDateTimeFieldORM;
+begin
+  Result := FData_Hora_Alteracao;
+end;
+
+function TAluno.getData_Hora_Inclusao: TDateTimeFieldORM;
 begin
   Result := FData_Hora_Inclusao;
 end;
 
-function TAluno.getData_Ingresso: TDateTimeFieldORM;
+function TAluno.getData_Ingresso: TDateFieldORM;
 begin
   Result := FData_Ingresso;
 end;

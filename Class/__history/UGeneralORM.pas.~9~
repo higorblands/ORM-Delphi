@@ -1,0 +1,51 @@
+unit UGeneralORM;
+
+interface
+
+uses
+  UTypeDataFieldORM, System.SysUtils, System.Classes, System.UITypes,FireDAC.Stan.Error, Data.DB,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef;
+
+Type
+  Table = class // Table
+  private
+    FName: TStringFieldORM;
+    function getTableName: TStringFieldORM;
+    procedure setTableName(const Value: TStringFieldORM);
+  public
+    constructor Create(aName: TStringFieldORM) virtual;
+    property Name: TStringFieldORM read getTableName write setTableName;
+
+
+
+
+    FDQueryORM : TFDQuery ;
+  end;
+
+
+implementation
+
+{ Table }
+
+constructor Table.Create(aName: TStringFieldORM);
+begin
+  FName := aName;
+end;
+
+function Table.getTableName: TStringFieldORM;
+begin
+  Result := FName;
+end;
+
+procedure Table.setTableName(const Value: TStringFieldORM);
+begin
+  FName := Value;
+end;
+
+
+end.

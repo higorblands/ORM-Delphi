@@ -1,0 +1,40 @@
+unit UGeneralORM;
+
+interface
+
+uses
+  UTypeDataFieldORM, System.SysUtils, System.Classes, System.UITypes;
+
+Type
+  Table = class // Table
+  private
+    FName: TStringFieldORM;
+    function getTableName: TStringFieldORM;
+    procedure setTableName(const Value: TStringFieldORM);
+  public
+    constructor Create(aName: TStringFieldORM);
+    property Name: TStringFieldORM read getTableName write setTableName;
+  end;
+
+
+implementation
+
+{ Table }
+
+constructor Table.Create(aName: TStringFieldORM);
+begin
+  FName := aName;
+end;
+
+function Table.getTableName: TStringFieldORM;
+begin
+  Result := FName;
+end;
+
+procedure Table.setTableName(const Value: TStringFieldORM);
+begin
+  FName := Value;
+end;
+
+
+end.
