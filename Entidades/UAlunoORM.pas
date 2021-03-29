@@ -99,50 +99,67 @@ Type
     FCurso: TStringFieldORM;
     FTurno: TStringFieldORM;
     FPeriodo: TIntegerFieldORM;
-    FData_Ingresso: TDateTimeFieldORM;
+    FData_Ingresso: TDateFieldORM;
     FSituacao: TStringFieldORM;
     FCadeirante: TBooleanFieldORM;
     FObservacao: TStringFieldORM;
-    FData_Hora_Inclusao: TDateFieldORM;
+    FData_Hora_Inclusao: TDateTimeFieldORM;
     FUsuario_Inclusao: TStringFieldORM;
-    FData_Hora_Alteracao: TDateFieldORM;
+    FData_Hora_Alteracao: TDateTimeFieldORM;
     FUsuario_alteracao: TStringFieldORM;
 
     function getID_Aluno: TIntegerFieldORM;
+    procedure setID_Aluno(const Value: TIntegerFieldORM);
     function getNome_Aluno: TStringFieldORM;
+    procedure setNome_Aluno(const Value: TStringFieldORM);
     function getCurso: TStringFieldORM;
+    procedure setCurso(const Value: TStringFieldORM);
     function getTurno: TStringFieldORM;
+    procedure setTurno(const Value: TStringFieldORM);
     function getPeriodo: TIntegerFieldORM;
+    procedure setPeriodo(const Value: TIntegerFieldORM);
     function getData_Ingresso: TDateFieldORM;
+    procedure setData_Ingresso(const Value: TDateFieldORM);
     function getSituacao: TStringFieldORM;
+    procedure setSituacao(const Value: TStringFieldORM);
     function getCadeirante: TBooleanFieldORM;
+    procedure setCadeirante(const Value: TBooleanFieldORM);
     function getObservacao: TStringFieldORM;
+    procedure setObservacao(const Value: TStringFieldORM);
     function getData_Hora_Inclusao: TDateTimeFieldORM;
+    procedure setData_Hora_Inclusao(const Value: TDateTimeFieldORM);
     function getUsuario_Inclusao: TStringFieldORM;
+    procedure setUsuario_Inclusao(const Value: TStringFieldORM);
     function getData_Hora_Alteracao: TDateTimeFieldORM;
+    procedure setData_Hora_Alteracao(const Value: TDateTimeFieldORM);
     function getUsuario_Alteracao: TStringFieldORM;
+    procedure setUsuario_alteracao(const Value: TStringFieldORM);
 
   public
-    property ID_Aluno: TIntegerFieldORM read getID_Aluno;
-    property Nome_Aluno: TStringFieldORM read getNome_Aluno;
-    property Curso: TStringFieldORM read getCurso;
-    property Turno: TStringFieldORM read getTurno;
-    property Periodo: TIntegerFieldORM read getPeriodo;
-    property Data_Ingresso: TDateFieldORM read getData_Ingresso;
-    property Situacao: TStringFieldORM read getSituacao;
-    property Cadeirante: TBooleanFieldORM read getCadeirante;
-    property Observacao: TStringFieldORM read getObservacao;
-    property Data_Hora_Inclusao: TDateTimeFieldORM read getData_Hora_Inclusao;
-    property Usuario_Inclusao: TStringFieldORM read getUsuario_Inclusao;
-    property Data_Hora_Alteracao: TDateTimeFieldORM read getData_Hora_Alteracao;
-    property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao;
-    function Insert: TBooleanFieldORM; override;
-    function Delete: TBooleanFieldORM; override;
-    function Update: TBooleanFieldORM; override;
+    property ID_Aluno: TIntegerFieldORM read getID_Aluno write setID_Aluno;
+    property Nome_Aluno: TStringFieldORM read getNome_Aluno write setNome_Aluno;
+    property Curso: TStringFieldORM read getCurso write setCurso;
+    property Turno: TStringFieldORM read getTurno write setTurno;
+    property Periodo: TIntegerFieldORM read getPeriodo write setPeriodo;
+    property Data_Ingresso: TDateFieldORM read getData_Ingresso
+      write setData_Ingresso;
+    property Situacao: TStringFieldORM read getSituacao write setSituacao;
+    property Cadeirante: TBooleanFieldORM read getCadeirante
+      write setCadeirante;
+    property Observacao: TStringFieldORM read getObservacao write setObservacao;
+    property Data_Hora_Inclusao: TDateTimeFieldORM read getData_Hora_Inclusao
+      write setData_Hora_Inclusao;
+    property Usuario_Inclusao: TStringFieldORM read getUsuario_Inclusao
+      write setUsuario_Inclusao;
+    property Data_Hora_Alteracao: TDateTimeFieldORM read getData_Hora_Alteracao
+      write setData_Hora_Alteracao;
+    property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao
+      write setUsuario_alteracao;
+    // function Insert: TBooleanFieldORM; override;
+    // function Delete: TBooleanFieldORM; override;
+    // function Update: TBooleanFieldORM; override;
 
-
-    constructor Create;
-
+    constructor Create; virtual;
 
   end;
 
@@ -184,37 +201,95 @@ function TAluno.getUsuario_Inclusao: TStringFieldORM;
 begin
   Result := FUsuario_Inclusao;
 end;
-
-function TAluno.Insert: TBooleanFieldORM;
-begin
+{
+  function TAluno.Insert: TBooleanFieldORM;
+  begin
   inherited;
 
   with QueryORM.SQL do
   begin
-   { Clear;
-    Add('insert into Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
-    Add('values (''' + ID_Aluno + ''',' + Nome_Aluno + ''',' + Curso + ''',' +
-      Turno + ''',' + Periodo + ''',' + Data_Ingresso + ''',' + Situacao + ''','
-      + Cadeirante + ''',' + Observacao + ''',' + Data_Hora_Inclusao + ''',' +
-      Usuario_Inclusao + ''',' + Data_Hora_Alteracao + ''',' + Usuario_Alteracao
-      + ''');'); }
+  Clear;
+  Add('insert into Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
+  Add('values (''' + strtoint(ID_Aluno) + ''',' + Nome_Aluno + ''',' + Curso +
+  ''',' + Turno + ''',' + Periodo + ''',' + Data_Ingresso + ''',' + Situacao
+  + ''',' + Cadeirante + ''',' + Observacao + ''',' + Data_Hora_Inclusao +
+  ''',' + Usuario_Inclusao + ''',' + Data_Hora_Alteracao + ''',' +
+  Usuario_Alteracao + ''');');
   end;
   QueryORM.ExecSQL;
+  end; }
+
+procedure TAluno.setCadeirante(const Value: TBooleanFieldORM);
+begin
+  FCadeirante := Value;
 end;
 
-function TAluno.Update: TBooleanFieldORM;
+procedure TAluno.setCurso(const Value: TStringFieldORM);
 begin
+  FCurso := Value;
+end;
 
+procedure TAluno.setData_Hora_Alteracao(const Value: TDateTimeFieldORM);
+begin
+  FData_Hora_Alteracao := Value;
+end;
+
+procedure TAluno.setData_Hora_Inclusao(const Value: TDateTimeFieldORM);
+begin
+  FData_Hora_Inclusao := Value;
+end;
+
+procedure TAluno.setData_Ingresso(const Value: TDateFieldORM);
+begin
+  FData_Ingresso := Value;
+end;
+
+procedure TAluno.setID_Aluno(const Value: TIntegerFieldORM);
+begin
+  FId_Aluno := Value;
+end;
+
+procedure TAluno.setNome_Aluno(const Value: TStringFieldORM);
+begin
+  FNome_Aluno := Value;
+end;
+
+procedure TAluno.setObservacao(const Value: TStringFieldORM);
+begin
+  FObservacao := Value;
+end;
+
+procedure TAluno.setPeriodo(const Value: TIntegerFieldORM);
+begin
+  FPeriodo := Value;
+end;
+
+procedure TAluno.setSituacao(const Value: TStringFieldORM);
+begin
+  FSituacao := Value;
+end;
+
+procedure TAluno.setTurno(const Value: TStringFieldORM);
+begin
+  FTurno := Value;
+end;
+
+procedure TAluno.setUsuario_alteracao(const Value: TStringFieldORM);
+begin
+  FUsuario_alteracao := Value;
+end;
+
+procedure TAluno.setUsuario_Inclusao(const Value: TStringFieldORM);
+begin
+  FUsuario_Inclusao := Value;
 end;
 
 { TAluno }
 
 constructor TAluno.Create;
-var
-  Check: boolean;
 begin
-  TableName := 'aluno';
-  conn := TFDconnection.Create(nil);
+  // TableName := 'aluno';
+  // conn := TFDconnection.Create(nil);
   FId_Aluno := TIntegerFieldORM.Create;
   FPeriodo := TIntegerFieldORM.Create;
   FNome_Aluno := TStringFieldORM.Create;
@@ -231,16 +306,15 @@ begin
   FSituacao := TStringFieldORM.Create;
   FCadeirante := TBooleanFieldORM.Create;
   FUsuario_Inclusao := TStringFieldORM.Create;
-  FData_Hora_Alteracao := TDateFieldORM.Create;
-  FData_Ingresso := TDateTimeFieldORM.Create;
-  Check := True;
+  FData_Hora_Alteracao := TDateTimeFieldORM.Create;
+  FData_Ingresso := TDateFieldORM.Create;
 
 end;
+{
+  function TAluno.Delete: TBooleanFieldORM;
+  begin
 
-function TAluno.Delete: TBooleanFieldORM;
-begin
-
-end;
+  end; }
 
 function TAluno.getCadeirante: TBooleanFieldORM;
 begin
