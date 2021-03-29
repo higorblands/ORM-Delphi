@@ -3,7 +3,6 @@ program ORM;
 uses
   Vcl.Forms,
   UMainForm in 'UMainForm.pas' {FMain},
-  UORM in 'UORM.pas',
   UTypeDataFieldORM in 'Class\UTypeDataFieldORM.pas',
   UGeneralORM in 'Class\UGeneralORM.pas',
   UAlunoORM in 'Entidades\UAlunoORM.pas';
