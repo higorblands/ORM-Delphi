@@ -24,12 +24,12 @@ Type
     QueryORM: TFDQuery;
     conn: TFDconnection;
 
-    constructor Create(aName: TStringFieldORM);virtual;
+    constructor Create(aName: TStringFieldORM); virtual;
     property TableName: TStringFieldORM read getTableName write setTableName;
     // Table
-    function Insert: TBooleanFieldORM; virtual;
-    function Delete: TBooleanFieldORM; virtual;
-    function Update: TBooleanFieldORM; virtual;
+    // function Insert: TBooleanFieldORM; virtual;
+    // function Delete: TBooleanFieldORM; virtual;
+    // function Update: TBooleanFieldORM; virtual;
 
   end;
 
@@ -41,33 +41,33 @@ constructor TORM.Create(aName: TStringFieldORM);
 begin
   FName := aName;
 end;
-
-function TORM.Delete: TBooleanFieldORM;
-begin
+{
+  function TORM.Delete: TBooleanFieldORM;
+  begin
   QueryORM := TFDQuery.Create(nil);
   QueryORM.connection := conn;
-end;
+  end; }
 
 function TORM.getTableName: TStringFieldORM;
 begin
   Result := FName;
 end;
-
-function TORM.Insert: TBooleanFieldORM;
-begin
+{
+  function TORM.Insert: TBooleanFieldORM;
+  begin
   QueryORM := TFDQuery.Create(nil);
   QueryORM.connection := conn;
-end;
+  end; }
 
 procedure TORM.setTableName(const Value: TStringFieldORM);
 begin
   FName := Value;
 end;
-
-function TORM.Update: TBooleanFieldORM;
-begin
+{
+  function TORM.Update: TBooleanFieldORM;
+  begin
   QueryORM := TFDQuery.Create(nil);
   QueryORM.connection := conn;
-end;
+  end; }
 
 end.

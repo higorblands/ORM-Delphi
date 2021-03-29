@@ -1,0 +1,73 @@
+unit UGeneralORM;
+
+interface
+
+uses
+  UTypeDataFieldORM, System.SysUtils, System.Classes, System.UITypes,
+  FireDAC.Stan.Error, Data.DB,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef;
+
+Type
+  TORM = class
+
+  private
+
+    FName: TStringFieldORM; // Table
+    function getTableName: TStringFieldORM; // Table
+    procedure setTableName(const Value: TStringFieldORM); // Table
+  public
+    QueryORM: TFDQuery;
+    conn: TFDconnection;
+
+    constructor Create(aName: TStringFieldORM); virtual;
+    property TableName: TStringFieldORM read getTableName write setTableName;
+    // Table
+    // function Insert: TBooleanFieldORM; virtual;
+    // function Delete: TBooleanFieldORM; virtual;
+    // function Update: TBooleanFieldORM; virtual;
+
+  end;
+
+implementation
+
+{ Table }
+
+constructor TORM.Create(aName: TStringFieldORM);
+begin
+  FName := aName;
+end;
+{
+  function TORM.Delete: TBooleanFieldORM;
+  begin
+  QueryORM := TFDQuery.Create(nil);
+  QueryORM.connection := conn;
+  end; }
+
+function TORM.getTableName: TStringFieldORM;
+begin
+  Result := FName;
+end;
+{
+  function TORM.Insert: TBooleanFieldORM;
+  begin
+  QueryORM := TFDQuery.Create(nil);
+  QueryORM.connection := conn;
+  end; }
+
+procedure TORM.setTableName(const Value: TStringFieldORM);
+begin
+  FName := Value;
+end;
+{
+  function TORM.Update: TBooleanFieldORM;
+  begin
+  QueryORM := TFDQuery.Create(nil);
+  QueryORM.connection := conn;
+  end; }
+
+end.
