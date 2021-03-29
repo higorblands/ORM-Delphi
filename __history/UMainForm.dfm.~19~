@@ -3,7 +3,7 @@ object FMain: TFMain
   Top = 0
   Align = alCustom
   Caption = 'Main'
-  ClientHeight = 276
+  ClientHeight = 262
   ClientWidth = 533
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -28,43 +28,9 @@ object FMain: TFMain
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
   end
-  object edtIdCurso: TEdit
-    Left = 88
-    Top = 134
-    Width = 121
-    Height = 21
-    NumbersOnly = True
-    TabOrder = 1
-    TextHint = 'ID Curso'
-  end
-  object edtCurso: TEdit
-    Left = 223
-    Top = 134
-    Width = 121
-    Height = 21
-    TabOrder = 2
-    TextHint = 'Nome do curso'
-  end
-  object btAdd: TButton
-    Left = 88
-    Top = 181
-    Width = 256
-    Height = 25
-    Caption = 'Adicionar'
-    TabOrder = 3
-    OnClick = btAddClick
-  end
-  object btDelete: TButton
-    Left = 88
-    Top = 212
-    Width = 256
-    Height = 25
-    Caption = 'Delete'
-    TabOrder = 4
-  end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=DbSTU'
+      'Database=dbAlunos'
       'User_Name=sa'
       'Password=admserver01'
       'Server=localhost'
@@ -78,13 +44,12 @@ object FMain: TFMain
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from CursosCadastro')
+      'select * from Aluno')
     Left = 328
     Top = 8
   end
   object DataSource: TDataSource
     DataSet = FDQListagem
-    OnDataChange = DataSourceDataChange
     Left = 392
     Top = 8
   end

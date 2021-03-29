@@ -214,7 +214,7 @@ var
   Check: boolean;
 begin
   TableName := 'aluno';
-  conn := TFDconnection.Create(nil);
+  conn := TFDconnection.Create;
   FId_Aluno := TIntegerFieldORM.Create;
   FPeriodo := TIntegerFieldORM.Create;
   FNome_Aluno := TStringFieldORM.Create;

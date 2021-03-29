@@ -3,7 +3,7 @@ unit UMainForm;
 interface
 
 uses
-  UGeneralORM, UAlunoORM,
+  UGeneralORM,UAlunoORM,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
@@ -21,10 +21,7 @@ type
     FDQAluno: TFDQuery;
     DataSource: TDataSource;
     FDQComandos: TFDQuery;
-    btAdd: TButton;
-    edtID_Aluno: TEdit;
-    edtNome_Aluno: TEdit;
-    procedure btAddClick(Sender: TObject);
+
 
   private
     { Private declarations }
@@ -40,17 +37,5 @@ implementation
 
 {$R *.dfm}
 
-procedure TFMain.btAddClick(Sender: TObject);
-var
-  Aluno: TAluno;
-begin
-  Aluno := TAluno.Create;
-  Aluno.conn := FDConnection1;
-  Aluno.ID_Aluno := strtoint(edtID_Aluno.text);
-  Aluno.Nome_Aluno := edtNome_Aluno.text;
-
-
-
-end;
 
 end.

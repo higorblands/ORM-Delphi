@@ -123,6 +123,7 @@ Type
     function getUsuario_Alteracao: TStringFieldORM;
 
   public
+    conn: TFDconnection;
     property ID_Aluno: TIntegerFieldORM read getID_Aluno;
     property Nome_Aluno: TStringFieldORM read getNome_Aluno;
     property Curso: TStringFieldORM read getCurso;
@@ -132,7 +133,7 @@ Type
     property Situacao: TStringFieldORM read getSituacao;
     property Cadeirante: TBooleanFieldORM read getCadeirante;
     property Observacao: TStringFieldORM read getObservacao;
-    property Data_Hora_Inclusao: TDateTimeFieldORM read getData_Hora_Inclusao;
+    property Data_Hora_Inclusao: TStringFieldORM read getData_Hora_Inclusao;
     property Usuario_Inclusao: TStringFieldORM read getUsuario_Inclusao;
     property Data_Hora_Alteracao: TDateTimeFieldORM read getData_Hora_Alteracao;
     property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao;
@@ -191,13 +192,13 @@ begin
 
   with QueryORM.SQL do
   begin
-   { Clear;
+    Clear;
     Add('insert into Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
     Add('values (''' + ID_Aluno + ''',' + Nome_Aluno + ''',' + Curso + ''',' +
       Turno + ''',' + Periodo + ''',' + Data_Ingresso + ''',' + Situacao + ''','
       + Cadeirante + ''',' + Observacao + ''',' + Data_Hora_Inclusao + ''',' +
       Usuario_Inclusao + ''',' + Data_Hora_Alteracao + ''',' + Usuario_Alteracao
-      + ''');'); }
+      + ''');');
   end;
   QueryORM.ExecSQL;
 end;
@@ -213,6 +214,8 @@ constructor TAluno.Create;
 var
   Check: boolean;
 begin
+
+  inherited Create;
   TableName := 'aluno';
   conn := TFDconnection.Create(nil);
   FId_Aluno := TIntegerFieldORM.Create;

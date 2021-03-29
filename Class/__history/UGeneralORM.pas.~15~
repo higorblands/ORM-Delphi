@@ -24,7 +24,7 @@ Type
     QueryORM: TFDQuery;
     conn: TFDconnection;
 
-    constructor Create(aName: TStringFieldORM);virtual;
+    constructor Create(aName: TStringFieldORM)virtual;
     property TableName: TStringFieldORM read getTableName write setTableName;
     // Table
     function Insert: TBooleanFieldORM; virtual;

@@ -3,7 +3,7 @@ unit UMainForm;
 interface
 
 uses
-  UORM,
+  UORM,UAlonoORM,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
@@ -31,6 +31,7 @@ type
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure btDeleteClick(Sender: TObject);
     procedure btUpdateClick(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -56,7 +57,7 @@ end;
 
 procedure TFMain.btAddClick(Sender: TObject);
 var
-  Obj: TCursoSQL;
+  Obj: TAluno;
 begin
   Obj := TCursoSQL.Create;
   Obj.Conexao := FDConnection1;
@@ -91,6 +92,7 @@ begin
   FDQListagem.Open;
   Obj.Free;
 end;
+
 
 procedure TFMain.DataSourceDataChange(Sender: TObject; Field: TField);
 begin

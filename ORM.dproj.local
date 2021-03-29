@@ -13,5 +13,8 @@
     <Transaction>2021/03/10 09:08:15.000.084,=C:\Users\higor\Documents\Delphi\ORM-Delphi\Unit1.pas</Transaction>
     <Transaction>2021/03/10 10:51:59.000.249,=C:\Users\higor\Documents\Delphi\ORM-Delphi\Unit1.pas</Transaction>
     <Transaction>2021/03/10 10:55:14.000.171,C:\Users\higor\Documents\Delphi\ORM-Delphi\Class\UTiposDados.pas=C:\Users\higor\Documents\Delphi\ORM-Delphi\Unit1.pas</Transaction>
+    <Transaction>2021/03/26 10:36:03.284,=E:\Git\ORM-Delphi\Class\UTypeDataFieldORM.pas</Transaction>
+    <Transaction>2021/03/26 10:36:03.289,=E:\Git\ORM-Delphi\Class\UGeneralORM.pas</Transaction>
+    <Transaction>2021/03/26 10:42:44.215,=E:\Git\ORM-Delphi\Entidades\UAlunoORM.pas</Transaction>
   </Transactions>
 </BorlandProject>

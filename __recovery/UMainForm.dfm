@@ -53,6 +53,30 @@ object FMain: TFMain
     TabOrder = 3
     TextHint = 'Nome Aluno'
   end
+  object edtCurso: TEdit
+    Left = 24
+    Top = 230
+    Width = 121
+    Height = 21
+    TabOrder = 4
+    TextHint = 'Curso'
+  end
+  object edtTurno: TEdit
+    Left = 24
+    Top = 257
+    Width = 121
+    Height = 21
+    TabOrder = 5
+    TextHint = 'Turno'
+  end
+  object edtPeriodo: TEdit
+    Left = 24
+    Top = 288
+    Width = 121
+    Height = 21
+    TabOrder = 6
+    TextHint = 'Periodo'
+  end
   object FDConnection1: TFDConnection
     Params.Strings = (
       'Database=dbAlunos'

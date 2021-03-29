@@ -3,7 +3,7 @@ object FMain: TFMain
   Top = 0
   Align = alCustom
   Caption = 'Main'
-  ClientHeight = 276
+  ClientHeight = 262
   ClientWidth = 533
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -47,7 +47,7 @@ object FMain: TFMain
   end
   object btAdd: TButton
     Left = 88
-    Top = 181
+    Top = 161
     Width = 256
     Height = 25
     Caption = 'Adicionar'
@@ -56,16 +56,25 @@ object FMain: TFMain
   end
   object btDelete: TButton
     Left = 88
-    Top = 212
+    Top = 192
     Width = 256
     Height = 25
     Caption = 'Delete'
     TabOrder = 4
     OnClick = btDeleteClick
   end
+  object btUpdate: TButton
+    Left = 88
+    Top = 223
+    Width = 256
+    Height = 25
+    Caption = 'Update'
+    TabOrder = 5
+    OnClick = btUpdateClick
+  end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=DbSTU'
+      'Database=dbAlunos'
       'User_Name=sa'
       'Password=admserver01'
       'Server=localhost'
@@ -79,7 +88,7 @@ object FMain: TFMain
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from CursosCadastro')
+      'select * from Aluno')
     Left = 328
     Top = 8
   end
