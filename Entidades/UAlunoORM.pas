@@ -94,6 +94,7 @@ uses
 Type
   TAluno = class(TORM)
   private
+    FTableName: TNameTable;
     FId_Aluno: TIntegerFieldORM;
     FNome_Aluno: TStringFieldORM;
     FCurso: TStringFieldORM;
@@ -159,7 +160,7 @@ Type
     // function Delete: TBooleanFieldORM; override;
     // function Update: TBooleanFieldORM; override;
 
-    constructor Create; virtual;
+    constructor Create;
 
   end;
 
@@ -201,6 +202,7 @@ function TAluno.getUsuario_Inclusao: TStringFieldORM;
 begin
   Result := FUsuario_Inclusao;
 end;
+
 {
   function TAluno.Insert: TBooleanFieldORM;
   begin
@@ -217,8 +219,8 @@ end;
   Usuario_Alteracao + ''');');
   end;
   QueryORM.ExecSQL;
-  end; }
-
+  end;
+}
 procedure TAluno.setCadeirante(const Value: TBooleanFieldORM);
 begin
   FCadeirante := Value;
@@ -288,8 +290,10 @@ end;
 
 constructor TAluno.Create;
 begin
-  // TableName := 'aluno';
-  // conn := TFDconnection.Create(nil);
+
+  FTableName := TNameTable.Create;
+  FTableName.TableName := 'aluno';
+
   FId_Aluno := TIntegerFieldORM.Create;
   FPeriodo := TIntegerFieldORM.Create;
   FNome_Aluno := TStringFieldORM.Create;
@@ -305,9 +309,11 @@ begin
   FTurno := TStringFieldORM.Create;
   FSituacao := TStringFieldORM.Create;
   FCadeirante := TBooleanFieldORM.Create;
+  FData_Hora_Inclusao := TDateTimeFieldORM.Create;
   FUsuario_Inclusao := TStringFieldORM.Create;
   FData_Hora_Alteracao := TDateTimeFieldORM.Create;
   FData_Ingresso := TDateFieldORM.Create;
+  inherited;
 
 end;
 {

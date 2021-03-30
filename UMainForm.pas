@@ -21,24 +21,7 @@ type
     FDQAluno: TFDQuery;
     DataSource: TDataSource;
     btAdd: TButton;
-    edtID_Aluno: TEdit;
-    edtNome_Aluno: TEdit;
-    edtCurso: TEdit;
-    edtTurno: TEdit;
-    edtPeriodo: TEdit;
-    DTPData_Ingresso: TDateTimePicker;
-    LData_Ingresso: TLabel;
-    edtSituacao: TEdit;
-    edtObservacao: TEdit;
-    DTPData_Hora_Inclusao: TDateTimePicker;
-    LData_Hora_Inclusao: TLabel;
     FDQComandos: TFDQuery;
-    edtUsuario_Inclusao: TEdit;
-    DTPData_Hora_Alteracao: TDateTimePicker;
-    LData_Hora_Alteracao: TLabel;
-    edtUsuario_Alteracao: TEdit;
-    RadioButton1: TRadioButton;
-    ComboBox1: TComboBox;
     procedure btAddClick(Sender: TObject);
 
   private
@@ -61,19 +44,19 @@ var
 begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
-  Aluno.ID_Aluno.Value := //strtoint(edtID_Aluno.text);
-  Aluno.Nome_Aluno.Value := //edtNome_Aluno.text;
-  Aluno.Curso.Value := //edtCurso.text;
-  Aluno.Turno.Value := //edtTurno.text;
-  Aluno.Periodo.Value := //strtoint(edtPeriodo.text);
-  Aluno.Data_Ingresso.Value := //DTPData_Ingresso.Date;
-  Aluno.Situacao.Value := //edtSituacao.text;
-  Aluno.Cadeirante.Value := True;//StrToBool(edtCadeirante.text);
-  Aluno.Observacao.Value := edtObservacao.text;
-  Aluno.Data_Hora_Inclusao.Value := DTPData_Hora_Inclusao.DateTime;
-  Aluno.Usuario_Inclusao.Value := edtUsuario_Inclusao.text;
-  Aluno.Data_Hora_Alteracao.Value := DTPData_Hora_Alteracao.DateTime ;
-  Aluno.Usuario_Alteracao.Value := edtUsuario_Alteracao.text;
+  Aluno.ID_Aluno.Value := 1;
+  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.Curso.Value := 'Banco de Dados';
+  Aluno.Turno.Value := 'EAD';
+  Aluno.Periodo.Value := 1;
+  Aluno.Data_Ingresso.Value := now;
+  Aluno.Situacao.Value := 'Regular';
+  Aluno.Cadeirante.Value := False;
+  Aluno.Observacao.Value := 'Aluno bom e novo';
+  Aluno.Data_Hora_Inclusao.Value := now;
+  Aluno.Usuario_Inclusao.Value := 'Admin';
+  Aluno.Data_Hora_Alteracao.Value := now;
+  Aluno.Usuario_Alteracao.Value := 'Andriws';
 
 end;
 

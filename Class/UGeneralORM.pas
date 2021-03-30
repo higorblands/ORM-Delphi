@@ -15,56 +15,52 @@ uses
 Type
   TORM = class
 
-  private
-
-    FName: TStringFieldORM; // Table
-    function getTableName: TStringFieldORM; // Table
-    procedure setTableName(const Value: TStringFieldORM); // Table
   public
     QueryORM: TFDQuery;
     conn: TFDconnection;
 
-    constructor Create(aName: TStringFieldORM); virtual;
-    property TableName: TStringFieldORM read getTableName write setTableName;
-    // Table
-    // function Insert: TBooleanFieldORM; virtual;
-    // function Delete: TBooleanFieldORM; virtual;
-    // function Update: TBooleanFieldORM; virtual;
+  end;
 
+Type
+  TNameTable = Class // String
+  Private
+    FNameTable: String;
+    FAssigned: Boolean;
+    function getTableName: String; // Table
+    procedure setTableName(const Value: String); // Table
+  Public
+    property TableName: String read getTableName write setTableName;
   end;
 
 implementation
 
 { Table }
 
-constructor TORM.Create(aName: TStringFieldORM);
-begin
-  FName := aName;
-end;
 {
-  function TORM.Delete: TBooleanFieldORM;
+  function TNameTable.Delete: TBooleanFieldORM;
   begin
   QueryORM := TFDQuery.Create(nil);
   QueryORM.connection := conn;
   end; }
 
-function TORM.getTableName: TStringFieldORM;
+function TNameTable.getTableName: String;
 begin
-  Result := FName;
+  Result := FNameTable;
 end;
 {
-  function TORM.Insert: TBooleanFieldORM;
+  function TNameTable.Insert: TBooleanFieldORM;
   begin
   QueryORM := TFDQuery.Create(nil);
   QueryORM.connection := conn;
   end; }
 
-procedure TORM.setTableName(const Value: TStringFieldORM);
+procedure TNameTable.setTableName(const Value: String);
 begin
-  FName := Value;
+  FNameTable := Value;
+  FAssigned := True;
 end;
 {
-  function TORM.Update: TBooleanFieldORM;
+  function TNameTable.Update: TBooleanFieldORM;
   begin
   QueryORM := TFDQuery.Create(nil);
   QueryORM.connection := conn;
