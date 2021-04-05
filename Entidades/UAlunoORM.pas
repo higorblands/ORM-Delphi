@@ -156,7 +156,8 @@ Type
       write setData_Hora_Alteracao;
     property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao
       write setUsuario_alteracao;
-    // function Insert: TBooleanFieldORM; override;
+    function List: TBooleanFieldORM;
+    function Insert: TBooleanFieldORM;
     // function Delete: TBooleanFieldORM; override;
     // function Update: TBooleanFieldORM; override;
 
@@ -203,24 +204,53 @@ begin
   Result := FUsuario_Inclusao;
 end;
 
-{
-  function TAluno.Insert: TBooleanFieldORM;
+function TAluno.Insert: TBooleanFieldORM;
+begin
+  with QueryORM.SQL do
   begin
-  inherited;
+    Clear;
+    // Tentativa Funcionando
+
+    { Add('INSERT INTO Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
+      Add('VALUES (5,''Higor'',''BDS'',''M'',2,''1899-12-30'',''R'',''False'',''Aluno bom e novo'',''2008-11-11 13:23:44'',''Admin'',''2008-11-11 13:23:44'',''Andriws'');');
+      Add('select * from Aluno'); }
+
+    // Tentativa erro de String and TintegerFieldORM
+
+    { Add('INSERT INTO Aluno ('+ID_Aluno+','+Nome_Aluno+','+Curso+','+Turno+','+Periodo+','+Data_Ingresso+','+Situacao+','+Cadeirante+','+Observacao+','+Data_Hora_Inclusao+','+Usuario_Inclusao+','+Data_Hora_Alteracao+','+Usuario_Alteracao+')');
+      Add('VALUES (''' + ID_Aluno.Value + ''',''' + Nome_Aluno.Value + ''',''' +
+      Curso.Value + ''',''' + Turno.Value + ''',''' + Periodo.Value + ''',''' +
+      Data_Ingresso.Value + ''',''' + Situacao.Value + ''',''' +
+      Cadeirante.Value + ''',''' + Observacao.Value + ''',''' +
+      Data_Hora_Inclusao.Value + ''',''' + Usuario_Inclusao.Value + ''',''' +
+      Data_Hora_Alteracao.Value + ''',''' + Usuario_Alteracao.Value + ''');'); }
+
+    // Tentativa erro de String and Integer
+
+    Add('INSERT INTO Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
+    Add('VALUES (''' + ID_Aluno.Value + ''',''' + Nome_Aluno.Value + ''',''' +
+      Curso.Value + ''',''' + Turno.Value + ''',''' + Periodo.Value + ''',''' +
+      Data_Ingresso.Value + ''',''' + Situacao.Value + ''',''' +
+      Cadeirante.Value + ''',''' + Observacao.Value + ''',''' +
+      Data_Hora_Inclusao.Value + ''',''' + Usuario_Inclusao.Value + ''',''' +
+      Data_Hora_Alteracao.Value + ''',''' + Usuario_Alteracao.Value + ''');');
+  end;
+  QueryORM.ExecSQL;
+
+end;
+
+function TAluno.List: TBooleanFieldORM;
+begin
 
   with QueryORM.SQL do
   begin
-  Clear;
-  Add('insert into Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
-  Add('values (''' + strtoint(ID_Aluno) + ''',' + Nome_Aluno + ''',' + Curso +
-  ''',' + Turno + ''',' + Periodo + ''',' + Data_Ingresso + ''',' + Situacao
-  + ''',' + Cadeirante + ''',' + Observacao + ''',' + Data_Hora_Inclusao +
-  ''',' + Usuario_Inclusao + ''',' + Data_Hora_Alteracao + ''',' +
-  Usuario_Alteracao + ''');');
+    Clear;
+    Add('select * from Aluno');
   end;
-  QueryORM.ExecSQL;
-  end;
-}
+  QueryORM.Open;
+
+end;
+
 procedure TAluno.setCadeirante(const Value: TBooleanFieldORM);
 begin
   FCadeirante := Value;

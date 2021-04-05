@@ -22,7 +22,9 @@ type
     DataSource: TDataSource;
     btAdd: TButton;
     FDQComandos: TFDQuery;
+    btList: TButton;
     procedure btAddClick(Sender: TObject);
+    procedure btListClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -42,13 +44,15 @@ procedure TFMain.btAddClick(Sender: TObject);
 var
   Aluno: TAluno;
 begin
+
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
-  Aluno.ID_Aluno.Value := 1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.ID_Aluno.Value := 8;
   Aluno.Nome_Aluno.Value := 'Higor';
   Aluno.Curso.Value := 'Banco de Dados';
   Aluno.Turno.Value := 'EAD';
-  Aluno.Periodo.Value := 1;
+  Aluno.Periodo.Value := 2;
   Aluno.Data_Ingresso.Value := now;
   Aluno.Situacao.Value := 'Regular';
   Aluno.Cadeirante.Value := False;
@@ -57,6 +61,20 @@ begin
   Aluno.Usuario_Inclusao.Value := 'Admin';
   Aluno.Data_Hora_Alteracao.Value := now;
   Aluno.Usuario_Alteracao.Value := 'Andriws';
+  Aluno.Insert;
+  Aluno.Free;
+
+end;
+
+procedure TFMain.btListClick(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.List;
+  Aluno.Free;
 
 end;
 

@@ -40,6 +40,15 @@ object FMain: TFMain
     TabOrder = 1
     OnClick = btAddClick
   end
+  object btList: TButton
+    Left = 40
+    Top = 272
+    Width = 75
+    Height = 25
+    Caption = 'List'
+    TabOrder = 2
+    OnClick = btListClick
+  end
   object FDConnection1: TFDConnection
     Params.Strings = (
       'Database=dbAlunos'
@@ -53,10 +62,9 @@ object FMain: TFMain
     Top = 328
   end
   object FDQAluno: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from Aluno')
+      '')
     Left = 96
     Top = 328
   end
