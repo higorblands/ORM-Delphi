@@ -156,6 +156,7 @@ Type
       write setData_Hora_Alteracao;
     property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao
       write setUsuario_alteracao;
+
     function List: TBooleanFieldORM;
     function Insert: TBooleanFieldORM;
     // function Delete: TBooleanFieldORM; override;
@@ -206,6 +207,7 @@ end;
 
 function TAluno.Insert: TBooleanFieldORM;
 begin
+
   with QueryORM.SQL do
   begin
     Clear;
@@ -228,14 +230,15 @@ begin
     // Tentativa erro de String and Integer
 
     Add('INSERT INTO Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
-    Add('VALUES (''' + ID_Aluno.Value + ''',''' + Nome_Aluno.Value + ''',''' +
-      Curso.Value + ''',''' + Turno.Value + ''',''' + Periodo.Value + ''',''' +
-      Data_Ingresso.Value + ''',''' + Situacao.Value + ''',''' +
-      Cadeirante.Value + ''',''' + Observacao.Value + ''',''' +
-      Data_Hora_Inclusao.Value + ''',''' + Usuario_Inclusao.Value + ''',''' +
-      Data_Hora_Alteracao.Value + ''',''' + Usuario_Alteracao.Value + ''');');
+    Add('VALUES (' + ID_Aluno.ToSQL + ',' + Nome_Aluno.ToSQL + ',' + Curso.ToSQL
+      + ',' + Turno.ToSQL + ',' + Periodo.ToSQL + ',' + Data_Ingresso.ToSQL +
+      ',' + Situacao.ToSQL + ',' + Cadeirante.ToSQL + ',' + Observacao.ToSQL +
+      ',' + Data_Hora_Inclusao.ToSQL + ',' + Usuario_Inclusao.ToSQL + ',' +
+      Data_Hora_Alteracao.ToSQL + ',' + Usuario_Alteracao.ToSQL + ');');
+    QueryORM.SQL.SaveToFile('d:\test.txt');
   end;
   QueryORM.ExecSQL;
+  List;
 
 end;
 

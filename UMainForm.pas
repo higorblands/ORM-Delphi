@@ -48,13 +48,13 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 8;
+  Aluno.ID_Aluno.Value := 28;
   Aluno.Nome_Aluno.Value := 'Higor';
   Aluno.Curso.Value := 'Banco de Dados';
-  Aluno.Turno.Value := 'EAD';
+  Aluno.Turno.Value := 'N';
   Aluno.Periodo.Value := 2;
   Aluno.Data_Ingresso.Value := now;
-  Aluno.Situacao.Value := 'Regular';
+  Aluno.Situacao.Value := 'R';
   Aluno.Cadeirante.Value := False;
   Aluno.Observacao.Value := 'Aluno bom e novo';
   Aluno.Data_Hora_Inclusao.Value := now;

@@ -1,0 +1,81 @@
+unit UMainForm;
+
+interface
+
+uses
+  UGeneralORM, UAlunoORM,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ComCtrls;
+
+type
+  TFMain = class(TForm)
+    DBGrid1: TDBGrid;
+    FDConnection1: TFDConnection;
+    FDQAluno: TFDQuery;
+    DataSource: TDataSource;
+    btAdd: TButton;
+    FDQComandos: TFDQuery;
+    btList: TButton;
+    procedure btAddClick(Sender: TObject);
+    procedure btListClick(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+  end;
+
+var
+  FMain: TFMain;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFMain.btAddClick(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.ID_Aluno.Value := 8;
+  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.Curso.Value := 'Banco de Dados';
+  Aluno.Turno.Value := 'EAD';
+  Aluno.Periodo.Value := 2;
+  Aluno.Data_Ingresso.Value := now;
+  Aluno.Situacao.Value := 'R';
+  Aluno.Cadeirante.Value := False;
+  Aluno.Observacao.Value := 'Aluno bom e novo';
+  Aluno.Data_Hora_Inclusao.Value := now;
+  Aluno.Usuario_Inclusao.Value := 'Admin';
+  Aluno.Data_Hora_Alteracao.Value := now;
+  Aluno.Usuario_Alteracao.Value := 'Andriws';
+  Aluno.Insert;
+  Aluno.Free;
+
+end;
+
+procedure TFMain.btListClick(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.List;
+  Aluno.Free;
+
+end;
+
+end.
