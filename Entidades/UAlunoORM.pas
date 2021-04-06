@@ -207,7 +207,6 @@ end;
 
 function TAluno.Insert: TBooleanFieldORM;
 begin
-
   with QueryORM.SQL do
   begin
     Clear;

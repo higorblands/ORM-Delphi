@@ -18,7 +18,6 @@ Type
   public
     QueryORM: TFDQuery;
     conn: TFDconnection;
-
   end;
 
 Type
@@ -30,40 +29,20 @@ Type
     procedure setTableName(const Value: String); // Table
   Public
     property TableName: String read getTableName write setTableName;
+    property Assigned: Boolean read FAssigned;
   end;
 
 implementation
-
-{ Table }
-
-{
-  function TNameTable.Delete: TBooleanFieldORM;
-  begin
-  QueryORM := TFDQuery.Create(nil);
-  QueryORM.connection := conn;
-  end; }
 
 function TNameTable.getTableName: String;
 begin
   Result := FNameTable;
 end;
-{
-  function TNameTable.Insert: TBooleanFieldORM;
-  begin
-  QueryORM := TFDQuery.Create(nil);
-  QueryORM.connection := conn;
-  end; }
 
 procedure TNameTable.setTableName(const Value: String);
 begin
   FNameTable := Value;
   FAssigned := True;
 end;
-{
-  function TNameTable.Update: TBooleanFieldORM;
-  begin
-  QueryORM := TFDQuery.Create(nil);
-  QueryORM.connection := conn;
-  end; }
 
 end.
