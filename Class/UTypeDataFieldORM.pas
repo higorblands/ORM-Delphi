@@ -9,11 +9,12 @@ Type
 
   TIntegerFieldORM = Class // Integer
   private
-    vDataValue: Integer;
     FAssigned: Boolean;
+    vDataValue: Integer;
     Procedure SETvDataValue(const Value: Integer);
     Function GETvDataValue: Integer;
   Public
+    Property Assigned: Boolean read FAssigned;
     Property Value: Integer read GETvDataValue write SETvDataValue;
     function ToSQL: String;
   end;
@@ -29,6 +30,7 @@ Type
     function getLength: Integer;
     procedure setLength(const Value: Integer);
   Public
+    Property Assigned: Boolean read FAssigned;
     Property Value: String read GETvString write SETvString;
     property Length: Integer read getLength write setLength;
     function ToSQL: String;
@@ -43,6 +45,7 @@ Type
     Procedure SETvDate(const Value: TDate);
     Function GETvData: TDate;
   Public
+    Property Assigned: Boolean read FAssigned;
     Property Value: TDate read GETvData write SETvDate;
     function ToSQL: String;
   end;
@@ -55,6 +58,7 @@ Type
     procedure SETvDateTime(const Value: TDateTime);
     Function GETvDateTime: TDateTime;
   public
+    Property Assigned: Boolean read FAssigned;
     Property Value: TDateTime read GETvDateTime write SETvDateTime;
     Function ToSQL: String;
   End;
@@ -67,6 +71,7 @@ Type
     procedure SETvBoolean(const Value: Boolean);
     Function GETvBoolean: Boolean;
   public
+    Property Assigned: Boolean read FAssigned;
     property Value: Boolean read GETvBoolean write SETvBoolean;
     Function ToSQL: String;
   end;
@@ -79,6 +84,7 @@ Type
     Procedure SETvFloat(const Value: Currency);
     Function GETvFloat: Currency;
   Public
+    Property Assigned: Boolean read FAssigned;
     Property Value: Currency read GETvFloat write SETvFloat;
     Function ToSQL: String;
   End;

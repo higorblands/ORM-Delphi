@@ -48,8 +48,8 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 28;
-  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.ID_Aluno.Value := 1;
+  Aluno.Nome_Aluno.Value := 'mega';
   Aluno.Curso.Value := 'Banco de Dados';
   Aluno.Turno.Value := 'N';
   Aluno.Periodo.Value := 2;
