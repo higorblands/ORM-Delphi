@@ -206,7 +206,8 @@ begin
 end;
 
 function TAluno.Insert: TBooleanFieldORM;
-begin
+
+Begin
   with QueryORM.SQL do
   begin
     Clear;
@@ -305,10 +306,9 @@ end;
 
 constructor TAluno.Create;
 begin
-
+  inherited;
   FTableName := TNameTable.Create;
   FTableName.TableName := 'aluno';
-
   FId_Aluno := TIntegerFieldORM.Create;
   FPeriodo := TIntegerFieldORM.Create;
   FNome_Aluno := TStringFieldORM.Create;
@@ -328,7 +328,6 @@ begin
   FUsuario_Inclusao := TStringFieldORM.Create;
   FData_Hora_Alteracao := TDateTimeFieldORM.Create;
   FData_Ingresso := TDateFieldORM.Create;
-  inherited;
 
 end;
 {

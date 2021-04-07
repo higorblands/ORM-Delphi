@@ -6,6 +6,15 @@ Uses
   StrUtils, System.SysUtils, System.Classes, System.UITypes;
 
 Type
+  TSQLSyntaxResult = Class
+  Private
+    Result: Boolean;
+    ResultSQL: String;
+    ResultWrongSQL: String;
+
+  End;
+
+Type
 
   TIntegerFieldORM = Class // Integer
   private
@@ -14,9 +23,10 @@ Type
     Procedure SETvDataValue(const Value: Integer);
     Function GETvDataValue: Integer;
   Public
+    constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: Integer read GETvDataValue write SETvDataValue;
-    function ToSQL: String;
+    function ToSQL: TSQLSyntaxResult;
   end;
 
 Type
@@ -30,10 +40,12 @@ Type
     function getLength: Integer;
     procedure setLength(const Value: Integer);
   Public
+    constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: String read GETvString write SETvString;
     property Length: Integer read getLength write setLength;
-    function ToSQL: String;
+    Function ToSQL: String;
+
   end;
 
 Type
@@ -45,6 +57,7 @@ Type
     Procedure SETvDate(const Value: TDate);
     Function GETvData: TDate;
   Public
+    constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: TDate read GETvData write SETvDate;
     function ToSQL: String;
@@ -58,6 +71,7 @@ Type
     procedure SETvDateTime(const Value: TDateTime);
     Function GETvDateTime: TDateTime;
   public
+    constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: TDateTime read GETvDateTime write SETvDateTime;
     Function ToSQL: String;
@@ -71,7 +85,7 @@ Type
     procedure SETvBoolean(const Value: Boolean);
     Function GETvBoolean: Boolean;
   public
-    Property Assigned: Boolean read FAssigned;
+    constructor Create; reintroduce;
     property Value: Boolean read GETvBoolean write SETvBoolean;
     Function ToSQL: String;
   end;
@@ -84,6 +98,7 @@ Type
     Procedure SETvFloat(const Value: Currency);
     Function GETvFloat: Currency;
   Public
+    constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: Currency read GETvFloat write SETvFloat;
     Function ToSQL: String;
@@ -93,32 +108,58 @@ implementation
 
 { TInteger }
 
+constructor TIntegerFieldORM.Create;
+begin
+  inherited;
+  vDataValue := 0;
+  FAssigned := false;
+end;
+
 function TIntegerFieldORM.GETvDataValue: Integer;
 begin
-  result := vDataValue;
+  Result := vDataValue;
 end;
 
 procedure TIntegerFieldORM.SETvDataValue(const Value: Integer);
 begin
+
   vDataValue := Value;
   FAssigned := True;
 end;
 
-function TIntegerFieldORM.ToSQL: String;
+function TIntegerFieldORM.ToSQL: TSQLSyntaxResult;
 begin
-  result := IntToStr(Value);
+  Result := TSQLSyntaxResult.Create;
+  if Assigned then
+  begin
+    Result.Result := True;
+    Result.ResultSQL := IntToStr(Value);
+  end
+  else
+  begin
+    Result.Result := false;
+    Result.ResultWrongSQL := 'Field empty.';
+  end;
+  Free;
 end;
 
 { TString }
 
+constructor TStringFieldORM.Create;
+begin
+  inherited;
+  vString := '';
+  FAssigned := false;
+end;
+
 function TStringFieldORM.getLength: Integer;
 begin
-  result := FLength;
+  Result := FLength;
 end;
 
 function TStringFieldORM.GETvString: String;
 begin
-  result := vString;
+  Result := vString;
 end;
 
 procedure TStringFieldORM.setLength(const Value: Integer);
@@ -134,13 +175,20 @@ end;
 
 function TStringFieldORM.ToSQL: String;
 begin
-  result := QuotedStr(Value);
+  Result := QuotedStr(Value);
 end;
 
 { TDateTime }
+constructor TDateFieldORM.Create;
+begin
+  inherited;
+  vDate := 00 - 00 - 0000;
+  FAssigned := false;
+end;
+
 function TDateFieldORM.GETvData: TDate;
 begin
-  result := vDate;
+  Result := vDate;
 end;
 
 procedure TDateFieldORM.SETvDate(const Value: TDate);
@@ -151,14 +199,22 @@ end;
 
 function TDateFieldORM.ToSQL: String;
 begin
-  result := QuotedStr(FormatDateTime('YYYY-MM-DD', Value));
+  Result := QuotedStr(FormatDateTime('YYYY-MM-DD', Value));
 end;
 
 { TBoolean }
 
+constructor TBooleanFieldORM.Create;
+begin
+  inherited;
+  vBoolean := false;
+  FAssigned := false;
+
+end;
+
 function TBooleanFieldORM.GETvBoolean: Boolean;
 begin
-  result := vBoolean;
+  Result := vBoolean;
 end;
 
 procedure TBooleanFieldORM.SETvBoolean(const Value: Boolean);
@@ -171,20 +227,25 @@ function TBooleanFieldORM.ToSQL: String;
 begin
   if Value = True then
   begin
-    result := '1';
+    Result := '1';
   end
   Else
   begin
-    result := '0';
+    Result := '0';
   end;
 
 end;
 
-{ TDateWithoutTime }
+constructor TDateTimeFieldORM.Create;
+begin
+  inherited;
+  vDateTime := now;
+  FAssigned := false;
+end;
 
 function TDateTimeFieldORM.GETvDateTime: TDateTime;
 begin
-  result := vDateTime;
+  Result := vDateTime;
 end;
 
 procedure TDateTimeFieldORM.SETvDateTime(const Value: TDateTime);
@@ -195,14 +256,21 @@ end;
 
 function TDateTimeFieldORM.ToSQL: String;
 begin
-  result := QuotedStr(FormatDateTime('YYYY-MM-DD HH:NN:SS', Value));
+  Result := QuotedStr(FormatDateTime('YYYY-MM-DD HH:NN:SS', Value));
 end;
 
 { TFloatFieldORM }
 
+constructor TFloatFieldORM.Create;
+begin
+  inherited;
+  vFloat := 0.0;
+  FAssigned := false;
+end;
+
 function TFloatFieldORM.GETvFloat: Currency;
 begin
-  result := vFloat;
+  Result := vFloat;
 end;
 
 procedure TFloatFieldORM.SETvFloat(const Value: Currency);
@@ -217,7 +285,7 @@ var
 begin
   FomartSQL.DecimalSeparator := '.';
   FomartSQL.ThousandSeparator := ',';
-  result := CurrToStr(Value, FomartSQL);
+  Result := CurrToStr(Value, FomartSQL);
 end;
 
 end.
