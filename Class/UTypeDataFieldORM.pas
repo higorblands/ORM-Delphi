@@ -8,10 +8,13 @@ Uses
 Type
   TSQLSyntaxResult = Class
   Private
-    Result: Boolean;
-    ResultSQL: String;
-    ResultWrongSQL: String;
-
+    FOK: Boolean;
+    FSQLTxT: String;
+    FErrorMSG: String;
+  Public
+    Property OK: Boolean read FOK;
+    Property SQLTxT: String read FSQLTxT;
+    Property ErrorMSG: String read FErrorMSG;
   End;
 
 Type
@@ -44,7 +47,7 @@ Type
     Property Assigned: Boolean read FAssigned;
     Property Value: String read GETvString write SETvString;
     property Length: Integer read getLength write setLength;
-    Function ToSQL: String;
+    Function ToSQL: TSQLSyntaxResult;
 
   end;
 
@@ -60,7 +63,7 @@ Type
     constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: TDate read GETvData write SETvDate;
-    function ToSQL: String;
+    function ToSQL: TSQLSyntaxResult;
   end;
 
 Type
@@ -74,7 +77,7 @@ Type
     constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: TDateTime read GETvDateTime write SETvDateTime;
-    Function ToSQL: String;
+    Function ToSQL: TSQLSyntaxResult;
   End;
 
 Type
@@ -86,8 +89,9 @@ Type
     Function GETvBoolean: Boolean;
   public
     constructor Create; reintroduce;
+    Property Assigned: Boolean read FAssigned;
     property Value: Boolean read GETvBoolean write SETvBoolean;
-    Function ToSQL: String;
+    Function ToSQL: TSQLSyntaxResult;
   end;
 
 Type
@@ -101,7 +105,7 @@ Type
     constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     Property Value: Currency read GETvFloat write SETvFloat;
-    Function ToSQL: String;
+    Function ToSQL: TSQLSyntaxResult;
   End;
 
 implementation
@@ -132,13 +136,13 @@ begin
   Result := TSQLSyntaxResult.Create;
   if Assigned then
   begin
-    Result.Result := True;
-    Result.ResultSQL := IntToStr(Value);
+    Result.FOK := True;
+    Result.FSQLTxT := IntToStr(Value);
   end
   else
   begin
-    Result.Result := false;
-    Result.ResultWrongSQL := 'Field empty.';
+    Result.FOK := false;
+    Result.FErrorMSG := 'Field empty.';
   end;
   Free;
 end;
@@ -173,16 +177,28 @@ begin
   FAssigned := True;
 end;
 
-function TStringFieldORM.ToSQL: String;
+function TStringFieldORM.ToSQL: TSQLSyntaxResult;
 begin
-  Result := QuotedStr(Value);
+
+  Result := TSQLSyntaxResult.Create;
+  if Assigned then
+  begin
+    Result.FOK := True;
+    Result.FSQLTxT := QuotedStr(Value);
+  end
+  else
+  begin
+    Result.FOK := false;
+    Result.FErrorMSG := 'Field empty.';
+  end;
+  Free;
 end;
 
 { TDateTime }
 constructor TDateFieldORM.Create;
 begin
   inherited;
-  vDate := 00 - 00 - 0000;
+  vDate := 0;
   FAssigned := false;
 end;
 
@@ -197,9 +213,20 @@ begin
   FAssigned := True;
 end;
 
-function TDateFieldORM.ToSQL: String;
+function TDateFieldORM.ToSQL: TSQLSyntaxResult;
 begin
-  Result := QuotedStr(FormatDateTime('YYYY-MM-DD', Value));
+  Result := TSQLSyntaxResult.Create;
+  if Assigned then
+  begin
+    Result.FOK := True;
+    Result.FSQLTxT := QuotedStr(FormatDateTime('YYYY-MM-DD', Value));
+  end
+  else
+  begin
+    Result.FOK := false;
+    Result.FErrorMSG := 'Field empty.';
+  end;
+  Free;
 end;
 
 { TBoolean }
@@ -223,23 +250,36 @@ begin
   FAssigned := True;
 end;
 
-function TBooleanFieldORM.ToSQL: String;
-begin
-  if Value = True then
-  begin
+function TBooleanFieldORM.ToSQL: TSQLSyntaxResult;
+begin {
+    if Value = True then
+    begin
     Result := '1';
-  end
-  Else
-  begin
+    end
+    Else
+    begin
     Result := '0';
+    end;
+  }
+  Result := TSQLSyntaxResult.Create;
+  if Assigned then
+  begin
+    Result.FOK := True;
+    Result.FSQLTxT := BoolToStr(Value);
+  end
+  else
+  begin
+    Result.FOK := false;
+    Result.FErrorMSG := 'Field empty.';
   end;
+  Free;
 
 end;
 
 constructor TDateTimeFieldORM.Create;
 begin
   inherited;
-  vDateTime := now;
+  vDateTime := 0;
   FAssigned := false;
 end;
 
@@ -254,9 +294,20 @@ begin
   FAssigned := True;
 end;
 
-function TDateTimeFieldORM.ToSQL: String;
+function TDateTimeFieldORM.ToSQL: TSQLSyntaxResult;
 begin
-  Result := QuotedStr(FormatDateTime('YYYY-MM-DD HH:NN:SS', Value));
+  Result := TSQLSyntaxResult.Create;
+  if Assigned then
+  begin
+    Result.FOK := True;
+    Result.FSQLTxT := QuotedStr(FormatDateTime('YYYY-MM-DD HH:NN:SS', Value));
+  end
+  else
+  begin
+    Result.FOK := false;
+    Result.FErrorMSG := 'Field empty.';
+  end;
+  Free;
 end;
 
 { TFloatFieldORM }
@@ -279,13 +330,24 @@ begin
   FAssigned := True;
 end;
 
-function TFloatFieldORM.ToSQL: String;
+function TFloatFieldORM.ToSQL: TSQLSyntaxResult;
 var
   FomartSQL: TFormatSettings;
 begin
   FomartSQL.DecimalSeparator := '.';
   FomartSQL.ThousandSeparator := ',';
-  Result := CurrToStr(Value, FomartSQL);
+  Result := TSQLSyntaxResult.Create;
+  if Assigned then
+  begin
+    Result.FOK := True;
+    Result.FSQLTxT := CurrToStr(Value, FomartSQL);
+  end
+  else
+  begin
+    Result.FOK := false;
+    Result.FErrorMSG := 'Field empty.';
+  end;
+  Free;
 end;
 
 end.

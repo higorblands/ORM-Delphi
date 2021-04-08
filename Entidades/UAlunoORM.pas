@@ -89,10 +89,11 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Data.DB;
 
 Type
   TAluno = class(TORM)
+
   private
     FTableName: TNameTable;
     FId_Aluno: TIntegerFieldORM;
@@ -108,6 +109,8 @@ Type
     FUsuario_Inclusao: TStringFieldORM;
     FData_Hora_Alteracao: TDateTimeFieldORM;
     FUsuario_alteracao: TStringFieldORM;
+    FError: string;
+    FErrorLog: string;
 
     function getID_Aluno: TIntegerFieldORM;
     procedure setID_Aluno(const Value: TIntegerFieldORM);
@@ -135,6 +138,7 @@ Type
     procedure setData_Hora_Alteracao(const Value: TDateTimeFieldORM);
     function getUsuario_Alteracao: TStringFieldORM;
     procedure setUsuario_alteracao(const Value: TStringFieldORM);
+    Procedure bdcall;
 
   public
     property ID_Aluno: TIntegerFieldORM read getID_Aluno write setID_Aluno;
@@ -156,7 +160,10 @@ Type
       write setData_Hora_Alteracao;
     property Usuario_Alteracao: TStringFieldORM read getUsuario_Alteracao
       write setUsuario_alteracao;
+    Property Error: string read FError;
+    Property ErrorLog: String read FErrorLog;
 
+    function filter: TSQLSyntaxResult;
     function List: TBooleanFieldORM;
     function Insert: TBooleanFieldORM;
     // function Delete: TBooleanFieldORM; override;
@@ -207,21 +214,18 @@ end;
 
 function TAluno.Insert: TBooleanFieldORM;
 
-Begin
-  with QueryORM.SQL do
-  begin
-    Clear;
-    // Tentativa Funcionando
-    Add('INSERT INTO Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
-    Add('VALUES (' + ID_Aluno.ToSQL + ',' + Nome_Aluno.ToSQL + ',' + Curso.ToSQL
-      + ',' + Turno.ToSQL + ',' + Periodo.ToSQL + ',' + Data_Ingresso.ToSQL +
-      ',' + Situacao.ToSQL + ',' + Cadeirante.ToSQL + ',' + Observacao.ToSQL +
-      ',' + Data_Hora_Inclusao.ToSQL + ',' + Usuario_Inclusao.ToSQL + ',' +
-      Data_Hora_Alteracao.ToSQL + ',' + Usuario_Alteracao.ToSQL + ');');
-    QueryORM.SQL.SaveToFile('d:\test.txt');
-  end;
-  QueryORM.ExecSQL;
+begin
+  filter;
   List;
+  // Tentativa Funcionando
+  { Add('INSERT INTO Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
+    Add('VALUES (' + ID_Aluno.ToSQL + ',' + Nome_Aluno.ToSQL + ',' + Curso.ToSQL +
+    ',' + Turno.ToSQL + ',' + Periodo.ToSQL + ',' + Data_Ingresso.ToSQL + ',' +
+    Situacao.ToSQL + ',' + Cadeirante.ToSQL + ',' + Observacao.ToSQL + ',' +
+    Data_Hora_Inclusao.ToSQL + ',' + Usuario_Inclusao.ToSQL + ',' +
+    Data_Hora_Alteracao.ToSQL + ',' + Usuario_Alteracao.ToSQL + ');');
+    QueryORM.SQL.SaveToFile('d:\test.txt'); }
+  QueryORM.ExecSQL;
 
 end;
 
@@ -304,6 +308,106 @@ end;
 
 { TAluno }
 
+procedure TAluno.bdcall;
+
+begin
+  with QueryORM.SQL do
+  begin
+    Clear;
+    Add('INSERT INTO Aluno (');
+
+    with ID_Aluno.ToSQL do
+    begin
+      if OK then
+      begin
+        Add(SQLTxT);
+      end;
+      with Nome_Aluno.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT);
+        end;
+      end;
+      with Curso.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT);
+        end;
+      end;
+      with Turno.ToSQL do
+      begin
+        if OK then
+          Add(SQLTxT);
+      end;
+      with Periodo.ToSQL do
+      begin
+        if OK then
+          Add(SQLTxT);
+      end;
+      with Data_Ingresso.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT);
+        end;
+      end;
+      with Situacao.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT + ',');
+        end;
+      end;
+      with Cadeirante.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT + ',');
+        end;
+      end;
+      with Observacao.ToSQL do
+      begin
+        if OK then
+        bEGin
+          Add(SQLTxT + ',');
+        end;
+      end;
+      with Data_Hora_Inclusao.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT + ',');
+        end;
+      end;
+      with Usuario_Inclusao.ToSQL do
+      begin
+        if OK then
+        begin
+          Add(SQLTxT + ',');
+        end;
+      end;
+      with Data_Hora_Alteracao.ToSQL do
+      Begin
+        if OK then
+        begin
+          Add(SQLTxT + ',');
+        end;
+      End;
+      with Usuario_Alteracao.ToSQL do
+      begin
+        if OK then
+        bEGIN
+          Add(SQLTxT + ',');
+        end;
+      end;
+    end;
+
+  end;
+
+end;
+
 constructor TAluno.Create;
 begin
   inherited;
@@ -335,6 +439,32 @@ end;
   begin
 
   end; }
+
+function TAluno.filter: TSQLSyntaxResult;
+begin
+  { with QueryORM.SQL do
+    begin
+    Clear;
+    with ID_Aluno.ToSQL do
+    begin
+    if OK then
+    begin
+    Add('INSERT INTO Aluno (');
+    Add(Curso);
+    end;
+    with Nome_Aluno.ToSQL do
+    begin
+    if OK then
+    begin
+    Add(SQLTxT);
+    end;
+
+    end;
+
+    end;
+    end; }
+  bdcall;
+end;
 
 function TAluno.getCadeirante: TBooleanFieldORM;
 begin

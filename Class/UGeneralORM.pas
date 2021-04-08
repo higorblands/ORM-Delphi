@@ -18,6 +18,7 @@ Type
   public
     QueryORM: TFDQuery;
     conn: TFDconnection;
+    SelectQueryORM: TFDQuery;
   end;
 
 Type
