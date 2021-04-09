@@ -48,14 +48,14 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 1;
-  Aluno.Nome_Aluno.Value := 'mega';
+  Aluno.ID_Aluno.Value := 24;
+  Aluno.Nome_Aluno.Value := 'Andriws';
   Aluno.Curso.Value := 'Banco de Dados';
   Aluno.Turno.Value := 'N';
   Aluno.Periodo.Value := 2;
   Aluno.Data_Ingresso.Value := now;
   Aluno.Situacao.Value := 'R';
-  Aluno.Cadeirante.Value := False;
+  // Aluno.Cadeirante.Value := False;
   Aluno.Observacao.Value := 'Aluno bom e novo';
   Aluno.Data_Hora_Inclusao.Value := now;
   Aluno.Usuario_Inclusao.Value := 'Admin';

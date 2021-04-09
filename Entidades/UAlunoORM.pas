@@ -1,83 +1,3 @@
-{$A8,B-,C+,D+,E-,F-,G+,H+,I+,J-,K-,L+,M-,N-,O+,P+,Q-,R-,S-,T-,U-,V+,W-,X+,Y+,Z1}
-{$MINSTACKSIZE $00004000}
-{$MAXSTACKSIZE $00100000}
-{$IMAGEBASE $00400000}
-{$APPTYPE GUI}
-{$WARN SYMBOL_DEPRECATED ON}
-{$WARN SYMBOL_LIBRARY ON}
-{$WARN SYMBOL_PLATFORM ON}
-{$WARN SYMBOL_EXPERIMENTAL ON}
-{$WARN UNIT_LIBRARY ON}
-{$WARN UNIT_PLATFORM ON}
-{$WARN UNIT_DEPRECATED ON}
-{$WARN UNIT_EXPERIMENTAL ON}
-{$WARN HRESULT_COMPAT ON}
-{$WARN HIDING_MEMBER ON}
-{$WARN HIDDEN_VIRTUAL ON}
-{$WARN GARBAGE ON}
-{$WARN BOUNDS_ERROR ON}
-{$WARN ZERO_NIL_COMPAT ON}
-{$WARN STRING_CONST_TRUNCED ON}
-{$WARN FOR_LOOP_VAR_VARPAR ON}
-{$WARN TYPED_CONST_VARPAR ON}
-{$WARN ASG_TO_TYPED_CONST ON}
-{$WARN CASE_LABEL_RANGE ON}
-{$WARN FOR_VARIABLE ON}
-{$WARN CONSTRUCTING_ABSTRACT ON}
-{$WARN COMPARISON_FALSE ON}
-{$WARN COMPARISON_TRUE ON}
-{$WARN COMPARING_SIGNED_UNSIGNED ON}
-{$WARN COMBINING_SIGNED_UNSIGNED ON}
-{$WARN UNSUPPORTED_CONSTRUCT ON}
-{$WARN FILE_OPEN ON}
-{$WARN FILE_OPEN_UNITSRC ON}
-{$WARN BAD_GLOBAL_SYMBOL ON}
-{$WARN DUPLICATE_CTOR_DTOR ON}
-{$WARN INVALID_DIRECTIVE ON}
-{$WARN PACKAGE_NO_LINK ON}
-{$WARN PACKAGED_THREADVAR ON}
-{$WARN IMPLICIT_IMPORT ON}
-{$WARN HPPEMIT_IGNORED ON}
-{$WARN NO_RETVAL ON}
-{$WARN USE_BEFORE_DEF ON}
-{$WARN FOR_LOOP_VAR_UNDEF ON}
-{$WARN UNIT_NAME_MISMATCH ON}
-{$WARN NO_CFG_FILE_FOUND ON}
-{$WARN IMPLICIT_VARIANTS ON}
-{$WARN UNICODE_TO_LOCALE ON}
-{$WARN LOCALE_TO_UNICODE ON}
-{$WARN IMAGEBASE_MULTIPLE ON}
-{$WARN SUSPICIOUS_TYPECAST ON}
-{$WARN PRIVATE_PROPACCESSOR ON}
-{$WARN UNSAFE_TYPE OFF}
-{$WARN UNSAFE_CODE OFF}
-{$WARN UNSAFE_CAST OFF}
-{$WARN OPTION_TRUNCATED ON}
-{$WARN WIDECHAR_REDUCED ON}
-{$WARN DUPLICATES_IGNORED ON}
-{$WARN UNIT_INIT_SEQ ON}
-{$WARN LOCAL_PINVOKE ON}
-{$WARN MESSAGE_DIRECTIVE ON}
-{$WARN TYPEINFO_IMPLICITLY_ADDED ON}
-{$WARN RLINK_WARNING ON}
-{$WARN IMPLICIT_STRING_CAST ON}
-{$WARN IMPLICIT_STRING_CAST_LOSS ON}
-{$WARN EXPLICIT_STRING_CAST OFF}
-{$WARN EXPLICIT_STRING_CAST_LOSS OFF}
-{$WARN CVT_WCHAR_TO_ACHAR ON}
-{$WARN CVT_NARROWING_STRING_LOST ON}
-{$WARN CVT_ACHAR_TO_WCHAR ON}
-{$WARN CVT_WIDENING_STRING_LOST ON}
-{$WARN NON_PORTABLE_TYPECAST ON}
-{$WARN XML_WHITESPACE_NOT_ALLOWED ON}
-{$WARN XML_UNKNOWN_ENTITY ON}
-{$WARN XML_INVALID_NAME_START ON}
-{$WARN XML_INVALID_NAME ON}
-{$WARN XML_EXPECTED_CHARACTER ON}
-{$WARN XML_CREF_NO_RESOLVE ON}
-{$WARN XML_NO_PARM ON}
-{$WARN XML_NO_MATCHING_PARM ON}
-{$WARN IMMUTABLE_STRINGS OFF}
 unit UAlunoORM;
 
 interface
@@ -138,9 +58,13 @@ Type
     procedure setData_Hora_Alteracao(const Value: TDateTimeFieldORM);
     function getUsuario_Alteracao: TStringFieldORM;
     procedure setUsuario_alteracao(const Value: TStringFieldORM);
-    Procedure bdcall;
+    procedure ColumnsPrepare;
+    procedure ValuesPrepare;
 
   public
+  var
+    sValuesBD: System.String;
+    sColumnsBD: System.String;
     property ID_Aluno: TIntegerFieldORM read getID_Aluno write setID_Aluno;
     property Nome_Aluno: TStringFieldORM read getNome_Aluno write setNome_Aluno;
     property Curso: TStringFieldORM read getCurso write setCurso;
@@ -217,16 +141,6 @@ function TAluno.Insert: TBooleanFieldORM;
 begin
   filter;
   List;
-  // Tentativa Funcionando
-  { Add('INSERT INTO Aluno (id_aluno,nome_aluno,curso,turno,periodo,data_ingresso,situacao,cadeirante,observacao,data_hora_inclusao,usuario_inclusao,data_hora_alteracao,usuario_alteracao)');
-    Add('VALUES (' + ID_Aluno.ToSQL + ',' + Nome_Aluno.ToSQL + ',' + Curso.ToSQL +
-    ',' + Turno.ToSQL + ',' + Periodo.ToSQL + ',' + Data_Ingresso.ToSQL + ',' +
-    Situacao.ToSQL + ',' + Cadeirante.ToSQL + ',' + Observacao.ToSQL + ',' +
-    Data_Hora_Inclusao.ToSQL + ',' + Usuario_Inclusao.ToSQL + ',' +
-    Data_Hora_Alteracao.ToSQL + ',' + Usuario_Alteracao.ToSQL + ');');
-    QueryORM.SQL.SaveToFile('d:\test.txt'); }
-  QueryORM.ExecSQL;
-
 end;
 
 function TAluno.List: TBooleanFieldORM;
@@ -306,106 +220,177 @@ begin
   FUsuario_Inclusao := Value;
 end;
 
-{ TAluno }
-
-procedure TAluno.bdcall;
-
+procedure TAluno.ValuesPrepare;
 begin
   with QueryORM.SQL do
   begin
-    Clear;
-    Add('INSERT INTO Aluno (');
-
+    sValuesBD := '';
     with ID_Aluno.ToSQL do
     begin
       if OK then
       begin
-        Add(SQLTxT);
+        sValuesBD := sValuesBD + SQLTxT + ',';
       end;
       with Nome_Aluno.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT);
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Curso.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT);
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Turno.ToSQL do
       begin
         if OK then
-          Add(SQLTxT);
+          sValuesBD := sValuesBD + SQLTxT + ',';
       end;
       with Periodo.ToSQL do
       begin
         if OK then
-          Add(SQLTxT);
+          sValuesBD := sValuesBD + SQLTxT + ',';
       end;
       with Data_Ingresso.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT);
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Situacao.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT + ',');
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Cadeirante.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT + ',');
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Observacao.ToSQL do
       begin
         if OK then
         bEGin
-          Add(SQLTxT + ',');
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Data_Hora_Inclusao.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT + ',');
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
       end;
       with Usuario_Inclusao.ToSQL do
       begin
         if OK then
         begin
-          Add(SQLTxT + ',');
+          sValuesBD := sValuesBD + SQLTxT + ',';
         end;
-      end;
-      with Data_Hora_Alteracao.ToSQL do
-      Begin
-        if OK then
+        with Data_Hora_Alteracao.ToSQL do
+        Begin
+          if OK then
+          begin
+            sValuesBD := sValuesBD + SQLTxT + ',';
+          end;
+        End;
+        with Usuario_Alteracao.ToSQL DO
         begin
-          Add(SQLTxT + ',');
-        end;
-      End;
-      with Usuario_Alteracao.ToSQL do
-      begin
-        if OK then
-        bEGIN
-          Add(SQLTxT + ',');
+          if OK then
+          bEGIN
+            sValuesBD := sValuesBD + SQLTxT + ',';
+          end;
         end;
       end;
-    end;
+      sValuesBD := Copy(sValuesBD, 1, Length(sValuesBD) - 1);
+      Add('INSERT INTO Aluno (' + sColumnsBD + ')' + ' VALUES(' +
+        sValuesBD + ');');
+      QueryORM.SQL.SaveToFile('d:\Reward.txt');
 
+      QueryORM.ExecSQL;
+    end;
   end;
 
+end;
+
+{ TAluno }
+
+procedure TAluno.ColumnsPrepare;
+var
+  i: integer;
+begin
+  sColumnsBD := '';
+  with QueryORM.SQL do
+  begin
+    if ID_Aluno.Assigned then
+    begin
+      sColumnsBD := 'ID_Aluno,';
+    end;
+    if Nome_Aluno.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Nome_Aluno,';
+    end;
+    if Curso.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Curso,';
+    end;
+    if Turno.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Turno,';
+    end;
+    if Periodo.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Periodo,';
+    end;
+    if Data_Ingresso.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Data_Ingresso,';
+    end;
+    if Situacao.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Situacao,';
+    end;
+    if Cadeirante.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Cadeirante,';
+    end;
+    if Observacao.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Observacao,';
+    end;
+    if Data_Hora_Inclusao.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Data_Hora_Inclusao,';
+    end;
+    if Usuario_Inclusao.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Usuario_Inclusao,';
+    end;
+    if Data_Hora_Alteracao.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Data_Hora_Alteracao,';
+    end;
+    if Usuario_Alteracao.Assigned then
+    begin
+      sColumnsBD := sColumnsBD + 'Usuario_Alteracao,';
+    end;
+    Clear;
+    sColumnsBD := Copy(sColumnsBD, 1, Length(sColumnsBD) - 1);
+    Add(sColumnsBD);
+    QueryORM.SQL.SaveToFile('d:\CEHASD.txt');
+    QueryORM.Close;
+
+  end;
+  ValuesPrepare;
 end;
 
 constructor TAluno.Create;
@@ -441,29 +426,9 @@ end;
   end; }
 
 function TAluno.filter: TSQLSyntaxResult;
+
 begin
-  { with QueryORM.SQL do
-    begin
-    Clear;
-    with ID_Aluno.ToSQL do
-    begin
-    if OK then
-    begin
-    Add('INSERT INTO Aluno (');
-    Add(Curso);
-    end;
-    with Nome_Aluno.ToSQL do
-    begin
-    if OK then
-    begin
-    Add(SQLTxT);
-    end;
-
-    end;
-
-    end;
-    end; }
-  bdcall;
+  ColumnsPrepare;
 end;
 
 function TAluno.getCadeirante: TBooleanFieldORM;

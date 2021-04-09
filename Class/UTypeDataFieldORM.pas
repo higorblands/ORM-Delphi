@@ -248,6 +248,7 @@ procedure TBooleanFieldORM.SETvBoolean(const Value: Boolean);
 begin
   vBoolean := Value;
   FAssigned := True;
+
 end;
 
 function TBooleanFieldORM.ToSQL: TSQLSyntaxResult;
