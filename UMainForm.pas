@@ -56,17 +56,18 @@ begin
   Aluno.Data_Ingresso.Value := now;
   Aluno.Situacao.Value := 'R';
   // Aluno.Cadeirante.Value := False;
-  Aluno.Observacao.Value := 'Aluno bom e novo';
+  // Aluno.Observacao.Value := 'Aluno bom e novo';
   Aluno.Data_Hora_Inclusao.Value := now;
   Aluno.Usuario_Inclusao.Value := 'Admin';
   Aluno.Data_Hora_Alteracao.Value := now;
   Aluno.Usuario_Alteracao.Value := 'Andriws';
   Aluno.Insert;
+  Aluno.List; // TESTE
   Aluno.Free;
 
 end;
 
-procedure TFMain.btListClick(Sender: TObject);
+procedure TFMain.btListClick(Sender: TObject); // TESTE
 var
   Aluno: TAluno;
 begin

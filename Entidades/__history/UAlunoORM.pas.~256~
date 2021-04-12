@@ -140,7 +140,14 @@ function TAluno.Insert: TBooleanFieldORM;
 
 begin
   PrepareSQL;
-  List;
+  with QueryORM.SQL do
+  begin
+    Clear;
+    Add('INSERT INTO Aluno (' + sColumnsBD + ')' + ' VALUES(' +
+      sValuesBD + ');');
+    QueryORM.ExecSQL;
+  end;
+
 end;
 
 function TAluno.List: TBooleanFieldORM;
@@ -222,105 +229,98 @@ end;
 
 procedure TAluno.ValuesPrepareSQL;
 begin
-  with QueryORM.SQL do
+  sValuesBD := '';
+  with ID_Aluno.ToSQL do
   begin
-    sValuesBD := '';
-    with ID_Aluno.ToSQL do
+    if OK then
     begin
-      if OK then
-      begin
-        sValuesBD := sValuesBD + SQLTxT + ',';
-      end;
-      with Nome_Aluno.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Curso.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Turno.ToSQL do
-      begin
-        if OK then
-          sValuesBD := sValuesBD + SQLTxT + ',';
-      end;
-      with Periodo.ToSQL do
-      begin
-        if OK then
-          sValuesBD := sValuesBD + SQLTxT + ',';
-      end;
-      with Data_Ingresso.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Situacao.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Cadeirante.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Observacao.ToSQL do
-      begin
-        if OK then
-        bEGin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Data_Hora_Inclusao.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-      end;
-      with Usuario_Inclusao.ToSQL do
-      begin
-        if OK then
-        begin
-          sValuesBD := sValuesBD + SQLTxT + ',';
-        end;
-        with Data_Hora_Alteracao.ToSQL do
-        Begin
-          if OK then
-          begin
-            sValuesBD := sValuesBD + SQLTxT + ',';
-          end;
-        End;
-        with Usuario_Alteracao.ToSQL DO
-        begin
-          if OK then
-          bEGIN
-            sValuesBD := sValuesBD + SQLTxT + ',';
-          end;
-        end;
-      end;
-      sValuesBD := Copy(sValuesBD, 1, Length(sValuesBD) - 1);
-      Add('INSERT INTO Aluno (' + sColumnsBD + ')' + ' VALUES(' +
-        sValuesBD + ');');
-      QueryORM.SQL.SaveToFile('d:\Reward2.txt');
-      QueryORM.ExecSQL;
-      Clear;
-      Close;
+      sValuesBD := sValuesBD + SQLTxT + ',';
     end;
   end;
-
+  with Nome_Aluno.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Periodo.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Data_Ingresso.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Situacao.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Cadeirante.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Observacao.ToSQL do
+  begin
+    if OK then
+    bEGin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Data_Hora_Inclusao.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Usuario_Inclusao.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Data_Hora_Alteracao.ToSQL do
+  Begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  End;
+  with Usuario_Alteracao.ToSQL DO
+  begin
+    if OK then
+    bEGIN
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Curso.ToSQL do
+  begin
+    if OK then
+    begin
+      sValuesBD := sValuesBD + SQLTxT + ',';
+    end;
+  end;
+  with Turno.ToSQL do
+  begin
+    if OK then
+      sValuesBD := sValuesBD + SQLTxT + ',';
+  end;
+  sValuesBD := Copy(sValuesBD, 1, Length(sValuesBD) - 1);
+  // QueryORM.SQL.SaveToFile('d:\Reward2.txt');
 end;
 
 { TAluno }
@@ -330,7 +330,6 @@ var
   i: integer;
 begin
   sColumnsBD := '';
-  with QueryORM.SQL do
   begin
     if ID_Aluno.Assigned then
     begin
@@ -384,12 +383,9 @@ begin
     begin
       sColumnsBD := sColumnsBD + 'Usuario_Alteracao,';
     end;
-    Clear;
     sColumnsBD := Copy(sColumnsBD, 1, Length(sColumnsBD) - 1);
     // Add(sColumnsBD);
     // QueryORM.SQL.SaveToFile('d:\Reward1.txt');
-    QueryORM.Close;
-
   end;
 end;
 
