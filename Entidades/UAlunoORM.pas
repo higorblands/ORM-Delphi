@@ -58,8 +58,8 @@ Type
     procedure setData_Hora_Alteracao(const Value: TDateTimeFieldORM);
     function getUsuario_Alteracao: TStringFieldORM;
     procedure setUsuario_alteracao(const Value: TStringFieldORM);
-    procedure ColumnsPrepare;
-    procedure ValuesPrepare;
+    procedure ColumnsPrepareSQL;
+    procedure ValuesPrepareSQL;
 
   public
   var
@@ -87,7 +87,7 @@ Type
     Property Error: string read FError;
     Property ErrorLog: String read FErrorLog;
 
-    function filter: TSQLSyntaxResult;
+    function PrepareSQL: TSQLSyntaxResult;
     function List: TBooleanFieldORM;
     function Insert: TBooleanFieldORM;
     // function Delete: TBooleanFieldORM; override;
@@ -139,7 +139,7 @@ end;
 function TAluno.Insert: TBooleanFieldORM;
 
 begin
-  filter;
+  PrepareSQL;
   List;
 end;
 
@@ -220,7 +220,7 @@ begin
   FUsuario_Inclusao := Value;
 end;
 
-procedure TAluno.ValuesPrepare;
+procedure TAluno.ValuesPrepareSQL;
 begin
   with QueryORM.SQL do
   begin
@@ -314,9 +314,10 @@ begin
       sValuesBD := Copy(sValuesBD, 1, Length(sValuesBD) - 1);
       Add('INSERT INTO Aluno (' + sColumnsBD + ')' + ' VALUES(' +
         sValuesBD + ');');
-      QueryORM.SQL.SaveToFile('d:\Reward.txt');
-
+      // QueryORM.SQL.SaveToFile('d:\Reward2.txt');
       QueryORM.ExecSQL;
+      Clear;
+      QueryORM.Close;
     end;
   end;
 
@@ -324,7 +325,7 @@ end;
 
 { TAluno }
 
-procedure TAluno.ColumnsPrepare;
+procedure TAluno.ColumnsPrepareSQL;
 var
   i: integer;
 begin
@@ -385,12 +386,11 @@ begin
     end;
     Clear;
     sColumnsBD := Copy(sColumnsBD, 1, Length(sColumnsBD) - 1);
-    Add(sColumnsBD);
-    QueryORM.SQL.SaveToFile('d:\CEHASD.txt');
+    // Add(sColumnsBD);
+    // QueryORM.SQL.SaveToFile('d:\Reward1.txt');
     QueryORM.Close;
 
   end;
-  ValuesPrepare;
 end;
 
 constructor TAluno.Create;
@@ -425,10 +425,11 @@ end;
 
   end; }
 
-function TAluno.filter: TSQLSyntaxResult;
+function TAluno.PrepareSQL: TSQLSyntaxResult;
 
 begin
-  ColumnsPrepare;
+  ColumnsPrepareSQL;
+  ValuesPrepareSQL;
 end;
 
 function TAluno.getCadeirante: TBooleanFieldORM;

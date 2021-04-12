@@ -314,9 +314,9 @@ begin
       sValuesBD := Copy(sValuesBD, 1, Length(sValuesBD) - 1);
       Add('INSERT INTO Aluno (' + sColumnsBD + ')' + ' VALUES(' +
         sValuesBD + ');');
-      QueryORM.SQL.SaveToFile('d:\Reward.txt');
+      QueryORM.SQL.SaveToFile('d:\Reward2.txt');
 
-     // QueryORM.ExecSQL;
+      // QueryORM.ExecSQL;
     end;
   end;
 
@@ -386,7 +386,7 @@ begin
     Clear;
     sColumnsBD := Copy(sColumnsBD, 1, Length(sColumnsBD) - 1);
     Add(sColumnsBD);
-    QueryORM.SQL.SaveToFile('d:\CEHASD.txt');
+    QueryORM.SQL.SaveToFile('d:\Reward1.txt');
     QueryORM.Close;
 
   end;
