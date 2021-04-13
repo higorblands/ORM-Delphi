@@ -88,6 +88,7 @@ Type
     procedure SETvBoolean(const Value: Boolean);
     Function GETvBoolean: Boolean;
   public
+    FOK: Boolean;
     FAssigned: Boolean;
     constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;

@@ -62,7 +62,7 @@ Type
   var
     sValuesBD: System.String;
     sColumnsBD: System.String;
-    FORMMSG: String;
+    FErrorMSG: String;
     FOK: Boolean;
     // FSQLTxT: String;
 
@@ -89,7 +89,7 @@ Type
     function FieldObrigatorio: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
     function List: TBooleanFieldORM;
-    function Insert: TBooleanField;
+    function Insert: TBooleanFieldORM;
     // function Delete: TBooleanFieldORM; override;
     // function Update: TBooleanFieldORM; override;
 
@@ -136,7 +136,7 @@ begin
   Result := FUsuario_Inclusao;
 end;
 
-function TAluno.Insert: TBooleanField;
+function TAluno.Insert: TBooleanFieldORM;
 begin
   if FieldObrigatorio.Assigned then
   begin
@@ -422,138 +422,134 @@ end;
 function TAluno.FieldObrigatorio: TBooleanFieldORM;
 begin
   Result := TBooleanFieldORM.Create;
-  FORMMSG := '';
+  FErrorMSG := '';
   Result.FAssigned := False;
   if ID_Aluno.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'ID Aluno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Nome_Aluno.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Nome Aluno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Curso.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Curso não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Turno.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Turno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Periodo.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Periodo não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Ingresso.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Data ingresso não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Situacao.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Situacao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Hora_Inclusao.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Data hora inclusao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Usuario_Inclusao.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Usuario inclusao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Hora_Alteracao.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Data hora alteracao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Usuario_Alteracao.Assigned then
   begin
-
+    Result.FOK := True;
     Result.FAssigned := True;
   end
   else
   begin
-
-    FORMMSG := FORMMSG +
+    Result.FOK := False;
+    FErrorMSG := FErrorMSG +
       'Usuario alteracao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
-  if FORMMSG <> '' then
+  if FErrorMSG = '' then
   begin
-    Result.FAssigned := False;
-  end
-  else
-  begin
-    Result.FAssigned := True;
-    FORMMSG := 'Operação realizada com sucesso !';
+  Result.FAssigned := False;
   end;
+
 
 end;
 

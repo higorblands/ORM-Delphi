@@ -48,7 +48,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 94;
+  Aluno.ID_Aluno.Value := 24;
   Aluno.Nome_Aluno.Value := 'Andriws';
   Aluno.Curso.Value := 'Banco de Dados';
   Aluno.Turno.Value := 'N';
@@ -62,7 +62,7 @@ begin
   Aluno.Data_Hora_Alteracao.Value := now;
   Aluno.Usuario_Alteracao.Value := 'Andriws';
   Aluno.Insert;
-  ShowMessage(Aluno.FORMMSG);
+  ShowMessage(Aluno.FErrorMSG);
   Aluno.List; // TESTE
   Aluno.Free;
 

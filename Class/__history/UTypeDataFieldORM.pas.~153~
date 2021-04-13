@@ -84,7 +84,6 @@ Type
   TBooleanFieldORM = Class // Boolean
   private
     vBoolean: Boolean;
-
     procedure SETvBoolean(const Value: Boolean);
     Function GETvBoolean: Boolean;
   public

@@ -35,16 +35,15 @@ Type
 
 implementation
 
-{
-  function TNameTable.getTableName: String;
-  begin
+function TNameTable.getTableName: String;
+begin
   Result := FNameTable;
-  end;
+end;
 
-  procedure TNameTable.setTableName(const Value: String);
-  begin
+procedure TNameTable.setTableName(const Value: String);
+begin
   FNameTable := Value;
   FAssigned := True;
-  end; }
+end;
 
 end.

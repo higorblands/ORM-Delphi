@@ -62,7 +62,7 @@ Type
   var
     sValuesBD: System.String;
     sColumnsBD: System.String;
-    FORMMSG: String;
+    FErrorMSG: String;
     FOK: Boolean;
     // FSQLTxT: String;
 
@@ -89,7 +89,7 @@ Type
     function FieldObrigatorio: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
     function List: TBooleanFieldORM;
-    function Insert: TBooleanField;
+    function Insert: String;
     // function Delete: TBooleanFieldORM; override;
     // function Update: TBooleanFieldORM; override;
 
@@ -136,7 +136,7 @@ begin
   Result := FUsuario_Inclusao;
 end;
 
-function TAluno.Insert: TBooleanField;
+function TAluno.Insert: String;
 begin
   if FieldObrigatorio.Assigned then
   begin
@@ -150,7 +150,9 @@ begin
     QueryORM.SQL.SaveToFile('d:\Reward1.txt');
     QueryORM.ExecSQL;
     QueryORM.Close;
+
   end;
+  Result := FErrorMSG;
 
 end;
 
@@ -422,7 +424,7 @@ end;
 function TAluno.FieldObrigatorio: TBooleanFieldORM;
 begin
   Result := TBooleanFieldORM.Create;
-  FORMMSG := '';
+  FErrorMSG := '';
   Result.FAssigned := False;
   if ID_Aluno.Assigned then
   begin
@@ -432,7 +434,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'ID Aluno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Nome_Aluno.Assigned then
@@ -443,7 +445,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Nome Aluno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Curso.Assigned then
@@ -454,7 +456,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Curso não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Turno.Assigned then
@@ -465,7 +467,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Turno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Periodo.Assigned then
@@ -476,7 +478,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Periodo não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Ingresso.Assigned then
@@ -487,7 +489,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Data ingresso não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Situacao.Assigned then
@@ -498,7 +500,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Situacao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Hora_Inclusao.Assigned then
@@ -509,7 +511,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Data hora inclusao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Usuario_Inclusao.Assigned then
@@ -520,7 +522,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Usuario inclusao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Hora_Alteracao.Assigned then
@@ -531,7 +533,7 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Data hora alteracao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Usuario_Alteracao.Assigned then
@@ -542,17 +544,12 @@ begin
   else
   begin
 
-    FORMMSG := FORMMSG +
+    FErrorMSG := FErrorMSG +
       'Usuario alteracao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
-  if FORMMSG <> '' then
+  if FErrorMSG <> '' then
   begin
     Result.FAssigned := False;
-  end
-  else
-  begin
-    Result.FAssigned := True;
-    FORMMSG := 'Operação realizada com sucesso !';
   end;
 
 end;

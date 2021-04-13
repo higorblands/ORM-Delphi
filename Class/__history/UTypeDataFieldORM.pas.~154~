@@ -84,11 +84,10 @@ Type
   TBooleanFieldORM = Class // Boolean
   private
     vBoolean: Boolean;
-
+    FAssigned: Boolean;
     procedure SETvBoolean(const Value: Boolean);
     Function GETvBoolean: Boolean;
   public
-    FAssigned: Boolean;
     constructor Create; reintroduce;
     Property Assigned: Boolean read FAssigned;
     property Value: Boolean read GETvBoolean write SETvBoolean;
@@ -108,6 +107,7 @@ Type
     Property Value: Currency read GETvFloat write SETvFloat;
     Function ToSQL: TSQLSyntaxResult;
   End;
+
 
 implementation
 
