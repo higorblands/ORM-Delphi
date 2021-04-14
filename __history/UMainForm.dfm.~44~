@@ -1,7 +1,8 @@
 object FMain: TFMain
-  Left = 0
-  Top = 0
+  Left = 343
+  Top = 321
   Align = alCustom
+  BiDiMode = bdRightToLeftNoAlign
   Caption = 'Main'
   ClientHeight = 376
   ClientWidth = 744
@@ -12,6 +13,7 @@ object FMain: TFMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  ParentBiDiMode = False
   Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 13
@@ -34,9 +36,35 @@ object FMain: TFMain
     Top = 177
     Width = 75
     Height = 25
-    Caption = 'Add'
+    Caption = 'C'
     TabOrder = 1
     OnClick = btAddClick
+  end
+  object btList: TButton
+    Left = 128
+    Top = 177
+    Width = 75
+    Height = 25
+    Caption = 'R'
+    TabOrder = 2
+    OnClick = btListClick
+  end
+  object Button1: TButton
+    Left = 216
+    Top = 177
+    Width = 75
+    Height = 25
+    Caption = 'U'
+    TabOrder = 3
+  end
+  object Button2: TButton
+    Left = 304
+    Top = 177
+    Width = 75
+    Height = 25
+    Caption = 'D'
+    TabOrder = 4
+    OnClick = Button2Click
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
@@ -51,10 +79,9 @@ object FMain: TFMain
     Top = 328
   end
   object FDQAluno: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from Aluno')
+      '')
     Left = 96
     Top = 328
   end

@@ -18,31 +18,33 @@ Type
   public
     QueryORM: TFDQuery;
     conn: TFDconnection;
+    SelectQueryORM: TFDQuery;
   end;
-
-Type
-  TNameTable = Class // String
-  Private
+  {
+    Type
+    TNameTable = Class // String
+    Private
     FNameTable: String;
     FAssigned: Boolean;
     function getTableName: String; // Table
     procedure setTableName(const Value: String); // Table
-  Public
+    Public
     property TableName: String read getTableName write setTableName;
     property Assigned: Boolean read FAssigned;
-  end;
+    end; }
 
 implementation
 
-function TNameTable.getTableName: String;
-begin
+{
+  function TNameTable.getTableName: String;
+  begin
   Result := FNameTable;
-end;
+  end;
 
-procedure TNameTable.setTableName(const Value: String);
-begin
+  procedure TNameTable.setTableName(const Value: String);
+  begin
   FNameTable := Value;
   FAssigned := True;
-end;
+  end; }
 
 end.

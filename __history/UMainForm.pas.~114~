@@ -23,8 +23,11 @@ type
     btAdd: TButton;
     FDQComandos: TFDQuery;
     btList: TButton;
+    Button1: TButton;
+    Button2: TButton;
     procedure btAddClick(Sender: TObject);
     procedure btListClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -48,9 +51,9 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 24;
+  Aluno.ID_Aluno.Value := 54;
   Aluno.Nome_Aluno.Value := 'Andriws';
- // Aluno.Curso.Value := 'Banco de Dados';
+  Aluno.Curso.Value := 'Banco de Dados';
   Aluno.Turno.Value := 'N';
   Aluno.Periodo.Value := 2;
   Aluno.Data_Ingresso.Value := now;
@@ -62,7 +65,7 @@ begin
   Aluno.Data_Hora_Alteracao.Value := now;
   Aluno.Usuario_Alteracao.Value := 'Andriws';
   Aluno.Insert;
-  ShowMessage(Aluno.FErrorMSG);
+  ShowMessage(Aluno.FORMMSG);
   Aluno.List; // TESTE
   Aluno.Free;
 
@@ -78,6 +81,19 @@ begin
   Aluno.List;
   Aluno.Free;
 
+end;
+
+procedure TFMain.Button2Click(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.ID_Aluno.Value := 54;
+  Aluno.Delete;
+  // DataSource.DataSet.Delete;
 end;
 
 end.

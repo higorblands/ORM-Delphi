@@ -88,10 +88,10 @@ Type
 
     function FieldObrigatorio: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
-    function List: TBooleanFieldORM;
     function Insert: TBooleanField;
-    // function Delete: TBooleanFieldORM; override;
-    // function Update: TBooleanFieldORM; override;
+    function List: TBooleanFieldORM;
+    function Delete: TBooleanFieldORM;
+    function Update: TBooleanFieldORM;
 
     constructor Create;
 
@@ -156,7 +156,6 @@ end;
 
 function TAluno.List: TBooleanFieldORM;
 begin
-
   with QueryORM.SQL do
   begin
     Clear;
@@ -229,6 +228,13 @@ end;
 procedure TAluno.setUsuario_Inclusao(const Value: TStringFieldORM);
 begin
   FUsuario_Inclusao := Value;
+end;
+
+function TAluno.Update: TBooleanFieldORM;
+begin
+  Result := TBooleanFieldORM.Create;
+  FORMMSG := '';
+
 end;
 
 procedure TAluno.ValuesPrepareSQL;
@@ -337,7 +343,6 @@ begin
   if ID_Aluno.Assigned then
   begin
     sColumnsBD := 'ID_Aluno,';
-
   end;
   if Nome_Aluno.Assigned then
   begin
@@ -419,129 +424,142 @@ begin
 
 end;
 
+function TAluno.Delete: TBooleanFieldORM;
+begin
+  Result := TBooleanFieldORM.Create;
+  FORMMSG := '';
+  if ID_Aluno.Assigned then
+  begin
+    // PrepareSQL;
+    with QueryORM.SQL do
+    begin
+      Clear;
+      Add('DELETE FROM Aluno Where ID_Aluno = ' +
+        IntToStr(ID_Aluno.Value) + ';');
+    end;
+    QueryORM.ExecSQL;
+    if QueryORM.RowsAffected = 0 then
+    begin
+      FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
+    end;
+  end
+  else
+  begin
+    FORMMSG :=
+      'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
+  end;
+  if FORMMSG <> '' then
+  begin
+    Result.FAssigned := False;
+  end
+  else
+  begin
+    Result.FAssigned := True;
+    FORMMSG := 'Operação realizada com sucesso !';
+  end;
+  QueryORM.Close;
+end;
+
 function TAluno.FieldObrigatorio: TBooleanFieldORM;
 begin
   Result := TBooleanFieldORM.Create;
   FORMMSG := '';
-  Result.FAssigned := False;
   if ID_Aluno.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'ID Aluno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Nome_Aluno.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Nome Aluno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Curso.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Curso não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Turno.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Turno não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Periodo.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Periodo não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Ingresso.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Data ingresso não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Situacao.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Situacao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Hora_Inclusao.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Data hora inclusao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Usuario_Inclusao.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Usuario inclusao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Data_Hora_Alteracao.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Data hora alteracao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
   if Usuario_Alteracao.Assigned then
   begin
-
     Result.FAssigned := True;
   end
   else
   begin
-
     FORMMSG := FORMMSG +
       'Usuario alteracao não foi preenchido, campo obrigatório. ' + #13#10;
   end;
@@ -554,14 +572,7 @@ begin
     Result.FAssigned := True;
     FORMMSG := 'Operação realizada com sucesso !';
   end;
-
 end;
-
-{
-  function TAluno.Delete: TBooleanFieldORM;
-  begin
-
-  end; }
 
 function TAluno.PrepareSQL: TSQLSyntaxResult;
 

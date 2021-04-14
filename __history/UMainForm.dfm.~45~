@@ -84,7 +84,6 @@ object FMain: TFMain
     Height = 25
     Caption = 'U'
     TabOrder = 3
-    OnClick = Button1Click
   end
   object Button2: TButton
     Left = 304

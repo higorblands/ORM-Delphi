@@ -23,8 +23,16 @@ type
     btAdd: TButton;
     FDQComandos: TFDQuery;
     btList: TButton;
+    Button1: TButton;
+    Button2: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
     procedure btAddClick(Sender: TObject);
     procedure btListClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -48,7 +56,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 94;
+  Aluno.ID_Aluno.Value := 54;
   Aluno.Nome_Aluno.Value := 'Andriws';
   Aluno.Curso.Value := 'Banco de Dados';
   Aluno.Turno.Value := 'N';
@@ -78,6 +86,33 @@ begin
   Aluno.List;
   Aluno.Free;
 
+end;
+
+procedure TFMain.Button1Click(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.ID_Aluno.Value := 54;
+  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.Update;
+  ShowMessage(Aluno.FORMMSG);
+
+end;
+
+procedure TFMain.Button2Click(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  // Aluno.ID_Aluno.Value := 54;
+  Aluno.Delete;
+  ShowMessage(Aluno.FORMMSG);
+  Aluno.Free;
 end;
 
 end.
