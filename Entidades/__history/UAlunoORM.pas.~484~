@@ -57,14 +57,19 @@ Type
     procedure setUsuario_alteracao(const Value: TStringFieldORM);
     procedure ColumnsPrepareSQL;
     procedure ValuesPrepareSQL;
+    procedure ColumnsPrepareSQPUpdate;
+    procedure ValuesPrepareSQLUpdate;
+    procedure ClearUpdateValuesAndColumns;
 
   public
   var
     sValuesBD: System.String;
     sColumnsBD: System.String;
+    sValueBDUpdate: System.Integer;
+    sUpdateBDTxT: System.String;
+    sValueBDList: System.String;
     FORMMSG: String;
     FOK: Boolean;
-    // FSQLTxT: String;
 
     property ID_Aluno: TIntegerFieldORM read getID_Aluno write setID_Aluno;
     property Nome_Aluno: TStringFieldORM read getNome_Aluno write setNome_Aluno;
@@ -87,12 +92,13 @@ Type
       write setUsuario_alteracao;
 
     function FieldObrigatorio: TBooleanFieldORM;
+    function FieldObrigatorioID: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
+    function PrepareSQLUpdate: TSQLSyntaxResult;
     function Insert: TBooleanField;
     function List: TBooleanFieldORM;
-    function Delete: TBooleanFieldORM;
-    // function Delete: TBooleanFieldORM; override;
-    // function Update: TBooleanFieldORM; override;
+    function Delete: Boolean;
+    function Update: Boolean;
 
     constructor Create;
 
@@ -148,7 +154,7 @@ begin
       Add('INSERT INTO Aluno (' + sColumnsBD + ')' + ' VALUES(' +
         sValuesBD + ');');
     end;
-    QueryORM.SQL.SaveToFile('d:\Reward1.txt');
+
     QueryORM.ExecSQL;
     QueryORM.Close;
   end;
@@ -157,12 +163,16 @@ end;
 
 function TAluno.List: TBooleanFieldORM;
 begin
-  with QueryORM.SQL do
+  FORMMSG := '';
+  if FieldObrigatorioID.Assigned then
   begin
-    Clear;
-    Add('select * from Aluno');
+    PrepareSQL;
+    with QueryORM.SQL do
+    begin
+      Clear;
+      Add('SELECT (' + sColumnsBD + ')' + ' FROM Aluno ;');
+    end;
   end;
-  QueryORM.Open;
 
 end;
 
@@ -229,6 +239,46 @@ end;
 procedure TAluno.setUsuario_Inclusao(const Value: TStringFieldORM);
 begin
   FUsuario_Inclusao := Value;
+end;
+
+function TAluno.Update: Boolean;
+begin
+  if FieldObrigatorioID.Assigned then
+  begin
+    FORMMSG := '';
+    PrepareSQLUpdate;
+    WITh QueryORM.SQL DO
+    begin
+      Clear;
+      Add('Update Aluno SET  ' + sUpdateBDTxT + ' WHERE ID_Aluno = ' +
+        IntToStr(sValueBDUpdate));
+    end;
+    QueryORM.ExecSQL;
+    QueryORM.SQL.SaveToFile('d:\Reward1.txt');
+    if QueryORM.RowsAffected = 0 then
+    begin
+      FORMMSG :=
+        'Atualização não realizada. ID Aluno não encontrado, 0 linhas afetadas.'
+    end;
+  end
+  else
+  begin
+    FORMMSG :=
+      'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
+  end;
+  if FORMMSG <> '' then
+  begin
+    Result := False;
+  end
+  else
+  begin
+    Result := True;
+    FORMMSG := 'Operação realizada com sucesso !';
+  end;
+  QueryORM.Close;
+
+  // Result.Free;
+
 end;
 
 procedure TAluno.ValuesPrepareSQL;
@@ -327,11 +377,20 @@ begin
   // QueryORM.SQL.SaveToFile('d:\Reward2.txt');
 end;
 
+procedure TAluno.ValuesPrepareSQLUpdate;
+begin
+
+end;
+
 { TAluno }
 
+procedure TAluno.ClearUpdateValuesAndColumns;
+begin
+  sColumnsBD := '';
+  sValuesBD := '';
+end;
+
 procedure TAluno.ColumnsPrepareSQL;
-var
-  i: integer;
 begin
   sColumnsBD := '';
   if ID_Aluno.Assigned then
@@ -393,6 +452,17 @@ begin
   // QueryORM.SQL.SaveToFile('d:\Reward1.txt');
 end;
 
+procedure TAluno.ColumnsPrepareSQPUpdate;
+begin {
+    sColumnsBD := '';
+
+    if ID_Aluno.Assigned then
+    begin
+    sUpdateBDTxT := ID_Aluno.Value;
+    end;
+  }
+end;
+
 constructor TAluno.Create;
 begin
   inherited;
@@ -418,9 +488,9 @@ begin
 
 end;
 
-function TAluno.Delete: TBooleanFieldORM;
+function TAluno.Delete: Boolean;
 begin
-  Result := TBooleanFieldORM.Create;
+  // Result := TBooleanFieldORM.Create;
   FORMMSG := '';
   if ID_Aluno.Assigned then
   begin
@@ -444,11 +514,11 @@ begin
   end;
   if FORMMSG <> '' then
   begin
-    Result.FAssigned := False;
+    Result := False;
   end
   else
   begin
-    Result.FAssigned := True;
+    Result := True;
     FORMMSG := 'Operação realizada com sucesso !';
   end;
   QueryORM.Close;
@@ -458,7 +528,6 @@ function TAluno.FieldObrigatorio: TBooleanFieldORM;
 begin
   Result := TBooleanFieldORM.Create;
   FORMMSG := '';
-
   if ID_Aluno.Assigned then
   begin
     Result.FAssigned := True;
@@ -569,11 +638,206 @@ begin
   end;
 end;
 
+function TAluno.FieldObrigatorioID: TBooleanFieldORM;
+begin
+  Result := TBooleanFieldORM.Create;
+  FORMMSG := '';
+  if ID_Aluno.Assigned then
+  begin
+    Result.FAssigned := True;
+  end
+  else
+  begin
+    FORMMSG := FORMMSG +
+      'ID Aluno não foi preenchido, campo obrigatório para realizar uma alteração. '
+      + #13#10;
+  end;
+end;
+
 function TAluno.PrepareSQL: TSQLSyntaxResult;
 
 begin
   ColumnsPrepareSQL;
   ValuesPrepareSQL;
+end;
+
+function TAluno.PrepareSQLUpdate: TSQLSyntaxResult;
+begin
+  // ColumnsPrepareSQPUpdate;
+  // ValuesPrepareSQLUpdate;
+
+  ClearUpdateValuesAndColumns;
+
+  if ID_Aluno.Assigned then
+  begin
+    sColumnsBD := ' ID_Aluno';
+    with ID_Aluno.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Nome_Aluno.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Nome_Aluno';
+    with Nome_Aluno.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+
+  end;
+  ClearUpdateValuesAndColumns;
+  if Curso.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Curso';
+    with Curso.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Turno.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Turno';
+    with Turno.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Periodo.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Periodo';
+    with Periodo.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Data_Ingresso.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Data_Ingresso';
+    with Data_Ingresso.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Situacao.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Situacao';
+    with Situacao.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Cadeirante.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Cadeirante';
+    with Cadeirante.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Observacao.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + 'Observacao';
+    with Observacao.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Data_Hora_Inclusao.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Data_Hora_Inclusao';
+    with Data_Hora_Inclusao.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Usuario_Inclusao.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Usuario_Inclusao';
+    with Usuario_Inclusao.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Data_Hora_Alteracao.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Data_Hora_Alteracao';
+    with Data_Hora_Alteracao.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  ClearUpdateValuesAndColumns;
+  if Usuario_Alteracao.Assigned then
+  begin
+    sColumnsBD := sColumnsBD + ' Usuario_Alteracao';
+    with Usuario_Alteracao.ToSQL do
+    begin
+      if OK then
+      begin
+        sValuesBD := sValuesBD + SQLTxT;
+        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+      end;
+    end;
+  end;
+  sUpdateBDTxT := Copy(sUpdateBDTxT, 1, Length(sUpdateBDTxT) - 1);
 end;
 
 function TAluno.getCadeirante: TBooleanFieldORM;

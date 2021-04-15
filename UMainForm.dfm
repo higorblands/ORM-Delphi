@@ -27,9 +27,9 @@ object FMain: TFMain
   object Label2: TLabel
     Left = 149
     Top = 160
-    Width = 30
+    Width = 36
     Height = 13
-    Caption = '" List "'
+    Caption = '" read "'
   end
   object Label3: TLabel
     Left = 229
@@ -87,13 +87,22 @@ object FMain: TFMain
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 304
+    Left = 297
     Top = 177
     Width = 75
     Height = 25
     Caption = 'D'
     TabOrder = 4
     OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 416
+    Top = 177
+    Width = 75
+    Height = 25
+    Caption = 'Generic List'
+    TabOrder = 5
+    OnClick = Button3Click
   end
   object FDConnection1: TFDConnection
     Params.Strings = (

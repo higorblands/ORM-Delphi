@@ -29,13 +29,16 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Button3: TButton;
     procedure btAddClick(Sender: TObject);
     procedure btListClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
 
   private
     { Private declarations }
+    procedure fakeList;
   public
     { Public declarations }
 
@@ -70,8 +73,9 @@ begin
   Aluno.Data_Hora_Alteracao.Value := now;
   Aluno.Usuario_Alteracao.Value := 'Andriws';
   Aluno.Insert;
+  fakeList;
   ShowMessage(Aluno.FORMMSG);
-  Aluno.List; // TESTE
+
   Aluno.Free;
 
 end;
@@ -83,6 +87,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
+  Aluno.sValueBDList := 10;
   Aluno.List;
   Aluno.Free;
 
@@ -95,10 +100,12 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
+  Aluno.ID_Aluno.Value := 10;   // PK NÃO FICA NA SYNTAX SQL
   Aluno.Nome_Aluno.Value := 'Higor';
   Aluno.Update;
+  fakeList;
   ShowMessage(Aluno.FORMMSG);
+  Aluno.Free;
 
 end;
 
@@ -109,10 +116,23 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  // Aluno.ID_Aluno.Value := 54;
+  Aluno.ID_Aluno.Value := 54;
   Aluno.Delete;
+  fakeList;
   ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
+end;
+
+procedure TFMain.Button3Click(Sender: TObject);
+begin
+ fakeList;
+end;
+
+procedure TFMain.fakeList;
+begin
+  FDQAluno.SQL.Clear;
+  FDQAluno.SQL.Add('select * from Aluno');
+  FDQAluno.Open;
 end;
 
 end.

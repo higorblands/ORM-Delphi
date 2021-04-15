@@ -32,6 +32,7 @@ type
     procedure btAddClick(Sender: TObject);
     procedure btListClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -69,8 +70,9 @@ begin
   Aluno.Data_Hora_Alteracao.Value := now;
   Aluno.Usuario_Alteracao.Value := 'Andriws';
   Aluno.Insert;
-  ShowMessage(Aluno.FORMMSG);
   Aluno.List; // TESTE
+  ShowMessage(Aluno.FORMMSG);
+
   Aluno.Free;
 
 end;
@@ -82,7 +84,24 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.List;
+  Aluno.List; // TESTE
+  Aluno.Free;
+
+end;
+
+procedure TFMain.Button1Click(Sender: TObject);
+var
+  Aluno: TAluno;
+begin
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.sValueBDUpdate := 54;
+  Aluno.ID_Aluno.Value := 10;
+  // Aluno.Nome_Aluno.Value := 'Andriws';
+  Aluno.Update;
+  Aluno.List; // TESTE
+  ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
 
 end;
@@ -94,8 +113,9 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
+  Aluno.ID_Aluno.Value := 10;
   Aluno.Delete;
+  Aluno.List; // TESTE
   ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
 end;
