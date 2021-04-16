@@ -59,9 +59,9 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
-  Aluno.Nome_Aluno.Value := 'Andriws';
-  Aluno.Curso.Value := 'Banco de Dados';
+  Aluno.ID_Aluno.Value := 34;
+  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.Curso.Value := 'ADS';
   Aluno.Turno.Value := 'N';
   Aluno.Periodo.Value := 2;
   Aluno.Data_Ingresso.Value := now;
@@ -87,6 +87,10 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
+  Aluno.ID_Aluno.Value := 54;
+  Aluno.Read(Aluno.ID_Aluno.Value);
+  fakeList;
+  ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
 
 end;
@@ -98,8 +102,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.sValueBDUpdate := 54;
-  Aluno.ID_Aluno.Value := 10;
+  Aluno.ID_Aluno.Value := 50;
   Aluno.Nome_Aluno.Value := 'Higor';
   Aluno.Update;
   fakeList;
@@ -124,7 +127,7 @@ end;
 
 procedure TFMain.Button3Click(Sender: TObject);
 begin
- fakeList;
+  fakeList;
 end;
 
 procedure TFMain.fakeList;
@@ -132,7 +135,6 @@ begin
   FDQAluno.SQL.Clear;
   FDQAluno.SQL.Add('select * from Aluno');
   FDQAluno.Open;
-  FDQAluno.Close;
 end;
 
 end.

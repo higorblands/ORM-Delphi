@@ -65,7 +65,6 @@ Type
   var
     sValuesBD: System.String;
     sColumnsBD: System.String;
-    sValueBDUpdate: System.Integer;
     sUpdateBDTxT: System.String;
     FORMMSG: String;
     FOK: Boolean;
@@ -94,11 +93,11 @@ Type
     function FieldObrigatorioID: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
     Procedure PrepareReadSQL;
-    function PrepareSQLUpdate: TSQLSyntaxResult;
+    function PrepareSQLUpdate(ID: Integer): String;
     function Insert: TBooleanField;
-    function Read: TBooleanFieldORM;
+    function Read(ID: Integer): Boolean;
     function Delete: Boolean;
-    function Update: Boolean;
+    function Update(ID: Integer): Boolean;
 
     constructor Create;
 
@@ -161,21 +160,33 @@ begin
 
 end;
 
-function TAluno.Read: TBooleanFieldORM;
+function TAluno.Read(ID: Integer): Boolean;
 begin
   FORMMSG := '';
   if FieldObrigatorioID.Assigned then
   begin
     PrepareReadSQL;
-    { with QueryORM.SQL do
-      begin
-      // Add('SELECT (' + sColumnsBD + ')' + ' FROM Aluno Where ID_Aluno = ' +
-      // IntToStr(sValueBDList) + ';');
-      end; }
-    QueryORM.ExecSQL;
-    QueryORM.Close;
+    QueryORM.Open('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
+    if QueryORM.RowsAffected = 0 then
+    begin
+      FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
+    end;
+  end
+  else
+  begin
+    FORMMSG :=
+      'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
   end;
-
+  if FORMMSG <> '' then
+  begin
+    Result := False;
+  end
+  else
+  begin
+    Result := True;
+    FORMMSG := 'Operação realizada com sucesso !';
+  end;
+  QueryORM.Close;
 end;
 
 procedure TAluno.setCadeirante(const Value: TBooleanFieldORM);
@@ -243,44 +254,18 @@ begin
   FUsuario_Inclusao := Value;
 end;
 
-function TAluno.Update: Boolean;
+function TAluno.Update(ID: Integer): Boolean;
 begin
-  if FieldObrigatorioID.Assigned then
+  FORMMSG := '';
+  PrepareSQLUpdate(ID);
+  QueryORM.SQL.Add(sUpdateBDTxT);
+  QueryORM.ExecSQL;
+  if QueryORM.RowsAffected = 0 then
   begin
-    FORMMSG := '';
-    PrepareSQLUpdate;
-    WITh QueryORM.SQL DO
-    begin
-      Clear;
-      Add('Update Aluno SET  ' + sUpdateBDTxT + ' WHERE ID_Aluno = ' +
-        IntToStr(sValueBDUpdate));
-    end;
-    QueryORM.ExecSQL;
-    QueryORM.SQL.SaveToFile('d:\Reward1.txt');
-    if QueryORM.RowsAffected = 0 then
-    begin
-      FORMMSG :=
-        'Atualização não realizada. ID Aluno não encontrado, 0 linhas afetadas.'
-    end;
-  end
-  else
-  begin
-    FORMMSG :=
-      'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
-  end;
-  if FORMMSG <> '' then
-  begin
-    Result := False;
-  end
-  else
-  begin
-    Result := True;
-    FORMMSG := 'Operação realizada com sucesso !';
+    FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
   end;
   QueryORM.Close;
-
-  // Result.Free;
-
+  // QueryORM.SQL.SaveToFile('d:\Reward1.txt');
 end;
 
 procedure TAluno.ValuesPrepareSQL;
@@ -691,10 +676,8 @@ begin
   ValuesPrepareSQL;
 end;
 
-function TAluno.PrepareSQLUpdate: TSQLSyntaxResult;
+function TAluno.PrepareSQLUpdate(ID: Integer): String;
 begin
-  // ColumnsPrepareSQPUpdate;
-  // ValuesPrepareSQLUpdate;
 
   ClearUpdateValuesAndColumns;
 
@@ -867,7 +850,12 @@ begin
       end;
     end;
   end;
+
   sUpdateBDTxT := Copy(sUpdateBDTxT, 1, Length(sUpdateBDTxT) - 1);
+  sUpdateBDTxT := ('Update Aluno SET ' + sUpdateBDTxT + ' WHERE ID_Aluno = ' +
+    IntToStr(ID) + ' ;');
+
+  Result := sUpdateBDTxT;
 end;
 
 function TAluno.getCadeirante: TBooleanFieldORM;

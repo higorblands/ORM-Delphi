@@ -59,9 +59,9 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
-  Aluno.Nome_Aluno.Value := 'Andriws';
-  Aluno.Curso.Value := 'Banco de Dados';
+  Aluno.ID_Aluno.Value := 34;
+  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.Curso.Value := 'ADS';
   Aluno.Turno.Value := 'N';
   Aluno.Periodo.Value := 2;
   Aluno.Data_Ingresso.Value := now;
@@ -87,8 +87,10 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.sValueBDList := 10;
-  Aluno.List;
+  Aluno.ID_Aluno.Value := 54;
+  Aluno.Read(Aluno.ID_Aluno.Value);
+  fakeList;
+  ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
 
 end;
@@ -100,9 +102,9 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 10;   // PK NÃO FICA NA SYNTAX SQL
+  Aluno.ID_Aluno.Value := 54;
   Aluno.Nome_Aluno.Value := 'Higor';
-  Aluno.Update;
+  Aluno.Update(Aluno.ID_Aluno.Value);
   fakeList;
   ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
@@ -116,7 +118,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
+  Aluno.ID_Aluno.Value := 10;
   Aluno.Delete;
   fakeList;
   ShowMessage(Aluno.FORMMSG);
@@ -125,7 +127,7 @@ end;
 
 procedure TFMain.Button3Click(Sender: TObject);
 begin
- fakeList;
+  fakeList;
 end;
 
 procedure TFMain.fakeList;
