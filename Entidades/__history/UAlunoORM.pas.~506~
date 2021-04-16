@@ -67,7 +67,6 @@ Type
     sColumnsBD: System.String;
     sValueBDUpdate: System.Integer;
     sUpdateBDTxT: System.String;
-    sValueBDList: System.String;
     FORMMSG: String;
     FOK: Boolean;
 
@@ -94,9 +93,10 @@ Type
     function FieldObrigatorio: TBooleanFieldORM;
     function FieldObrigatorioID: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
+    Procedure PrepareReadSQL;
     function PrepareSQLUpdate: TSQLSyntaxResult;
     function Insert: TBooleanField;
-    function List: TBooleanFieldORM;
+    function Read(ID: Integer): TBooleanFieldORM;
     function Delete: Boolean;
     function Update: Boolean;
 
@@ -161,17 +161,15 @@ begin
 
 end;
 
-function TAluno.List: TBooleanFieldORM;
+function TAluno.Read(ID: Integer): TBooleanFieldORM;
 begin
   FORMMSG := '';
   if FieldObrigatorioID.Assigned then
   begin
-    PrepareSQL;
-    with QueryORM.SQL do
-    begin
-      Clear;
-      Add('SELECT (' + sColumnsBD + ')' + ' FROM Aluno ;');
-    end;
+    PrepareReadSQL;
+    QueryORM.Open('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
+    QueryORM.ExecSQL;
+    QueryORM.Close;
   end;
 
 end;
@@ -652,6 +650,34 @@ begin
       'ID Aluno não foi preenchido, campo obrigatório para realizar uma alteração. '
       + #13#10;
   end;
+end;
+
+Procedure TAluno.PrepareReadSQL;
+begin
+
+  with QueryORM.SQL do
+  begin
+    QueryORM.Open('SELECT * FROM Aluno;');
+    FId_Aluno.Value := QueryORM.FieldByName('ID_Aluno').AsInteger;
+    FNome_Aluno.Value := QueryORM.FieldByName('Nome_Aluno').AsString;
+    FCurso.Value := QueryORM.FieldByName('Curso').AsString;
+    FTurno.Value := QueryORM.FieldByName('Turno').AsString;
+    FPeriodo.Value := QueryORM.FieldByName('Periodo').AsInteger;
+    FData_Ingresso.Value := QueryORM.FieldByName('Data_Ingresso').AsDateTime;
+    FSituacao.Value := QueryORM.FieldByName('Situacao').AsString;
+    FCadeirante.Value := QueryORM.FieldByName('Cadeirante').AsBoolean;
+    FObservacao.Value := QueryORM.FieldByName('Observacao').AsString;
+    FData_Hora_Inclusao.Value := QueryORM.FieldByName('Data_Hora_Inclusao')
+      .AsDateTime;
+    FUsuario_Inclusao.Value := QueryORM.FieldByName('Usuario_Inclusao')
+      .AsString;
+    FData_Hora_Alteracao.Value := QueryORM.FieldByName('Data_Hora_Alteracao')
+      .AsDateTime;
+    FUsuario_alteracao.Value := QueryORM.FieldByName
+      ('Usuario_Alteracao').AsString;
+
+  end;
+
 end;
 
 function TAluno.PrepareSQL: TSQLSyntaxResult;

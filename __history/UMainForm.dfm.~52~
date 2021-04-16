@@ -17,6 +17,34 @@ object FMain: TFMain
   Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 56
+    Top = 160
+    Width = 43
+    Height = 13
+    Caption = '" Insert "'
+  end
+  object Label2: TLabel
+    Left = 149
+    Top = 160
+    Width = 36
+    Height = 13
+    Caption = '" read "'
+  end
+  object Label3: TLabel
+    Left = 229
+    Top = 158
+    Width = 49
+    Height = 13
+    Caption = '" Update "'
+  end
+  object Label4: TLabel
+    Left = 317
+    Top = 158
+    Width = 45
+    Height = 13
+    Caption = '" Delete "'
+  end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 0
@@ -56,14 +84,25 @@ object FMain: TFMain
     Height = 25
     Caption = 'U'
     TabOrder = 3
+    OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 304
+    Left = 297
     Top = 177
     Width = 75
     Height = 25
     Caption = 'D'
     TabOrder = 4
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 416
+    Top = 177
+    Width = 75
+    Height = 25
+    Caption = 'Generic List'
+    TabOrder = 5
+    OnClick = Button3Click
   end
   object FDConnection1: TFDConnection
     Params.Strings = (

@@ -69,8 +69,8 @@ object FMain: TFMain
     OnClick = btAddClick
   end
   object btList: TButton
-    Left = 128
-    Top = 177
+    Left = 135
+    Top = 179
     Width = 75
     Height = 25
     Caption = 'R'
