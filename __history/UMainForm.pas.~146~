@@ -87,7 +87,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
+  Aluno.ID_Aluno.Value := 4;
   Aluno.Read(Aluno.ID_Aluno.Value);
   fakeList;
   ShowMessage(Aluno.FORMMSG);
@@ -102,8 +102,8 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 50;
-  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.ID_Aluno.Value := 34;
+  Aluno.Nome_Aluno.Value := 'Angelo';
   Aluno.Update;
   fakeList;
   ShowMessage(Aluno.FORMMSG);
@@ -118,7 +118,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 10;
+  Aluno.ID_Aluno.Value := 4;
   Aluno.Delete;
   fakeList;
   ShowMessage(Aluno.FORMMSG);

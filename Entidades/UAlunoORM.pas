@@ -57,9 +57,6 @@ Type
     procedure setUsuario_alteracao(const Value: TStringFieldORM);
     procedure ColumnsPrepareSQL;
     procedure ValuesPrepareSQL;
-    procedure ColumnsPrepareSQPUpdate;
-    procedure ValuesPrepareSQLUpdate;
-    procedure ClearUpdateValuesAndColumns;
 
   public
   var
@@ -92,12 +89,13 @@ Type
     function FieldNotNull: TBooleanFieldORM;
     function ValidationPK: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
-    Procedure PrepareReadSQL;
+    Procedure PrepareReadSQL(ID: Integer);
+    Procedure DataLoadSQL;
     function PrepareSQLUpdate(ID: Integer): String;
     function Insert: TBooleanField;
     function Read(ID: Integer): Boolean;
     function Delete: Boolean;
-    function Update(ID: Integer): Boolean;
+    function Update: Boolean;
 
     constructor Create;
 
@@ -165,11 +163,16 @@ begin
   FORMMSG := '';
   if ValidationPK.Assigned then
   begin
-    PrepareReadSQL;
-    QueryORM.Open('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
+    PrepareReadSQL(ID);
+    QueryORM.Open;
+
     if QueryORM.RowsAffected = 0 then
     begin
       FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
+    end
+    else
+    begin
+      DataLoadSQL;
     end;
   end
   else
@@ -254,11 +257,11 @@ begin
   FUsuario_Inclusao := Value;
 end;
 
-function TAluno.Update(ID: Integer): Boolean;
+function TAluno.Update: Boolean;
 begin
   FORMMSG := '';
   QueryORM.SQL.Clear;
-  QueryORM.SQL.Add(PrepareSQLUpdate(ID));
+  QueryORM.SQL.Add(PrepareSQLUpdate(ID_Aluno.Value));
   QueryORM.ExecSQL;
   if QueryORM.RowsAffected = 0 then
   begin
@@ -373,21 +376,9 @@ begin
     end;
   end;
   sValuesBD := Copy(sValuesBD, 1, Length(sValuesBD) - 1);
-  // QueryORM.SQL.SaveToFile('d:\Reward2.txt');
-end;
-
-procedure TAluno.ValuesPrepareSQLUpdate;
-begin
-
 end;
 
 { TAluno }
-
-procedure TAluno.ClearUpdateValuesAndColumns;
-begin
-  sColumnsBD := '';
-  sValuesBD := '';
-end;
 
 procedure TAluno.ColumnsPrepareSQL;
 begin
@@ -447,19 +438,6 @@ begin
     sColumnsBD := sColumnsBD + 'Usuario_Alteracao,';
   end;
   sColumnsBD := Copy(sColumnsBD, 1, Length(sColumnsBD) - 1);
-  // Add(sColumnsBD);
-  // QueryORM.SQL.SaveToFile('d:\Reward1.txt');
-end;
-
-procedure TAluno.ColumnsPrepareSQPUpdate;
-begin {
-    sColumnsBD := '';
-
-    if ID_Aluno.Assigned then
-    begin
-    sUpdateBDTxT := ID_Aluno.Value;
-    end;
-  }
 end;
 
 constructor TAluno.Create;
@@ -487,13 +465,32 @@ begin
 
 end;
 
+procedure TAluno.DataLoadSQL;
+begin
+
+  FId_Aluno.Value := QueryORM.FieldByName('ID_Aluno').AsInteger;
+  FNome_Aluno.Value := QueryORM.FieldByName('Nome_Aluno').AsString;
+  FCurso.Value := QueryORM.FieldByName('Curso').AsString;
+  FTurno.Value := QueryORM.FieldByName('Turno').AsString;
+  FPeriodo.Value := QueryORM.FieldByName('Periodo').AsInteger;
+  FData_Ingresso.Value := QueryORM.FieldByName('Data_Ingresso').AsDateTime;
+  FSituacao.Value := QueryORM.FieldByName('Situacao').AsString;
+  FCadeirante.Value := QueryORM.FieldByName('Cadeirante').AsBoolean;
+  FObservacao.Value := QueryORM.FieldByName('Observacao').AsString;
+  FData_Hora_Inclusao.Value := QueryORM.FieldByName('Data_Hora_Inclusao')
+    .AsDateTime;
+  FUsuario_Inclusao.Value := QueryORM.FieldByName('Usuario_Inclusao').AsString;
+  FData_Hora_Alteracao.Value := QueryORM.FieldByName('Data_Hora_Alteracao')
+    .AsDateTime;
+  FUsuario_alteracao.Value := QueryORM.FieldByName('Usuario_Alteracao')
+    .AsString;
+end;
+
 function TAluno.Delete: Boolean;
 begin
-  // Result := TBooleanFieldORM.Create;
   FORMMSG := '';
   if ID_Aluno.Assigned then
   begin
-    // PrepareSQL;
     with QueryORM.SQL do
     begin
       Clear;
@@ -653,29 +650,13 @@ begin
   end;
 end;
 
-Procedure TAluno.PrepareReadSQL;
+Procedure TAluno.PrepareReadSQL(ID: Integer);
 begin
 
   with QueryORM.SQL do
   begin
-    QueryORM.Open('SELECT * FROM Aluno;');
-    FId_Aluno.Value := QueryORM.FieldByName('ID_Aluno').AsInteger;
-    FNome_Aluno.Value := QueryORM.FieldByName('Nome_Aluno').AsString;
-    FCurso.Value := QueryORM.FieldByName('Curso').AsString;
-    FTurno.Value := QueryORM.FieldByName('Turno').AsString;
-    FPeriodo.Value := QueryORM.FieldByName('Periodo').AsInteger;
-    FData_Ingresso.Value := QueryORM.FieldByName('Data_Ingresso').AsDateTime;
-    FSituacao.Value := QueryORM.FieldByName('Situacao').AsString;
-    FCadeirante.Value := QueryORM.FieldByName('Cadeirante').AsBoolean;
-    FObservacao.Value := QueryORM.FieldByName('Observacao').AsString;
-    FData_Hora_Inclusao.Value := QueryORM.FieldByName('Data_Hora_Inclusao')
-      .AsDateTime;
-    FUsuario_Inclusao.Value := QueryORM.FieldByName('Usuario_Inclusao')
-      .AsString;
-    FData_Hora_Alteracao.Value := QueryORM.FieldByName('Data_Hora_Alteracao')
-      .AsDateTime;
-    FUsuario_alteracao.Value := QueryORM.FieldByName
-      ('Usuario_Alteracao').AsString;
+    Clear;
+    Add('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
 
   end;
 
@@ -697,178 +678,141 @@ begin
       'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
   end;
 
-  ClearUpdateValuesAndColumns;
-
   if ID_Aluno.Assigned then
   begin
-    sColumnsBD := ' ID_Aluno';
     with ID_Aluno.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := ' ID_Aluno' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Nome_Aluno.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Nome_Aluno';
     with Nome_Aluno.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Nome_Aluno ' + ' = ' + SQLTxT + ',';
       end;
     end;
 
   end;
-  ClearUpdateValuesAndColumns;
   if Curso.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Curso';
     with Curso.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Curso' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Turno.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Turno';
     with Turno.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Turno' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Periodo.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Periodo';
     with Periodo.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Periodo' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Data_Ingresso.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Data_Ingresso';
     with Data_Ingresso.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Data_Ingresso' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Situacao.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Situacao';
     with Situacao.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Situacao' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Cadeirante.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Cadeirante';
     with Cadeirante.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Cadeirante' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Observacao.Assigned then
   begin
-    sColumnsBD := sColumnsBD + 'Observacao';
     with Observacao.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Observacao' + ' = ' + SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Data_Hora_Inclusao.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Data_Hora_Inclusao';
     with Data_Hora_Inclusao.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Data_Hora_Inclusao' + ' = ' +
+          SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Usuario_Inclusao.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Usuario_Inclusao';
     with Usuario_Inclusao.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Usuario_Inclusao' + ' = ' +
+          SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Data_Hora_Alteracao.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Data_Hora_Alteracao';
     with Data_Hora_Alteracao.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Data_Hora_Alteracao' + ' = ' +
+          SQLTxT + ',';
       end;
     end;
   end;
-  ClearUpdateValuesAndColumns;
   if Usuario_Alteracao.Assigned then
   begin
-    sColumnsBD := sColumnsBD + ' Usuario_Alteracao';
     with Usuario_Alteracao.ToSQL do
     begin
       if OK then
       begin
-        sValuesBD := sValuesBD + SQLTxT;
-        sUpdateBDTxT := sUpdateBDTxT + sColumnsBD + ' = ' + sValuesBD + ',';
+        sUpdateBDTxT := sUpdateBDTxT + ' Usuario_Alteracao' + ' = ' +
+          SQLTxT + ',';
       end;
     end;
   end;
-
   sUpdateBDTxT := Copy(sUpdateBDTxT, 1, Length(sUpdateBDTxT) - 1);
   sUpdateBDTxT := ('Update Aluno SET ' + sUpdateBDTxT + ' WHERE ID_Aluno = ' +
     IntToStr(ID) + ';');

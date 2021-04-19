@@ -87,7 +87,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 54;
+  Aluno.ID_Aluno.Value := 34;
   Aluno.Read(Aluno.ID_Aluno.Value);
   fakeList;
   ShowMessage(Aluno.FORMMSG);
@@ -102,11 +102,9 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  // Aluno.sValueBDUpdate := 10;
-  Aluno.ID_Aluno.Value := 50; // PK NÃO FICA NA SYNTAX SQL
-  Aluno.Nome_Aluno.Value := 'Higor';
-  Aluno.Read(Aluno.ID_Aluno.Value);
-  Aluno.Update;
+  Aluno.ID_Aluno.Value := 4;
+  Aluno.Nome_Aluno.Value := 'Angelo';
+  Aluno.Update(Aluno.ID_Aluno.Value);
   fakeList;
   ShowMessage(Aluno.FORMMSG);
   Aluno.Free;
@@ -120,7 +118,7 @@ begin
   Aluno := TAluno.Create;
   Aluno.conn := FDConnection1;
   Aluno.QueryORM := FDQAluno;
-  Aluno.ID_Aluno.Value := 10;
+  Aluno.ID_Aluno.Value := 4;
   Aluno.Delete;
   fakeList;
   ShowMessage(Aluno.FORMMSG);

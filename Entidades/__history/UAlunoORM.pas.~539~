@@ -92,12 +92,13 @@ Type
     function FieldNotNull: TBooleanFieldORM;
     function ValidationPK: TBooleanFieldORM;
     function PrepareSQL: TSQLSyntaxResult;
-    Procedure PrepareReadSQL;
+    Procedure PrepareReadSQL(ID: Integer);
+    Procedure DataLoadSQL;
     function PrepareSQLUpdate(ID: Integer): String;
     function Insert: TBooleanField;
     function Read(ID: Integer): Boolean;
     function Delete: Boolean;
-    function Update(ID: Integer): Boolean;
+    function Update: Boolean;
 
     constructor Create;
 
@@ -165,8 +166,9 @@ begin
   FORMMSG := '';
   if ValidationPK.Assigned then
   begin
-    PrepareReadSQL;
-    QueryORM.Open('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
+    PrepareReadSQL(ID);
+    DataLoadSQL;
+
     if QueryORM.RowsAffected = 0 then
     begin
       FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
@@ -254,11 +256,11 @@ begin
   FUsuario_Inclusao := Value;
 end;
 
-function TAluno.Update(ID: Integer): Boolean;
+function TAluno.Update: Boolean;
 begin
   FORMMSG := '';
-  PrepareSQLUpdate(ID);
-  QueryORM.SQL.Add(sUpdateBDTxT);
+  QueryORM.SQL.Clear;
+  QueryORM.SQL.Add(PrepareSQLUpdate(ID_Aluno.Value));
   QueryORM.ExecSQL;
   if QueryORM.RowsAffected = 0 then
   begin
@@ -274,8 +276,10 @@ begin
     Result := True;
     FORMMSG := 'Operação realizada com sucesso !';
   end;
+  QueryORM.SQL.SaveToFile('d:\Reward2.txt');
+  QueryORM.SQL.Clear;
   QueryORM.Close;
-  // QueryORM.SQL.SaveToFile('d:\Reward1.txt');
+
 end;
 
 procedure TAluno.ValuesPrepareSQL;
@@ -485,6 +489,27 @@ begin
 
 end;
 
+procedure TAluno.DataLoadSQL;
+begin
+  QueryORM.Open;
+  FId_Aluno.Value := QueryORM.FieldByName('ID_Aluno').AsInteger;
+  FNome_Aluno.Value := QueryORM.FieldByName('Nome_Aluno').AsString;
+  FCurso.Value := QueryORM.FieldByName('Curso').AsString;
+  FTurno.Value := QueryORM.FieldByName('Turno').AsString;
+  FPeriodo.Value := QueryORM.FieldByName('Periodo').AsInteger;
+  FData_Ingresso.Value := QueryORM.FieldByName('Data_Ingresso').AsDateTime;
+  FSituacao.Value := QueryORM.FieldByName('Situacao').AsString;
+  FCadeirante.Value := QueryORM.FieldByName('Cadeirante').AsBoolean;
+  FObservacao.Value := QueryORM.FieldByName('Observacao').AsString;
+  FData_Hora_Inclusao.Value := QueryORM.FieldByName('Data_Hora_Inclusao')
+    .AsDateTime;
+  FUsuario_Inclusao.Value := QueryORM.FieldByName('Usuario_Inclusao').AsString;
+  FData_Hora_Alteracao.Value := QueryORM.FieldByName('Data_Hora_Alteracao')
+    .AsDateTime;
+  FUsuario_alteracao.Value := QueryORM.FieldByName('Usuario_Alteracao')
+    .AsString;
+end;
+
 function TAluno.Delete: Boolean;
 begin
   // Result := TBooleanFieldORM.Create;
@@ -651,29 +676,13 @@ begin
   end;
 end;
 
-Procedure TAluno.PrepareReadSQL;
+Procedure TAluno.PrepareReadSQL(ID: Integer);
 begin
 
   with QueryORM.SQL do
   begin
-    QueryORM.Open('SELECT * FROM Aluno;');
-    FId_Aluno.Value := QueryORM.FieldByName('ID_Aluno').AsInteger;
-    FNome_Aluno.Value := QueryORM.FieldByName('Nome_Aluno').AsString;
-    FCurso.Value := QueryORM.FieldByName('Curso').AsString;
-    FTurno.Value := QueryORM.FieldByName('Turno').AsString;
-    FPeriodo.Value := QueryORM.FieldByName('Periodo').AsInteger;
-    FData_Ingresso.Value := QueryORM.FieldByName('Data_Ingresso').AsDateTime;
-    FSituacao.Value := QueryORM.FieldByName('Situacao').AsString;
-    FCadeirante.Value := QueryORM.FieldByName('Cadeirante').AsBoolean;
-    FObservacao.Value := QueryORM.FieldByName('Observacao').AsString;
-    FData_Hora_Inclusao.Value := QueryORM.FieldByName('Data_Hora_Inclusao')
-      .AsDateTime;
-    FUsuario_Inclusao.Value := QueryORM.FieldByName('Usuario_Inclusao')
-      .AsString;
-    FData_Hora_Alteracao.Value := QueryORM.FieldByName('Data_Hora_Alteracao')
-      .AsDateTime;
-    FUsuario_alteracao.Value := QueryORM.FieldByName
-      ('Usuario_Alteracao').AsString;
+    Clear;
+    Add('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
 
   end;
 
@@ -869,7 +878,7 @@ begin
 
   sUpdateBDTxT := Copy(sUpdateBDTxT, 1, Length(sUpdateBDTxT) - 1);
   sUpdateBDTxT := ('Update Aluno SET ' + sUpdateBDTxT + ' WHERE ID_Aluno = ' +
-    IntToStr(ID) + ' ;');
+    IntToStr(ID) + ';');
 
   Result := sUpdateBDTxT;
 end;

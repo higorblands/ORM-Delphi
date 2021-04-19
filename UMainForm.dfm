@@ -1,6 +1,6 @@
 object FMain: TFMain
-  Left = 343
-  Top = 321
+  Left = 243
+  Top = 55
   Align = alCustom
   BiDiMode = bdRightToLeftNoAlign
   Caption = 'Main'
