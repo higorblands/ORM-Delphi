@@ -1,0 +1,64 @@
+unit UController;
+
+interface
+
+uses
+  UAlunoORM, System.SysUtils, System.Classes, System.UITypes,
+  FireDAC.Stan.Error, Data.DB,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef;
+
+Type
+  TController = Class
+
+  public
+    FId_Aluno: Integer;
+    FNome_Aluno: String;
+    FCurso: String;
+    FTurno: String;
+    FPeriodo: Integer;
+    FData_Ingresso: TDateTime;
+    FSituacao: String;
+    FCadeirante: Boolean;
+    FObservacao: String;
+    FData_Hora_Inclusao: TDateTime;
+    FUsuario_Inclusao: String;
+    FData_Hora_Alteracao: TDateTime;
+    FUsuario_alteracao: String;
+    Query: TFDQuery;
+    conn: TFDconnection;
+    function Insert: Boolean;
+  End;
+
+implementation
+
+{ TController }
+
+function TController.Insert: Boolean;
+var
+  Aluno: TAluno;
+begin
+  Aluno := TAluno.Create;
+  Aluno.conn := FDConnection1;
+  Aluno.QueryORM := FDQAluno;
+  Aluno.ID_Aluno.Value := 4;
+  Aluno.Nome_Aluno.Value := 'Higor';
+  Aluno.Curso.Value := 'ADS';
+  Aluno.Turno.Value := 'N';
+  Aluno.Periodo.Value := 2;
+  Aluno.Data_Ingresso.Value := now;
+  Aluno.Situacao.Value := 'R';
+  Aluno.Cadeirante.Value := False;
+  Aluno.Observacao.Value := 'Aluno bom e novo';
+  Aluno.Data_Hora_Inclusao.Value := now;
+  Aluno.Usuario_Inclusao.Value := 'Admin';
+  Aluno.Data_Hora_Alteracao.Value := now;
+  Aluno.Usuario_Alteracao.Value := 'Andriws';
+  Aluno.Insert;
+end;
+
+end.

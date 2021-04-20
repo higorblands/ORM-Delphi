@@ -1,0 +1,20 @@
+program ORM;
+
+
+
+
+
+uses
+  Vcl.Forms,
+  UTypeDataFieldORM in 'ORM\UTypeDataFieldORM.pas',
+  UGeneralORM in 'ORM\UGeneralORM.pas',
+  UAlunoORM in 'Entidades\UAlunoORM.pas',
+  UMainForm in 'UMainForm.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.Run;
+end.
