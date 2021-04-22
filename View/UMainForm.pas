@@ -19,10 +19,10 @@ type
     TabSheetCadastro: TTabSheet;
     TabSheetListagem: TTabSheet;
     GroupBoxListagem: TGroupBox;
-    Label12: TLabel;
-    Label13: TLabel;
-    EditFiltroId: TEdit;
-    EditFiltroNome: TEdit;
+    LID: TLabel;
+    LNome: TLabel;
+    edtFiltroID: TEdit;
+    edtFiltroNome: TEdit;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
     btnDetalhes: TButton;
@@ -66,6 +66,12 @@ type
     DataSource1: TDataSource;
     DateTimePickerInclusao: TDateTimePicker;
     DateTimePickerAlteracao: TDateTimePicker;
+    LCurso: TLabel;
+    edtFiltroCurso: TEdit;
+    LPeriodo: TLabel;
+    edtFiltroPeriodo: TEdit;
+    LSituacao: TLabel;
+    edtFiltroSituacao: TEdit;
     procedure btnIncluirClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
@@ -133,6 +139,8 @@ procedure TFMain.btnCancelarClick(Sender: TObject);
 begin
 
   // Inicio regras de visibilidade/habilitação/edição //
+  TabSheetListagem.TabVisible := False;
+  TabSheetCadastro.TabVisible := True;
   btnExcluir.Enabled := True;
   btnSalvar.Enabled := False;
   btnCancelar.Enabled := True;
@@ -163,8 +171,7 @@ begin
   MemoObservacao.ReadOnly := True;
   // EditDataHoraInclusao.Enabled := True;
   // EditDataHoraAltecacao.Enabled := True;
-  TabSheetListagem.TabVisible := True;
-  TabSheetCadastro.TabVisible := True;
+
 end;
 
 procedure TFMain.btnIncluirClick(Sender: TObject);
@@ -173,52 +180,55 @@ var
   Controller: TController;
 begin
 
-  Controller := Controller.Create;
-  Controller.conn := FDConnection1;
-  Controller.Query := FDQuery1;
-  Controller.FId_Aluno := StrToInt(EditIdAluno.Text);
-  Controller.FNome_Aluno := EditNomeAluno.Text;
-  Controller.FCurso := EditCurso.Text;
-  Controller.FTurno := EditTurno.Text;
-  Controller.FPeriodo := StrToInt(EditPeriodo.Text);
-  Controller.FData_Ingresso := DateTimePickerIngresso.Date;
-  Controller.FSituacao := EditSituacao.Text;
-  Controller.FCadeirante := strtobool(ComboBoxCadeirante.Items.Text);
-  Controller.FObservacao := MemoObservacao.Text;
-  Controller.FData_Hora_Inclusao := DateTimePickerInclusao.Date;
-  Controller.FData_Hora_Alteracao := DateTimePickerAlteracao.Date;
-  Controller.FUsuario_Alteracao := EditUsuarioAlteracao.Text;
+    Controller := TController.Create;
+    Controller.conn := FDConnection1;
+    Controller.Query := FDQuery1;
+    Controller.FID_Aluno := StrToInt(EditIdAluno.Text);
+    Controller.FNome_Aluno := EditNomeAluno.Text;
+    Controller.FCurso := EditCurso.Text;
+    Controller.FTurno := EditTurno.Text;
+    Controller.FPeriodo := StrToInt(EditPeriodo.Text);
+    Controller.FData_Ingresso := DateTimePickerIngresso.Date;
+    Controller.FSituacao := EditSituacao.Text;
+    Controller.FCadeirante := strtobool(ComboBoxCadeirante.Items.Text);
+    Controller.FObservacao := MemoObservacao.Text;
+    Controller.FData_Hora_Inclusao := DateTimePickerInclusao.Date;
+    Controller.FData_Hora_Alteracao := DateTimePickerAlteracao.Date;
+    Controller.FUsuario_Alteracao := EditUsuarioAlteracao.Text;
+    Controller.Insert;
 
-  ShowMessage(Controller.Insert);
-  // Inicio regras de visibilidade/habilitação/edição //
-  TabSheetCadastro.TabVisible := True;
-  TabSheetListagem.TabVisible := False;
-  btnIncluir.Enabled := False;
-  btnAlterar.Enabled := False;
-  btnExcluir.Enabled := False;
-  btnSalvar.Enabled := True;
-  btnCancelar.Enabled := True;
-  btnCadastroVoltar.Enabled := False;
-  EditUsuarioInclusao.Visible := False;
-  EditUsuarioAlteracao.Visible := False;
-  DateTimePickerInclusao.Visible := False;
-  DateTimePickerAlteracao.Visible := False;
-  Label10.Visible := False;
-  Label11.Visible := False;
-  Label17.Visible := False;
-  Label18.Visible := False;
-  EditCurso.ReadOnly := False;
-  EditIdAluno.ReadOnly := True;
-  EditNomeAluno.ReadOnly := False;
-  EditCurso.ReadOnly := False;
-  EditTurno.ReadOnly := False;
-  EditPeriodo.ReadOnly := False;
-  DateTimePickerIngresso.Enabled := True;
-  ComboBoxCadeirante.Enabled := True;
-  EditSituacao.ReadOnly := False;
-  EditUsuarioInclusao.ReadOnly := False;
-  EditUsuarioAlteracao.ReadOnly := False;
-  MemoObservacao.ReadOnly := False;
-end;
+
+    // Inicio regras de visibilidade/habilitação/edição //
+    TabSheetCadastro.TabVisible := True;
+    TabSheetListagem.TabVisible := False;
+    btnIncluir.Enabled := False;
+    btnAlterar.Enabled := False;
+    btnExcluir.Enabled := False;
+    btnSalvar.Enabled := True;
+    btnCancelar.Enabled := True;
+    btnCadastroVoltar.Enabled := False;
+    EditUsuarioInclusao.Visible := False;
+    EditUsuarioAlteracao.Visible := False;
+    DateTimePickerInclusao.Visible := False;
+    DateTimePickerAlteracao.Visible := False;
+    Label10.Visible := False;
+    Label11.Visible := False;
+    Label17.Visible := False;
+    Label18.Visible := False;
+    EditCurso.ReadOnly := False;
+    EditIdAluno.ReadOnly := True;
+    EditNomeAluno.ReadOnly := False;
+    EditCurso.ReadOnly := False;
+    EditTurno.ReadOnly := False;
+    EditPeriodo.ReadOnly := False;
+    DateTimePickerIngresso.Enabled := True;
+    ComboBoxCadeirante.Enabled := True;
+    EditSituacao.ReadOnly := False;
+    EditUsuarioInclusao.ReadOnly := False;
+    EditUsuarioAlteracao.ReadOnly := False;
+    MemoObservacao.ReadOnly := False;
+
+  end;
+
 
 end.

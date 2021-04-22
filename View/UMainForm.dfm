@@ -1,7 +1,7 @@
 object FMain: TFMain
   Left = 0
   Top = 0
-  Caption = 'FMain'
+  Caption = 'Main'
   ClientHeight = 406
   ClientWidth = 610
   Color = clBtnFace
@@ -21,10 +21,150 @@ object FMain: TFMain
     ActivePage = TabSheetCadastro
     Align = alClient
     TabOrder = 1
-    ExplicitTop = -6
+    object TabSheetListagem: TTabSheet
+      Caption = 'Listagem'
+      ImageIndex = 1
+      object GroupBoxListagem: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 602
+        Height = 98
+        Align = alTop
+        TabOrder = 0
+        object LID: TLabel
+          Left = 14
+          Top = 22
+          Width = 18
+          Height = 13
+          Caption = 'ID: '
+        end
+        object LNome: TLabel
+          Left = 84
+          Top = 22
+          Width = 34
+          Height = 13
+          Caption = 'Nome: '
+        end
+        object LCurso: TLabel
+          Left = 259
+          Top = 22
+          Width = 35
+          Height = 13
+          Caption = 'Curso: '
+        end
+        object LPeriodo: TLabel
+          Left = 428
+          Top = 22
+          Width = 43
+          Height = 13
+          Caption = 'Per'#237'odo: '
+        end
+        object LSituacao: TLabel
+          Left = 506
+          Top = 22
+          Width = 48
+          Height = 13
+          Caption = 'Situa'#231#227'o: '
+        end
+        object edtFiltroID: TEdit
+          Left = 38
+          Top = 19
+          Width = 37
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 0
+        end
+        object edtFiltroNome: TEdit
+          Left = 124
+          Top = 19
+          Width = 121
+          Height = 21
+          TabOrder = 1
+        end
+        object Panel1: TPanel
+          Left = -4
+          Top = 57
+          Width = 757
+          Height = 41
+          TabOrder = 2
+          object btnDetalhes: TButton
+            Left = 188
+            Top = 5
+            Width = 75
+            Height = 25
+            Caption = 'Detalhes'
+            TabOrder = 1
+          end
+          object btnFiltrar: TButton
+            Left = 82
+            Top = 5
+            Width = 75
+            Height = 25
+            Caption = 'Filtrar'
+            TabOrder = 0
+          end
+          object btnLimpar: TButton
+            AlignWithMargins = True
+            Left = 297
+            Top = 5
+            Width = 75
+            Height = 25
+            Caption = 'Limpar'
+            TabOrder = 2
+          end
+        end
+        object edtFiltroCurso: TEdit
+          Left = 293
+          Top = 19
+          Width = 121
+          Height = 21
+          TabOrder = 3
+        end
+        object edtFiltroPeriodo: TEdit
+          Left = 470
+          Top = 19
+          Width = 25
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 4
+        end
+        object edtFiltroSituacao: TEdit
+          Left = 553
+          Top = 19
+          Width = 25
+          Height = 21
+          MaxLength = 1
+          TabOrder = 5
+        end
+      end
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 104
+        Width = 601
+        Height = 253
+        DataSource = DataSource1
+        ReadOnly = True
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+      end
+      object Painel: TPanel
+        Left = 0
+        Top = 275
+        Width = 602
+        Height = 47
+        Align = alBottom
+        TabOrder = 2
+        ExplicitTop = 276
+      end
+    end
     object TabSheetCadastro: TTabSheet
       Caption = 'Cadastro'
       ImageIndex = 1
+      ExplicitHeight = 322
       object Label1: TLabel
         Left = 3
         Top = 27
@@ -209,8 +349,7 @@ object FMain: TFMain
         Style = csDropDownList
         TabOrder = 10
         Items.Strings = (
-          'True'
-          'False')
+          'True')
       end
       object DateTimePickerIngresso: TDateTimePicker
         Left = 72
@@ -221,100 +360,23 @@ object FMain: TFMain
         Time = 44225.618625092590000000
         TabOrder = 11
       end
-    end
-    object TabSheetListagem: TTabSheet
-      Caption = 'Listagem'
-      ImageIndex = 1
-      object GroupBoxListagem: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 602
-        Height = 98
-        Align = alTop
-        TabOrder = 0
-        object Label12: TLabel
-          Left = 14
-          Top = 6
-          Width = 18
-          Height = 13
-          Caption = 'ID: '
-        end
-        object Label13: TLabel
-          Left = 84
-          Top = 6
-          Width = 34
-          Height = 13
-          Caption = 'Nome: '
-        end
-        object EditFiltroId: TEdit
-          Left = 38
-          Top = 3
-          Width = 37
-          Height = 21
-          NumbersOnly = True
-          TabOrder = 0
-        end
-        object EditFiltroNome: TEdit
-          Left = 124
-          Top = 3
-          Width = 121
-          Height = 21
-          TabOrder = 1
-        end
-        object Panel1: TPanel
-          Left = -4
-          Top = 57
-          Width = 757
-          Height = 41
-          TabOrder = 2
-          object btnDetalhes: TButton
-            Left = 188
-            Top = 5
-            Width = 75
-            Height = 25
-            Caption = 'Detalhes'
-            TabOrder = 1
-          end
-          object btnFiltrar: TButton
-            Left = 82
-            Top = 5
-            Width = 75
-            Height = 25
-            Caption = 'Filtrar'
-            TabOrder = 0
-          end
-          object btnLimpar: TButton
-            AlignWithMargins = True
-            Left = 297
-            Top = 5
-            Width = 75
-            Height = 25
-            Caption = 'Limpar'
-            TabOrder = 2
-          end
-        end
+      object DateTimePickerInclusao: TDateTimePicker
+        Left = 447
+        Top = 78
+        Width = 121
+        Height = 20
+        Date = 44225.618625092590000000
+        Time = 44225.618625092590000000
+        TabOrder = 12
       end
-      object DBGrid1: TDBGrid
-        Left = 0
+      object DateTimePickerAlteracao: TDateTimePicker
+        Left = 447
         Top = 104
-        Width = 601
-        Height = 253
-        DataSource = DataSource1
-        ReadOnly = True
-        TabOrder = 1
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
-      end
-      object Painel: TPanel
-        Left = 0
-        Top = 276
-        Width = 602
-        Height = 47
-        Align = alBottom
-        TabOrder = 2
+        Width = 121
+        Height = 20
+        Date = 44225.618625092590000000
+        Time = 44225.618625092590000000
+        TabOrder = 13
       end
     end
   end
@@ -368,24 +430,6 @@ object FMain: TFMain
       Caption = 'Excluir'
       TabOrder = 4
     end
-  end
-  object DateTimePickerInclusao: TDateTimePicker
-    Left = 451
-    Top = 102
-    Width = 121
-    Height = 20
-    Date = 44225.618625092590000000
-    Time = 44225.618625092590000000
-    TabOrder = 2
-  end
-  object DateTimePickerAlteracao: TDateTimePicker
-    Left = 451
-    Top = 128
-    Width = 121
-    Height = 20
-    Date = 44225.618625092590000000
-    Time = 44225.618625092590000000
-    TabOrder = 3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
