@@ -183,19 +183,22 @@ begin
   Controller := TController.Create;
   Controller.conn := FDConnection1;
   Controller.Query := FDQuery1;
-  ShowMessage(Controller.Insert);
-  Controller.ID_Aluno.Value := StrToInt(EditIdAluno.Text);
-  Controller.Nome_Aluno.Value := EditNomeAluno.Text;
-  Controller.Curso.Value := EditCurso.Text;
-  Controller.Turno.Value := EditTurno.Text;
-  Controller.Periodo.Value := StrToInt(EditPeriodo.Text);
-  Controller.Data_Ingresso.Value := DateTimePickerIngresso.Date;
-  Controller.Situacao.Value := EditSituacao.Text;
-  Controller.Cadeirante.Value := strtobool(ComboBoxCadeirante.Items.Text);
-  Controller.Observacao.Value := MemoObservacao.Text;
-  Controller.Data_Hora_Inclusao.Value := DateTimePickerInclusao.Date;
-  Controller.Data_Hora_Alteracao.Value := DateTimePickerAlteracao.Date;
-  Controller.Usuario_Alteracao.Value := EditUsuarioAlteracao.Text;
+  Controller.ID_Aluno := 1;//StrToInt(EditIdAluno.Text);
+  Controller.Nome_Aluno :='Higor'; //EditNomeAluno.Text;
+  Controller.Curso:='BDS'; //EditCurso.Text;
+  Controller.Turno :='E';// EditTurno.Text;
+  Controller.Periodo := 2;//StrToInt(EditPeriodo.Text);
+  Controller.Data_Ingresso:= now; //DateTimePickerIngresso.Date;
+  Controller.Situacao := 'R';//EditSituacao.Text;
+  Controller.Cadeirante := False;//strtobool(ComboBoxCadeirante.Items.Text);
+  Controller.Observacao:= 'Aluno bom e novo !';//MemoObservacao.Text;
+  Controller.Data_Hora_Inclusao := now;//DateTimePickerInclusao.Date;
+  Controller.Data_Hora_Alteracao := now;//DateTimePickerAlteracao.Date;
+  Controller.Usuario_Alteracao :='Andriws'; //EditUsuarioAlteracao.Text;
+  Controller.Insert;
+
+
+  // Controller.Insert;
 
   // Inicio regras de visibilidade/habilitação/edição //
   TabSheetCadastro.TabVisible := True;
@@ -226,6 +229,7 @@ begin
   EditUsuarioInclusao.ReadOnly := False;
   EditUsuarioAlteracao.ReadOnly := False;
   MemoObservacao.ReadOnly := False;
+
 end;
 
 end.

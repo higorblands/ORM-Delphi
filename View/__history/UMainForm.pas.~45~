@@ -180,52 +180,55 @@ var
   Controller: TController;
 begin
 
-  Controller := TController.Create;
-  Controller.conn := FDConnection1;
-  Controller.Query := FDQuery1;
-  ShowMessage(Controller.FieldNotNull);
-  Controller.ID_Aluno.Value := StrToInt(EditIdAluno.Text);
-  Controller.Nome_Aluno.Value := EditNomeAluno.Text;
-  Controller.Curso.Value := EditCurso.Text;
-  Controller.Turno.Value := EditTurno.Text;
-  Controller.Periodo.Value := StrToInt(EditPeriodo.Text);
-  Controller.Data_Ingresso.Value := DateTimePickerIngresso.Date;
-  Controller.Situacao.Value := EditSituacao.Text;
-  Controller.Cadeirante.Value := strtobool(ComboBoxCadeirante.Items.Text);
-  Controller.Observacao.Value := MemoObservacao.Text;
-  Controller.Data_Hora_Inclusao.Value := DateTimePickerInclusao.Date;
-  Controller.Data_Hora_Alteracao.Value := DateTimePickerAlteracao.Date;
-  Controller.Usuario_Alteracao.Value := EditUsuarioAlteracao.Text;
-  ShowMessage(Controller.Insert);
-  // Inicio regras de visibilidade/habilitação/edição //
-  TabSheetCadastro.TabVisible := True;
-  TabSheetListagem.TabVisible := False;
-  btnIncluir.Enabled := False;
-  btnAlterar.Enabled := False;
-  btnExcluir.Enabled := False;
-  btnSalvar.Enabled := True;
-  btnCancelar.Enabled := True;
-  btnCadastroVoltar.Enabled := False;
-  EditUsuarioInclusao.Visible := False;
-  EditUsuarioAlteracao.Visible := False;
-  DateTimePickerInclusao.Visible := False;
-  DateTimePickerAlteracao.Visible := False;
-  Label10.Visible := False;
-  Label11.Visible := False;
-  Label17.Visible := False;
-  Label18.Visible := False;
-  EditCurso.ReadOnly := False;
-  EditIdAluno.ReadOnly := True;
-  EditNomeAluno.ReadOnly := False;
-  EditCurso.ReadOnly := False;
-  EditTurno.ReadOnly := False;
-  EditPeriodo.ReadOnly := False;
-  DateTimePickerIngresso.Enabled := True;
-  ComboBoxCadeirante.Enabled := True;
-  EditSituacao.ReadOnly := False;
-  EditUsuarioInclusao.ReadOnly := False;
-  EditUsuarioAlteracao.ReadOnly := False;
-  MemoObservacao.ReadOnly := False;
-end;
+    Controller := TController.Create;
+    Controller.conn := FDConnection1;
+    Controller.Query := FDQuery1;
+    Controller.ID_Aluno.Value:= StrToInt(EditIdAluno.Text);
+    Controller.Nome_Aluno.Value := EditNomeAluno.Text;
+    Controller.Curso.Value:= EditCurso.Text;
+    Controller.Turno.Value := EditTurno.Text;
+    Controller.Periodo.Value := StrToInt(EditPeriodo.Text);
+    Controller.Data_Ingresso.Value := DateTimePickerIngresso.Date;
+    Controller.Situacao.Value := EditSituacao.Text;
+    Controller.Cadeirante.Value := strtobool(ComboBoxCadeirante.Items.Text);
+    Controller.Observacao.Value := MemoObservacao.Text;
+    Controller.Data_Hora_Inclusao.Value := DateTimePickerInclusao.Date;
+    Controller.Data_Hora_Alteracao.Value := DateTimePickerAlteracao.Date;
+    Controller.Usuario_Alteracao.Value := EditUsuarioAlteracao.Text;
+    //Controller.Insert;
+
+
+    // Inicio regras de visibilidade/habilitação/edição //
+    TabSheetCadastro.TabVisible := True;
+    TabSheetListagem.TabVisible := False;
+    btnIncluir.Enabled := False;
+    btnAlterar.Enabled := False;
+    btnExcluir.Enabled := False;
+    btnSalvar.Enabled := True;
+    btnCancelar.Enabled := True;
+    btnCadastroVoltar.Enabled := False;
+    EditUsuarioInclusao.Visible := False;
+    EditUsuarioAlteracao.Visible := False;
+    DateTimePickerInclusao.Visible := False;
+    DateTimePickerAlteracao.Visible := False;
+    Label10.Visible := False;
+    Label11.Visible := False;
+    Label17.Visible := False;
+    Label18.Visible := False;
+    EditCurso.ReadOnly := False;
+    EditIdAluno.ReadOnly := True;
+    EditNomeAluno.ReadOnly := False;
+    EditCurso.ReadOnly := False;
+    EditTurno.ReadOnly := False;
+    EditPeriodo.ReadOnly := False;
+    DateTimePickerIngresso.Enabled := True;
+    ComboBoxCadeirante.Enabled := True;
+    EditSituacao.ReadOnly := False;
+    EditUsuarioInclusao.ReadOnly := False;
+    EditUsuarioAlteracao.ReadOnly := False;
+    MemoObservacao.ReadOnly := False;
+
+  end;
+
 
 end.

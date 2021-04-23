@@ -180,55 +180,59 @@ var
   Controller: TController;
 begin
 
-    Controller := TController.Create;
-    Controller.conn := FDConnection1;
-    Controller.Query := FDQuery1;
-    Controller.FID_Aluno := StrToInt(EditIdAluno.Text);
-    Controller.FNome_Aluno := EditNomeAluno.Text;
-    Controller.FCurso := EditCurso.Text;
-    Controller.FTurno := EditTurno.Text;
-    Controller.FPeriodo := StrToInt(EditPeriodo.Text);
-    Controller.FData_Ingresso := DateTimePickerIngresso.Date;
-    Controller.FSituacao := EditSituacao.Text;
-    Controller.FCadeirante := strtobool(ComboBoxCadeirante.Items.Text);
-    Controller.FObservacao := MemoObservacao.Text;
-    Controller.FData_Hora_Inclusao := DateTimePickerInclusao.Date;
-    Controller.FData_Hora_Alteracao := DateTimePickerAlteracao.Date;
-    Controller.FUsuario_Alteracao := EditUsuarioAlteracao.Text;
-    Controller.Insert;
+  Controller := TController.Create;
+  Controller.conn := FDConnection1;
+  Controller.Query := FDQuery1;
+  Controller.ID_Aluno := 1; // StrToInt(EditIdAluno.Text);
+  Controller.Nome_Aluno := 'Higor'; // EditNomeAluno.Text;
+  Controller.Curso := 'BDS'; // EditCurso.Text;
+  Controller.Turno := 'E'; // EditTurno.Text;
+  Controller.Periodo := 2; // StrToInt(EditPeriodo.Text);
+  Controller.Data_Ingresso := now; // DateTimePickerIngresso.Date;
+  Controller.Situacao := 'R'; // EditSituacao.Text;
+  Controller.Cadeirante := False; // strtobool(ComboBoxCadeirante.Items.Text);
+  Controller.Observacao := 'Aluno bom e novo !'; // MemoObservacao.Text;
+
+  Controller.Data_Hora_Inclusao := now; // DateTimePickerInclusao.Date;
+  Controller.Usuario_Inclusao := 'Andriws';
+  Controller.Data_Hora_Alteracao := now; // DateTimePickerAlteracao.Date;
+  Controller.Usuario_Alteracao := 'Andriws'; // EditUsuarioAlteracao.Text;
+  Controller.Insert;
+  ShowMessage(Controller.FORMMSG);
 
 
-    // Inicio regras de visibilidade/habilitação/edição //
-    TabSheetCadastro.TabVisible := True;
-    TabSheetListagem.TabVisible := False;
-    btnIncluir.Enabled := False;
-    btnAlterar.Enabled := False;
-    btnExcluir.Enabled := False;
-    btnSalvar.Enabled := True;
-    btnCancelar.Enabled := True;
-    btnCadastroVoltar.Enabled := False;
-    EditUsuarioInclusao.Visible := False;
-    EditUsuarioAlteracao.Visible := False;
-    DateTimePickerInclusao.Visible := False;
-    DateTimePickerAlteracao.Visible := False;
-    Label10.Visible := False;
-    Label11.Visible := False;
-    Label17.Visible := False;
-    Label18.Visible := False;
-    EditCurso.ReadOnly := False;
-    EditIdAluno.ReadOnly := True;
-    EditNomeAluno.ReadOnly := False;
-    EditCurso.ReadOnly := False;
-    EditTurno.ReadOnly := False;
-    EditPeriodo.ReadOnly := False;
-    DateTimePickerIngresso.Enabled := True;
-    ComboBoxCadeirante.Enabled := True;
-    EditSituacao.ReadOnly := False;
-    EditUsuarioInclusao.ReadOnly := False;
-    EditUsuarioAlteracao.ReadOnly := False;
-    MemoObservacao.ReadOnly := False;
+  // Controller.Insert;
 
-  end;
+  // Inicio regras de visibilidade/habilitação/edição //
+  TabSheetCadastro.TabVisible := True;
+  TabSheetListagem.TabVisible := False;
+  btnIncluir.Enabled := False;
+  btnAlterar.Enabled := False;
+  btnExcluir.Enabled := False;
+  btnSalvar.Enabled := True;
+  btnCancelar.Enabled := True;
+  btnCadastroVoltar.Enabled := False;
+  EditUsuarioInclusao.Visible := False;
+  EditUsuarioAlteracao.Visible := False;
+  DateTimePickerInclusao.Visible := False;
+  DateTimePickerAlteracao.Visible := False;
+  Label10.Visible := False;
+  Label11.Visible := False;
+  Label17.Visible := False;
+  Label18.Visible := False;
+  EditCurso.ReadOnly := False;
+  EditIdAluno.ReadOnly := True;
+  EditNomeAluno.ReadOnly := False;
+  EditCurso.ReadOnly := False;
+  EditTurno.ReadOnly := False;
+  EditPeriodo.ReadOnly := False;
+  DateTimePickerIngresso.Enabled := True;
+  ComboBoxCadeirante.Enabled := True;
+  EditSituacao.ReadOnly := False;
+  EditUsuarioInclusao.ReadOnly := False;
+  EditUsuarioAlteracao.ReadOnly := False;
+  MemoObservacao.ReadOnly := False;
 
+end;
 
 end.

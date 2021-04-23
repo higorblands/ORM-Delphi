@@ -153,18 +153,16 @@ object FMain: TFMain
       end
       object Painel: TPanel
         Left = 0
-        Top = 275
+        Top = 276
         Width = 602
         Height = 47
         Align = alBottom
         TabOrder = 2
-        ExplicitTop = 276
       end
     end
     object TabSheetCadastro: TTabSheet
       Caption = 'Cadastro'
       ImageIndex = 1
-      ExplicitHeight = 322
       object Label1: TLabel
         Left = 3
         Top = 27

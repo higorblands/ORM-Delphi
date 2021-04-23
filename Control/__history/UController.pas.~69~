@@ -162,13 +162,30 @@ begin
       Add('INSERT INTO Aluno (' + Aluno.sColumnsBD + ')' + ' VALUES(' +
         Aluno.sValuesBD + ');');
     end;
-    Query.SQL.SaveToFile('D:\Rewards2.txt');
-
-    // Query.ExecSQL;
-    Query.Close;
-    FORMMSG := Aluno.FORMMSG;
   end;
 
+  {
+    inherited;
+    FId_Aluno := TIntegerFieldORM.create;
+    FPeriodo := TIntegerFieldORM.create;
+    FNome_Aluno := TStringFieldORM.create;
+    FNome_Aluno.Length := 200;
+    FCurso := TStringFieldORM.create;
+    FCurso.Length := 50;
+    FObservacao := TStringFieldORM.create;
+    FObservacao.Length := 16;
+    FUsuario_Inclusao := TStringFieldORM.create;
+    FUsuario_Inclusao.Length := 25;
+    FUsuario_alteracao := TStringFieldORM.create;
+    FUsuario_alteracao.Length := 25;
+    FTurno := TStringFieldORM.create;
+    FSituacao := TStringFieldORM.create;
+    FCadeirante := TBooleanFieldORM.create;
+    FData_Hora_Inclusao := TDateTimeFieldORM.create;
+    FUsuario_Inclusao := TStringFieldORM.create;
+    FData_Hora_Alteracao := TDateTimeFieldORM.create;
+    FData_Ingresso := TDateFieldORM.create;
+  }
 end;
 
 procedure TController.setCadeirante(const Value: Boolean);

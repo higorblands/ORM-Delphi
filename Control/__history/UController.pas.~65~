@@ -86,7 +86,7 @@ end;
 
 function TController.getCadeirante: Boolean;
 begin
-  Result := Aluno.Cadeirante.Value;
+  Result := FCadeirante;
 end;
 
 function TController.getCurso: String;
@@ -117,125 +117,131 @@ end;
 
 function TController.getNome_Aluno: String;
 begin
-  Result := Aluno.Nome_Aluno.Value;
+  Result := FNome_Aluno;
 end;
 
 function TController.getObservacao: String;
 begin
-  Result := Aluno.Observacao.Value;
+  Result := FObservacao;
 end;
 
 function TController.getPeriodo: Integer;
 begin
-  Result := Aluno.Periodo.Value;
+  Result := FPeriodo;
 end;
 
 function TController.getSituacao: String;
 begin
-  Result := Aluno.Situacao.Value;
+  Result := FSituacao;
 end;
 
 function TController.getTurno: String;
 begin
-  Result := Aluno.Turno.Value;
+  Result := FTurno;
 end;
 
 function TController.getUsuario_Alteracao: String;
 begin
-  Result := Aluno.Usuario_Alteracao.Value;
+  Result := FUsuario_alteracao;
 end;
 
 function TController.getUsuario_Inclusao: String;
 begin
-  Result := Aluno.Usuario_Inclusao.Value;
+  Result := FUsuario_Inclusao;
 end;
 
 function TController.Insert: String;
 
-begin
-  if Aluno.FieldNotNull.Assigned then
-  begin
-    Aluno.PrepareSQL;
-    with Query.SQL do
-    begin
-      Clear;
-      Add('INSERT INTO Aluno (' + Aluno.sColumnsBD + ')' + ' VALUES(' +
-        Aluno.sValuesBD + ');');
-    end;
-    Query.SQL.SaveToFile('D:\Rewards2.txt');
-
-    // Query.ExecSQL;
-    Query.Close;
-    FORMMSG := Aluno.FORMMSG;
-  end;
-
+begin {
+    inherited;
+    FId_Aluno := TIntegerFieldORM.create;
+    FPeriodo := TIntegerFieldORM.create;
+    FNome_Aluno := TStringFieldORM.create;
+    FNome_Aluno.Length := 200;
+    FCurso := TStringFieldORM.create;
+    FCurso.Length := 50;
+    FObservacao := TStringFieldORM.create;
+    FObservacao.Length := 16;
+    FUsuario_Inclusao := TStringFieldORM.create;
+    FUsuario_Inclusao.Length := 25;
+    FUsuario_alteracao := TStringFieldORM.create;
+    FUsuario_alteracao.Length := 25;
+    FTurno := TStringFieldORM.create;
+    FSituacao := TStringFieldORM.create;
+    FCadeirante := TBooleanFieldORM.create;
+    FData_Hora_Inclusao := TDateTimeFieldORM.create;
+    FUsuario_Inclusao := TStringFieldORM.create;
+    FData_Hora_Alteracao := TDateTimeFieldORM.create;
+    FData_Ingresso := TDateFieldORM.create;
+  }
 end;
 
 procedure TController.setCadeirante(const Value: Boolean);
 begin
-  Aluno.Cadeirante.Value := Value;
+  FCadeirante := Value;
 
 end;
 
 procedure TController.setCurso(const Value: String);
 begin
-  Aluno.Curso.Value := Value;
+  FCurso := Value;
 end;
 
 procedure TController.setData_Hora_Alteracao(const Value: TDateTime);
 begin
-  Aluno.Data_Hora_Alteracao.Value := Value;
+  FData_Hora_Alteracao := Value;
 end;
 
 procedure TController.setData_Hora_Inclusao(const Value: TDateTime);
 begin
-  Aluno.Data_Hora_Inclusao.Value := Value;
+  FData_Hora_Inclusao := Value;
 end;
 
 procedure TController.setData_Ingresso(const Value: TDate);
 begin
-  Aluno.Data_Ingresso.Value := Value;
+  FData_Ingresso := Value;
 end;
 
 procedure TController.setID_Aluno(const Value: Integer);
 begin
 
+  // FId_Aluno := Value;
   Aluno.ID_Aluno.Value := Value;
 end;
 
 procedure TController.setNome_Aluno(const Value: String);
 begin
-  Aluno.Nome_Aluno.Value := Value;
+  FNome_Aluno := Value;
 end;
 
 procedure TController.setObservacao(const Value: String);
 begin
-  Aluno.Observacao.Value := Value;
+  FObservacao := Value;
 end;
 
 procedure TController.setPeriodo(const Value: Integer);
 begin
-  Aluno.Periodo.Value := Value;
+  FPeriodo := Value;
 end;
 
 procedure TController.setSituacao(const Value: String);
 begin
-  Aluno.Situacao.Value := Value;
+  FSituacao := Value;
 end;
 
 procedure TController.setTurno(const Value: String);
 begin
-  Aluno.Turno.Value := Value;
+  FTurno := Value;
 end;
 
 procedure TController.setUsuario_alteracao(const Value: String);
 begin
-  Aluno.Usuario_Alteracao.Value := Value;
+  FUsuario_alteracao := Value;
 end;
 
 procedure TController.setUsuario_Inclusao(const Value: String);
 begin
-  Aluno.Usuario_Inclusao.Value := Value;
+  FUsuario_Inclusao := Value;
 end;
 
 end.

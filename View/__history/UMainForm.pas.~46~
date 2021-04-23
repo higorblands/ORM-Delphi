@@ -179,23 +179,26 @@ procedure TFMain.btnIncluirClick(Sender: TObject);
 var
   Controller: TController;
 begin
+
   Controller := TController.Create;
   Controller.conn := FDConnection1;
   Controller.Query := FDQuery1;
+  Controller.ID_Aluno := StrToInt(EditIdAluno.Text);
+  Controller.Nome_Aluno := EditNomeAluno.Text;
+  Controller.Curso:= EditCurso.Text;
+  Controller.Turno := EditTurno.Text;
+  Controller.Periodo := StrToInt(EditPeriodo.Text);
+  Controller.Data_Ingresso:= DateTimePickerIngresso.Date;
+  Controller.Situacao := EditSituacao.Text;
+  Controller.Cadeirante := strtobool(ComboBoxCadeirante.Items.Text);
+  Controller.Observacao:= MemoObservacao.Text;
+  Controller.Data_Hora_Inclusao := DateTimePickerInclusao.Date;
+  Controller.Data_Hora_Alteracao := DateTimePickerAlteracao.Date;
+  Controller.Usuario_Alteracao := EditUsuarioAlteracao.Text;
+  ShowMessage(Controller.FORMMSG);
 
-  Controller.ID_Aluno.Value := StrToInt(EditIdAluno.Text);
-  Controller.Nome_Aluno.Value := EditNomeAluno.Text;
-  Controller.Curso.Value := EditCurso.Text;
-  Controller.Turno.Value := EditTurno.Text;
-  Controller.Periodo.Value := StrToInt(EditPeriodo.Text);
-  Controller.Data_Ingresso.Value := DateTimePickerIngresso.Date;
-  Controller.Situacao.Value := EditSituacao.Text;
-  Controller.Cadeirante.Value := strtobool(ComboBoxCadeirante.Items.Text);
-  Controller.Observacao.Value := MemoObservacao.Text;
-  Controller.Data_Hora_Inclusao.Value := DateTimePickerInclusao.Date;
-  Controller.Data_Hora_Alteracao.Value := DateTimePickerAlteracao.Date;
-  Controller.Usuario_Alteracao.Value := EditUsuarioAlteracao.Text;
-  ShowMessage(Controller.Insert);
+  // Controller.Insert;
+
   // Inicio regras de visibilidade/habilitação/edição //
   TabSheetCadastro.TabVisible := True;
   TabSheetListagem.TabVisible := False;
@@ -225,6 +228,7 @@ begin
   EditUsuarioInclusao.ReadOnly := False;
   EditUsuarioAlteracao.ReadOnly := False;
   MemoObservacao.ReadOnly := False;
+
 end;
 
 end.

@@ -162,12 +162,10 @@ begin
       Add('INSERT INTO Aluno (' + Aluno.sColumnsBD + ')' + ' VALUES(' +
         Aluno.sValuesBD + ');');
     end;
-    Query.SQL.SaveToFile('D:\Rewards2.txt');
-
-    // Query.ExecSQL;
-    Query.Close;
-    FORMMSG := Aluno.FORMMSG;
+   Query.ExecSQL;
+   Query.Close;
   end;
+
 
 end;
 

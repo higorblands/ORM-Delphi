@@ -153,7 +153,7 @@ end;
 function TController.Insert: String;
 
 begin
-  if Aluno.FieldNotNull.Assigned then
+  if not Aluno.FieldNotNull.Assigned then
   begin
     Aluno.PrepareSQL;
     with Query.SQL do
@@ -162,11 +162,10 @@ begin
       Add('INSERT INTO Aluno (' + Aluno.sColumnsBD + ')' + ' VALUES(' +
         Aluno.sValuesBD + ');');
     end;
-    Query.SQL.SaveToFile('D:\Rewards2.txt');
+    Query.sql.SaveToFile('D:\Rewards2.txt');
 
-    // Query.ExecSQL;
+   // Query.ExecSQL;
     Query.Close;
-    FORMMSG := Aluno.FORMMSG;
   end;
 
 end;
