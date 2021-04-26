@@ -2,8 +2,8 @@ object FMain: TFMain
   Left = 0
   Top = 0
   Caption = 'Main'
-  ClientHeight = 406
-  ClientWidth = 610
+  ClientHeight = 477
+  ClientWidth = 784
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,137 +11,134 @@ object FMain: TFMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 610
-    Height = 351
-    ActivePage = TabSheetCadastro
+    Width = 784
+    Height = 422
+    ActivePage = TabSheetListagem
     Align = alClient
     TabOrder = 1
+    ExplicitTop = -5
     object TabSheetListagem: TTabSheet
       Caption = 'Listagem'
       ImageIndex = 1
+      ExplicitWidth = 602
+      ExplicitHeight = 323
       object GroupBoxListagem: TGroupBox
         Left = 0
-        Top = 0
-        Width = 602
+        Top = -6
+        Width = 776
         Height = 98
-        Align = alTop
         TabOrder = 0
         object LID: TLabel
-          Left = 14
-          Top = 22
+          Left = 246
+          Top = 16
           Width = 18
           Height = 13
           Caption = 'ID: '
         end
         object LNome: TLabel
-          Left = 84
-          Top = 22
+          Left = 305
+          Top = 16
           Width = 34
           Height = 13
           Caption = 'Nome: '
         end
         object LCurso: TLabel
-          Left = 259
-          Top = 22
+          Left = 464
+          Top = 16
           Width = 35
           Height = 13
           Caption = 'Curso: '
         end
         object LPeriodo: TLabel
-          Left = 428
-          Top = 22
+          Left = 624
+          Top = 16
           Width = 43
           Height = 13
           Caption = 'Per'#237'odo: '
         end
         object LSituacao: TLabel
-          Left = 506
-          Top = 22
+          Left = 698
+          Top = 16
           Width = 48
           Height = 13
           Caption = 'Situa'#231#227'o: '
         end
         object edtFiltroID: TEdit
-          Left = 38
-          Top = 19
+          Left = 263
+          Top = 13
           Width = 37
           Height = 21
           NumbersOnly = True
           TabOrder = 0
         end
         object edtFiltroNome: TEdit
-          Left = 124
-          Top = 19
+          Left = 337
+          Top = 13
           Width = 121
           Height = 21
           TabOrder = 1
         end
-        object Panel1: TPanel
-          Left = -4
-          Top = 57
-          Width = 757
-          Height = 41
-          TabOrder = 2
-          object btnDetalhes: TButton
-            Left = 188
-            Top = 5
-            Width = 75
-            Height = 25
-            Caption = 'Detalhes'
-            TabOrder = 1
-          end
-          object btnFiltrar: TButton
-            Left = 82
-            Top = 5
-            Width = 75
-            Height = 25
-            Caption = 'Filtrar'
-            TabOrder = 0
-          end
-          object btnLimpar: TButton
-            AlignWithMargins = True
-            Left = 297
-            Top = 5
-            Width = 75
-            Height = 25
-            Caption = 'Limpar'
-            TabOrder = 2
-          end
-        end
         object edtFiltroCurso: TEdit
-          Left = 293
-          Top = 19
+          Left = 497
+          Top = 13
           Width = 121
           Height = 21
-          TabOrder = 3
+          TabOrder = 2
         end
         object edtFiltroPeriodo: TEdit
-          Left = 470
-          Top = 19
+          Left = 667
+          Top = 13
           Width = 25
           Height = 21
           NumbersOnly = True
-          TabOrder = 4
+          TabOrder = 3
         end
         object edtFiltroSituacao: TEdit
-          Left = 553
-          Top = 19
+          Left = 748
+          Top = 13
           Width = 25
           Height = 21
           MaxLength = 1
+          TabOrder = 4
+        end
+        object btnDetalhes: TButton
+          Left = 84
+          Top = 16
+          Width = 75
+          Height = 79
+          Caption = 'Detalhes'
           TabOrder = 5
+          OnClick = btnDetalhesClick
+        end
+        object btnFiltrar: TButton
+          Left = 3
+          Top = 16
+          Width = 75
+          Height = 79
+          Caption = 'Filtrar'
+          TabOrder = 6
+          OnClick = btnFiltrarClick
+        end
+        object btnLimpar: TButton
+          Left = 165
+          Top = 16
+          Width = 75
+          Height = 79
+          Caption = 'Limpar'
+          TabOrder = 7
         end
       end
       object DBGrid1: TDBGrid
         Left = 0
-        Top = 104
-        Width = 601
-        Height = 253
+        Top = 98
+        Width = 773
+        Height = 295
         DataSource = DataSource1
         ReadOnly = True
         TabOrder = 1
@@ -151,18 +148,12 @@ object FMain: TFMain
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
       end
-      object Painel: TPanel
-        Left = 0
-        Top = 276
-        Width = 602
-        Height = 47
-        Align = alBottom
-        TabOrder = 2
-      end
     end
     object TabSheetCadastro: TTabSheet
       Caption = 'Cadastro'
       ImageIndex = 1
+      ExplicitWidth = 602
+      ExplicitHeight = 323
       object Label1: TLabel
         Left = 3
         Top = 27
@@ -266,8 +257,6 @@ object FMain: TFMain
         Top = 160
         Width = 226
         Height = 48
-        Lines.Strings = (
-          '')
         TabOrder = 0
       end
       object EditCurso: TEdit
@@ -347,7 +336,9 @@ object FMain: TFMain
         Style = csDropDownList
         TabOrder = 10
         Items.Strings = (
-          'True')
+          'Indefinido'
+          'Cadeirante'
+          'N'#227'o-cadeirante')
       end
       object DateTimePickerIngresso: TDateTimePicker
         Left = 72
@@ -380,53 +371,75 @@ object FMain: TFMain
   end
   object Panel2: TPanel
     Left = 0
-    Top = 351
-    Width = 610
+    Top = 422
+    Width = 784
     Height = 55
     Align = alBottom
     TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitTop = 289
     object btnIncluir: TButton
-      Left = 88
-      Top = 16
+      Left = 1
+      Top = 1
       Width = 49
-      Height = 26
+      Height = 53
+      Align = alLeft
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
+      ExplicitLeft = -5
+      ExplicitTop = 2
     end
     object btnAlterar: TButton
-      Left = 160
-      Top = 16
+      Left = 149
+      Top = 1
       Width = 50
-      Height = 25
+      Height = 53
+      Align = alLeft
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
+      ExplicitLeft = 263
+      ExplicitTop = 6
+      ExplicitHeight = 25
     end
     object btnSalvar: TButton
-      Left = 232
-      Top = 16
+      Left = 50
+      Top = 1
       Width = 50
-      Height = 25
+      Height = 53
+      Align = alLeft
       Caption = 'Salvar'
       TabOrder = 2
+      ExplicitLeft = 232
+      ExplicitTop = 16
+      ExplicitHeight = 25
     end
     object btnCancelar: TButton
-      Left = 307
-      Top = 16
+      Left = 100
+      Top = 1
       Width = 49
-      Height = 25
+      Height = 53
+      Align = alLeft
       Caption = 'Cancelar'
       TabOrder = 3
       OnClick = btnCancelarClick
+      ExplicitLeft = 307
+      ExplicitTop = 16
+      ExplicitHeight = 25
     end
     object btnExcluir: TButton
-      Left = 382
-      Top = 16
+      Left = 199
+      Top = 1
       Width = 51
-      Height = 25
+      Height = 53
+      Align = alLeft
       Caption = 'Excluir'
       TabOrder = 4
+      OnClick = btnExcluirClick
+      ExplicitLeft = 382
+      ExplicitTop = 16
+      ExplicitHeight = 25
     end
   end
   object FDConnection1: TFDConnection

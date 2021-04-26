@@ -158,6 +158,8 @@ begin
 
 end;
 
+
+
 function TAluno.Read(ID: Integer): Boolean;
 begin
   FORMMSG := '';
@@ -189,6 +191,7 @@ begin
     Result := True;
     FORMMSG := 'Operação realizada com sucesso !';
   end;
+
   QueryORM.Close;
 end;
 

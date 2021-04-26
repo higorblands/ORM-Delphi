@@ -24,11 +24,6 @@ type
     edtFiltroID: TEdit;
     edtFiltroNome: TEdit;
     DBGrid1: TDBGrid;
-    Panel1: TPanel;
-    btnDetalhes: TButton;
-    btnFiltrar: TButton;
-    btnLimpar: TButton;
-    Painel: TPanel;
     Panel2: TPanel;
     btnIncluir: TButton;
     btnAlterar: TButton;
@@ -72,12 +67,22 @@ type
     edtFiltroPeriodo: TEdit;
     LSituacao: TLabel;
     edtFiltroSituacao: TEdit;
+    btnDetalhes: TButton;
+    btnFiltrar: TButton;
+    btnLimpar: TButton;
     procedure btnIncluirClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnCadastroVoltarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btnFiltrarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnDetalhesClick(Sender: TObject);
   private
     { Private declarations }
+    procedure GridCustomize;
+    Procedure GenericSelect;
+
   public
     { Public declarations }
   end;
@@ -90,12 +95,13 @@ implementation
 {$R *.dfm}
 
 procedure TFMain.btnAlterarClick(Sender: TObject);
+var
+  controller: TController;
 
 begin
 
   // Inicio regras de visibilidade/habilitação/edição //
-  TabSheetCadastro.TabVisible := True;
-  TabSheetListagem.TabVisible := False;
+
   btnIncluir.Enabled := False;
   btnAlterar.Enabled := False;
   btnExcluir.Enabled := False;
@@ -122,25 +128,25 @@ begin
   EditUsuarioInclusao.ReadOnly := False;
   EditUsuarioAlteracao.ReadOnly := False;
   MemoObservacao.ReadOnly := False;
+
 end;
 
 procedure TFMain.btnCadastroVoltarClick(Sender: TObject);
 begin
   // Inicio regras de visibilidade/habilitação/edição //
-  TabSheetCadastro.TabVisible := False;
-  TabSheetListagem.TabVisible := True;
+
   btnIncluir.Enabled := True;
   btnAlterar.Enabled := True;
   btnSalvar.Enabled := False;
   btnCancelar.Enabled := True;
+  TabSheetCadastro.TabVisible := True;
 end;
 
 procedure TFMain.btnCancelarClick(Sender: TObject);
 begin
 
   // Inicio regras de visibilidade/habilitação/edição //
-  TabSheetListagem.TabVisible := False;
-  TabSheetCadastro.TabVisible := True;
+
   btnExcluir.Enabled := True;
   btnSalvar.Enabled := False;
   btnCancelar.Enabled := True;
@@ -174,38 +180,87 @@ begin
 
 end;
 
+procedure TFMain.btnDetalhesClick(Sender: TObject);
+var
+  controller: TController;
+begin
+  controller := TController.Create;
+  controller.conn := FDConnection1;
+  controller.Query := FDQuery1;
+  controller.ID_Aluno := 35;
+  controller.read(controller.ID_Aluno);
+  PageControl.ActivePageIndex := 1;
+  EditIdAluno.Text := IntToStr(controller.ID_Aluno);
+  EditNomeAluno.Text := controller.Nome_Aluno;
+  EditCurso.Text := controller.Curso;
+  EditPeriodo.Text := IntToStr(controller.Periodo);
+  EditTurno.Text := controller.Turno;
+  EditSituacao.Text := controller.Situacao;
+  case controller.Cadeirante of
+    False:
+      ComboBoxCadeirante.ItemIndex := 2;
+    True:
+      ComboBoxCadeirante.ItemIndex := 1;
+
+  end;
+  DateTimePickerIngresso.Date := controller.Data_Ingresso;
+  EditUsuarioInclusao.Text := controller.Usuario_Inclusao;
+  EditUsuarioAlteracao.Text := controller.Usuario_Alteracao;
+  DateTimePickerInclusao.DateTime := controller.Data_Hora_Inclusao;
+  DateTimePickerAlteracao.DateTime := controller.Data_Hora_Alteracao;
+  MemoObservacao.Lines.Add(controller.Observacao);
+
+end;
+
+procedure TFMain.btnExcluirClick(Sender: TObject);
+var
+  controller: TController;
+begin
+  controller := TController.Create;
+  controller.conn := FDConnection1;
+  controller.Query := FDQuery1;
+  controller.ID_Aluno := 32;
+  controller.Delete;
+  ShowMessage(controller.FORMMSG);
+  controller.Free;
+  GenericSelect;
+
+end;
+
+procedure TFMain.btnFiltrarClick(Sender: TObject);
+begin
+  GenericSelect;
+  GridCustomize;
+end;
+
 procedure TFMain.btnIncluirClick(Sender: TObject);
 
 var
-  Controller: TController;
+  controller: TController;
 begin
 
-  Controller := TController.Create;
-  Controller.conn := FDConnection1;
-  Controller.Query := FDQuery1;
-  Controller.ID_Aluno := 1; // StrToInt(EditIdAluno.Text);
-  Controller.Nome_Aluno := 'Higor'; // EditNomeAluno.Text;
-  Controller.Curso := 'BDS'; // EditCurso.Text;
-  Controller.Turno := 'E'; // EditTurno.Text;
-  Controller.Periodo := 2; // StrToInt(EditPeriodo.Text);
-  Controller.Data_Ingresso := now; // DateTimePickerIngresso.Date;
-  Controller.Situacao := 'R'; // EditSituacao.Text;
-  Controller.Cadeirante := False; // strtobool(ComboBoxCadeirante.Items.Text);
-  Controller.Observacao := 'Aluno bom e novo !'; // MemoObservacao.Text;
+  controller := TController.Create;
+  controller.conn := FDConnection1;
+  controller.Query := FDQuery1;
+  controller.ID_Aluno := 1305; // StrToInt(EditIdAluno.Text);
+  controller.Nome_Aluno := 'Higor'; // EditNomeAluno.Text;
+  controller.Curso := 'BDS'; // EditCurso.Text;
+  controller.Turno := 'E'; // EditTurno.Text;
+  controller.Periodo := 2; // StrToInt(EditPeriodo.Text);
+  controller.Data_Ingresso := now; // DateTimePickerIngresso.Date;
+  controller.Situacao := 'R'; // EditSituacao.Text;
+  controller.Cadeirante := False; // strtobool(ComboBoxCadeirante.Items.Text);
+  controller.Observacao := 'Aluno bom e novo !'; // MemoObservacao.Text;
 
-  Controller.Data_Hora_Inclusao := now; // DateTimePickerInclusao.Date;
-  Controller.Usuario_Inclusao := 'Andriws';
-  Controller.Data_Hora_Alteracao := now; // DateTimePickerAlteracao.Date;
-  Controller.Usuario_Alteracao := 'Andriws'; // EditUsuarioAlteracao.Text;
-  Controller.Insert;
-  ShowMessage(Controller.FORMMSG);
-
-
-  // Controller.Insert;
+  controller.Data_Hora_Inclusao := now; // DateTimePickerInclusao.Date;
+  controller.Usuario_Inclusao := 'Andriws';
+  controller.Data_Hora_Alteracao := now; // DateTimePickerAlteracao.Date;
+  controller.Usuario_Alteracao := 'Andriws'; // EditUsuarioAlteracao.Text;
+  controller.Insert;
+  ShowMessage(controller.FORMMSG);
 
   // Inicio regras de visibilidade/habilitação/edição //
-  TabSheetCadastro.TabVisible := True;
-  TabSheetListagem.TabVisible := False;
+
   btnIncluir.Enabled := False;
   btnAlterar.Enabled := False;
   btnExcluir.Enabled := False;
@@ -232,7 +287,65 @@ begin
   EditUsuarioInclusao.ReadOnly := False;
   EditUsuarioAlteracao.ReadOnly := False;
   MemoObservacao.ReadOnly := False;
+  GenericSelect;
+  //DBGrid1.DataSource.DataSet.UpdateRecord;
 
 end;
+
+procedure TFMain.GenericSelect;
+begin
+  FDQuery1.SQL.Clear;
+  FDQuery1.SQL.Add('select * from Aluno');
+  FDQuery1.Open;
+end;
+
+procedure TFMain.FormCreate(Sender: TObject);
+begin
+  TabSheetCadastro.TabVisible := False;
+  PageControl.ActivePageIndex := 0;
+  ComboBoxCadeirante.ItemIndex := 0;
+
+  {
+    TabSheetListagem.Visible := True;
+    TabSheetListagem.Visible := True;
+    TabSheetListagem.Enabled := True;
+    TabSheetCadastro.Visible := False;
+    TabSheetCadastro.Enabled := False;
+  }
+  if DataSource1.DataSet.IsEmpty then
+  begin
+    btnDetalhes.Enabled := False;
+    btnAlterar.Enabled := False;
+  end;
+  GridCustomize;
+end;
+
+procedure TFMain.GridCustomize;
+begin
+  DBGrid1.Columns[0].Title.Caption := 'ID';
+  DBGrid1.Columns[1].Title.Caption := 'Nome';
+  DBGrid1.Columns[2].Title.Caption := 'Curso';
+  DBGrid1.Columns[3].Title.Caption := 'Turno';
+  DBGrid1.Columns[4].Title.Caption := 'Período';
+  DBGrid1.Columns[5].Title.Caption := 'Data de Ingresso';
+  DBGrid1.Columns[6].Title.Caption := 'Situação';
+  DBGrid1.Columns[7].Title.Caption := 'Cadeirante';
+  DBGrid1.Columns[8].Title.Caption := 'Observação';
+  DBGrid1.Columns[9].Title.Caption := 'Data - Hora Inclusão';
+  DBGrid1.Columns[10].Title.Caption := 'Usuário Inclusão';
+  DBGrid1.Columns[11].Title.Caption := 'Data - Hora Alteração';
+  DBGrid1.Columns[12].Title.Caption := 'Usuário Alteração';
+  DBGrid1.Columns[0].Width := 50;
+  DBGrid1.Columns[1].Width := 150;
+  DBGrid1.Columns[2].Width := 100;
+  DBGrid1.Columns[7].Visible := False;
+  DBGrid1.Columns[8].Visible := False;
+  DBGrid1.Columns[9].Visible := False;
+  DBGrid1.Columns[10].Visible := False;
+  DBGrid1.Columns[11].Visible := False;
+  DBGrid1.Columns[12].Visible := False;
+end;
+
+
 
 end.
