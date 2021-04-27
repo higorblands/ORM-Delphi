@@ -80,12 +80,13 @@ type
     procedure btnDetalhesClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
   private
     { Private declarations }
     procedure GridCustomize;
     Procedure GenericSelect;
     procedure ClearEdits;
-    procedure Enableedits;
+    procedure DisableEdits;
 
   var
     controller: TController;
@@ -218,7 +219,8 @@ begin
   DateTimePickerInclusao.DateTime := controller.Data_Hora_Inclusao;
   DateTimePickerAlteracao.DateTime := controller.Data_Hora_Alteracao;
   MemoObservacao.Lines.Add(controller.Observacao);
-
+  btnIncluir.Enabled := False;
+  btnCancelar.Enabled := False;
 end;
 
 procedure TFMain.btnExcluirClick(Sender: TObject);
@@ -232,6 +234,7 @@ begin
   ShowMessage(controller.FORMMSG);
   controller.Free;
   GenericSelect;
+  DisableEdits;
 
 end;
 
@@ -279,7 +282,7 @@ begin
   EditPeriodo.Text := IntToStr(controller.Periodo);
   DateTimePickerIngresso.Date := controller.Data_Ingresso;
   EditSituacao.Text := controller.Situacao;
-   case controller.Cadeirante of
+  case controller.Cadeirante of
     False:
       ComboBoxCadeirante.ItemIndex := 2;
     True:
@@ -334,7 +337,7 @@ begin
   btnCancelar.Enabled := False;
   btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := True;
-  Enableedits;
+  DisableEdits;
 
 end;
 
@@ -351,7 +354,26 @@ begin
   MemoObservacao.Lines.Clear;
 end;
 
-procedure TFMain.Enableedits;
+procedure TFMain.DBGrid1CellClick(Column: TColumn);
+begin
+  controller := TController.Create;
+  controller.conn := FDConnection1;
+  controller.Query := FDQuery1;
+  controller.ID_Aluno := 1505;
+  controller.read(controller.ID_Aluno);
+  edtFiltroID.Text := IntToStr(controller.ID_Aluno);
+  edtFiltroNome.Text := controller.Nome_Aluno;
+  edtFiltroCurso.Text := controller.Curso;
+  edtFiltroPeriodo.Text := IntToStr(controller.Periodo);
+  edtFiltroSituacao.Text := controller.Turno;
+  btnIncluir.Enabled := False;
+  btnCancelar.Enabled := False;
+  GenericSelect;
+  GridCustomize;
+  controller.Free;
+end;
+
+procedure TFMain.DisableEdits;
 begin
   EditIdAluno.Enabled := False;
   EditNomeAluno.Enabled := False;
@@ -365,7 +387,7 @@ begin
   DateTimePickerIngresso.Enabled := False;
   DateTimePickerInclusao.Enabled := False;
   DateTimePickerAlteracao.Enabled := False;
-  ComboBoxCadeirante.Enabled := False.
+  ComboBoxCadeirante.Enabled := False;
 end;
 
 procedure TFMain.GenericSelect;
@@ -373,6 +395,7 @@ begin
   FDQuery1.SQL.Clear;
   FDQuery1.SQL.Add('select * from Aluno');
   FDQuery1.Open;
+  GridCustomize;
 end;
 
 procedure TFMain.FormCreate(Sender: TObject);

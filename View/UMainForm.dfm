@@ -19,7 +19,7 @@ object FMain: TFMain
     Top = 0
     Width = 784
     Height = 422
-    ActivePage = TabSheetListagem
+    ActivePage = TabSheetCadastro
     Align = alClient
     TabOrder = 1
     object TabSheetListagem: TTabSheet
@@ -376,17 +376,16 @@ object FMain: TFMain
     object btnIncluir: TButton
       Left = 1
       Top = 1
-      Width = 49
+      Width = 51
       Height = 53
       Align = alLeft
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
-      ExplicitLeft = -5
-      ExplicitTop = 2
+      ExplicitLeft = 0
     end
     object btnAlterar: TButton
-      Left = 149
+      Left = 151
       Top = 1
       Width = 50
       Height = 53
@@ -394,9 +393,10 @@ object FMain: TFMain
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
+      ExplicitLeft = 149
     end
     object btnSalvar: TButton
-      Left = 50
+      Left = 52
       Top = 1
       Width = 50
       Height = 53
@@ -404,9 +404,10 @@ object FMain: TFMain
       Caption = 'Salvar'
       TabOrder = 2
       OnClick = btnSalvarClick
+      ExplicitLeft = 50
     end
     object btnCancelar: TButton
-      Left = 100
+      Left = 102
       Top = 1
       Width = 49
       Height = 53
@@ -414,9 +415,10 @@ object FMain: TFMain
       Caption = 'Cancelar'
       TabOrder = 3
       OnClick = btnCancelarClick
+      ExplicitLeft = 100
     end
     object btnExcluir: TButton
-      Left = 199
+      Left = 201
       Top = 1
       Width = 51
       Height = 53
@@ -424,6 +426,7 @@ object FMain: TFMain
       Caption = 'Excluir'
       TabOrder = 4
       OnClick = btnExcluirClick
+      ExplicitLeft = 199
     end
   end
   object FDConnection1: TFDConnection

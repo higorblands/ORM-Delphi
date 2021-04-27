@@ -145,6 +145,7 @@ object FMain: TFMain
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        OnCellClick = DBGrid1CellClick
       end
     end
     object TabSheetCadastro: TTabSheet
@@ -381,7 +382,6 @@ object FMain: TFMain
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
-      ExplicitLeft = -5
     end
     object btnAlterar: TButton
       Left = 149
@@ -401,6 +401,7 @@ object FMain: TFMain
       Align = alLeft
       Caption = 'Salvar'
       TabOrder = 2
+      OnClick = btnSalvarClick
     end
     object btnCancelar: TButton
       Left = 100

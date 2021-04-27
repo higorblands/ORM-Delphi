@@ -19,7 +19,7 @@ object FMain: TFMain
     Top = 0
     Width = 784
     Height = 422
-    ActivePage = TabSheetCadastro
+    ActivePage = TabSheetListagem
     Align = alClient
     TabOrder = 1
     object TabSheetListagem: TTabSheet
@@ -129,6 +129,7 @@ object FMain: TFMain
           Height = 79
           Caption = 'Limpar'
           TabOrder = 7
+          OnClick = btnLimparClick
         end
       end
       object DBGrid1: TDBGrid
@@ -144,6 +145,7 @@ object FMain: TFMain
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        OnCellClick = DBGrid1CellClick
       end
     end
     object TabSheetCadastro: TTabSheet
@@ -381,6 +383,7 @@ object FMain: TFMain
       TabOrder = 0
       OnClick = btnIncluirClick
       ExplicitLeft = -5
+      ExplicitTop = 2
     end
     object btnAlterar: TButton
       Left = 149
@@ -400,6 +403,7 @@ object FMain: TFMain
       Align = alLeft
       Caption = 'Salvar'
       TabOrder = 2
+      OnClick = btnSalvarClick
     end
     object btnCancelar: TButton
       Left = 100

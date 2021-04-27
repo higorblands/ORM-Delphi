@@ -86,7 +86,10 @@ type
     procedure GridCustomize;
     Procedure GenericSelect;
     procedure ClearEdits;
-    procedure Enableedits;
+    procedure ClearEditsFiltro;
+    procedure DisableEdits;
+    procedure enableedits;
+    procedure checkdsempty;
 
   var
     controller: TController;
@@ -150,6 +153,7 @@ begin
   PageControl.ActivePageIndex := 0;
   ClearEdits;
   GenericSelect;
+
 end;
 
 procedure TFMain.btnCancelarClick(Sender: TObject);
@@ -221,6 +225,7 @@ begin
   MemoObservacao.Lines.Add(controller.Observacao);
   btnIncluir.Enabled := False;
   btnCancelar.Enabled := False;
+  DisableEdits;
 end;
 
 procedure TFMain.btnExcluirClick(Sender: TObject);
@@ -234,6 +239,7 @@ begin
   ShowMessage(controller.FORMMSG);
   controller.Free;
   GenericSelect;
+  DisableEdits;
 
 end;
 
@@ -247,11 +253,9 @@ procedure TFMain.btnIncluirClick(Sender: TObject);
 
 begin
   ClearEdits;
+  enableedits;
   PageControl.ActivePageIndex := 1;
   {
-
-
-
 
   }
   controller := TController.Create;
@@ -322,8 +326,7 @@ end;
 
 procedure TFMain.btnLimparClick(Sender: TObject);
 begin
-  ClearEdits;
-
+  ClearEditsFiltro;
 end;
 
 procedure TFMain.btnSalvarClick(Sender: TObject);
@@ -336,8 +339,32 @@ begin
   btnCancelar.Enabled := False;
   btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := True;
-  Enableedits;
+  DisableEdits;
 
+end;
+
+procedure TFMain.checkdsempty;
+begin
+  if DataSource1.DataSet.IsEmpty then
+  begin
+    btnDetalhes.Enabled := False;
+    btnAlterar.Enabled := False;
+    btnLimpar.Enabled := False;
+    btnFiltrar.Enabled := False;
+    btnSalvar.Enabled := False;
+    btnExcluir.Enabled := False;
+    btnCancelar.Enabled := False;
+  end
+  else
+  begin
+    btnDetalhes.Enabled := True;
+    btnAlterar.Enabled := True;
+    btnLimpar.Enabled := True;
+    btnFiltrar.Enabled := True;
+    btnSalvar.Enabled := True;
+    btnExcluir.Enabled := True;
+    btnCancelar.Enabled := True;
+  end;
 end;
 
 procedure TFMain.ClearEdits;
@@ -351,6 +378,15 @@ begin
   EditUsuarioInclusao.Clear;
   EditUsuarioAlteracao.Clear;
   MemoObservacao.Lines.Clear;
+end;
+
+procedure TFMain.ClearEditsFiltro;
+begin
+  edtFiltroID.Text := '';
+  edtFiltroNome.Text := '';
+  edtFiltroCurso.Text := '';
+  edtFiltroPeriodo.Text := '';
+  edtFiltroSituacao.Text := '';
 end;
 
 procedure TFMain.DBGrid1CellClick(Column: TColumn);
@@ -372,7 +408,7 @@ begin
   controller.Free;
 end;
 
-procedure TFMain.Enableedits;
+procedure TFMain.DisableEdits;
 begin
   EditIdAluno.Enabled := False;
   EditNomeAluno.Enabled := False;
@@ -389,6 +425,23 @@ begin
   ComboBoxCadeirante.Enabled := False;
 end;
 
+procedure TFMain.enableedits;
+begin
+  EditIdAluno.Enabled := True;
+  EditNomeAluno.Enabled := True;
+  EditCurso.Enabled := True;
+  EditPeriodo.Enabled := True;
+  EditTurno.Enabled := True;
+  EditSituacao.Enabled := True;
+  EditUsuarioInclusao.Enabled := True;
+  EditUsuarioAlteracao.Enabled := True;
+  MemoObservacao.Enabled := True;
+  DateTimePickerIngresso.Enabled := True;
+  DateTimePickerInclusao.Enabled := True;
+  DateTimePickerAlteracao.Enabled := True;
+  ComboBoxCadeirante.Enabled := True;
+end;
+
 procedure TFMain.GenericSelect;
 begin
   FDQuery1.SQL.Clear;
@@ -403,24 +456,7 @@ begin
   PageControl.ActivePageIndex := 0;
   ComboBoxCadeirante.ItemIndex := 0;
   btnSalvar.Enabled := False;
-  {
-    TabSheetListagem.Visible := True;
-    TabSheetListagem.Visible := True;
-    TabSheetListagem.Enabled := True;
-    TabSheetCadastro.Visible := False;
-    TabSheetCadastro.Enabled := False;
-  }
-  if DataSource1.DataSet.IsEmpty then
-  begin
-    btnDetalhes.Enabled := False;
-    btnAlterar.Enabled := False;
-    btnLimpar.Enabled := False;
-    btnFiltrar.Enabled := False;
-    btnSalvar.Enabled := False;
-    btnExcluir.Enabled := False;
-    btnCancelar.Enabled := False;
-  end;
-  GridCustomize;
+  checkdsempty;
 end;
 
 procedure TFMain.GridCustomize;
