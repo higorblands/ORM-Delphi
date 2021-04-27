@@ -22,12 +22,9 @@ object FMain: TFMain
     ActivePage = TabSheetListagem
     Align = alClient
     TabOrder = 1
-    ExplicitTop = -5
     object TabSheetListagem: TTabSheet
       Caption = 'Listagem'
       ImageIndex = 1
-      ExplicitWidth = 602
-      ExplicitHeight = 323
       object GroupBoxListagem: TGroupBox
         Left = 0
         Top = -6
@@ -132,6 +129,7 @@ object FMain: TFMain
           Height = 79
           Caption = 'Limpar'
           TabOrder = 7
+          OnClick = btnLimparClick
         end
       end
       object DBGrid1: TDBGrid
@@ -147,13 +145,12 @@ object FMain: TFMain
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        OnCellClick = DBGrid1CellClick
       end
     end
     object TabSheetCadastro: TTabSheet
       Caption = 'Cadastro'
       ImageIndex = 1
-      ExplicitWidth = 602
-      ExplicitHeight = 323
       object Label1: TLabel
         Left = 3
         Top = 27
@@ -376,8 +373,6 @@ object FMain: TFMain
     Height = 55
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 289
     object btnIncluir: TButton
       Left = 1
       Top = 1
@@ -399,9 +394,6 @@ object FMain: TFMain
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
-      ExplicitLeft = 263
-      ExplicitTop = 6
-      ExplicitHeight = 25
     end
     object btnSalvar: TButton
       Left = 50
@@ -411,9 +403,7 @@ object FMain: TFMain
       Align = alLeft
       Caption = 'Salvar'
       TabOrder = 2
-      ExplicitLeft = 232
-      ExplicitTop = 16
-      ExplicitHeight = 25
+      OnClick = btnSalvarClick
     end
     object btnCancelar: TButton
       Left = 100
@@ -424,9 +414,6 @@ object FMain: TFMain
       Caption = 'Cancelar'
       TabOrder = 3
       OnClick = btnCancelarClick
-      ExplicitLeft = 307
-      ExplicitTop = 16
-      ExplicitHeight = 25
     end
     object btnExcluir: TButton
       Left = 199
@@ -437,9 +424,6 @@ object FMain: TFMain
       Caption = 'Excluir'
       TabOrder = 4
       OnClick = btnExcluirClick
-      ExplicitLeft = 382
-      ExplicitTop = 16
-      ExplicitHeight = 25
     end
   end
   object FDConnection1: TFDConnection
