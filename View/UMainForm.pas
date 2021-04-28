@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  UController;
+  UController, Data.SqlExpr;
 
 type
   TFMain = class(TForm)
@@ -55,7 +55,6 @@ type
     DateTimePickerIngresso: TDateTimePicker;
     ComboBoxCadeirante: TComboBox;
     MemoObservacao: TMemo;
-    Label9: TLabel;
     FDConnection1: TFDConnection;
     FDQuery1: TFDQuery;
     DataSource1: TDataSource;
@@ -153,6 +152,7 @@ begin
   PageControl.ActivePageIndex := 0;
   ClearEdits;
   GenericSelect;
+  btnCadastroVoltar.Visible := False;
 
 end;
 
@@ -255,9 +255,6 @@ begin
   ClearEdits;
   enableedits;
   PageControl.ActivePageIndex := 1;
-  {
-
-  }
   controller := TController.Create;
   controller.conn := FDConnection1;
   controller.Query := FDQuery1;
@@ -299,6 +296,7 @@ begin
   MemoObservacao.Lines.Add(controller.Observacao);
 
   // Inicio regras de visibilidade/habilitação/edição //
+  btnCadastroVoltar.Visible := True;
   btnIncluir.Enabled := False;
   btnAlterar.Enabled := False;
   btnExcluir.Enabled := False;
@@ -453,6 +451,7 @@ end;
 procedure TFMain.FormCreate(Sender: TObject);
 begin
   TabSheetCadastro.TabVisible := False;
+  btnCadastroVoltar.Visible := False;
   PageControl.ActivePageIndex := 0;
   ComboBoxCadeirante.ItemIndex := 0;
   btnSalvar.Enabled := False;

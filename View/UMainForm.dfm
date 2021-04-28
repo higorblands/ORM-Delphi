@@ -242,13 +242,6 @@ object FMain: TFMain
         Height = 13
         Caption = 'Cadeirante'
       end
-      object Label9: TLabel
-        Left = 414
-        Top = 214
-        Width = 95
-        Height = 13
-        Caption = 'Voltar para listagem'
-      end
       object MemoObservacao: TMemo
         Left = 342
         Top = 160
@@ -316,22 +309,13 @@ object FMain: TFMain
         Height = 21
         TabOrder = 8
       end
-      object btnCadastroVoltar: TButton
-        Left = 422
-        Top = 233
-        Width = 75
-        Height = 17
-        Caption = 'Voltar'
-        TabOrder = 9
-        OnClick = btnCadastroVoltarClick
-      end
       object ComboBoxCadeirante: TComboBox
         Left = 72
         Top = 167
         Width = 121
         Height = 21
         Style = csDropDownList
-        TabOrder = 10
+        TabOrder = 9
         Items.Strings = (
           'Indefinido'
           'Cadeirante'
@@ -344,7 +328,7 @@ object FMain: TFMain
         Height = 20
         Date = 44225.618625092590000000
         Time = 44225.618625092590000000
-        TabOrder = 11
+        TabOrder = 10
       end
       object DateTimePickerInclusao: TDateTimePicker
         Left = 447
@@ -353,7 +337,7 @@ object FMain: TFMain
         Height = 20
         Date = 44225.618625092590000000
         Time = 44225.618625092590000000
-        TabOrder = 12
+        TabOrder = 11
       end
       object DateTimePickerAlteracao: TDateTimePicker
         Left = 447
@@ -362,7 +346,7 @@ object FMain: TFMain
         Height = 20
         Date = 44225.618625092590000000
         Time = 44225.618625092590000000
-        TabOrder = 13
+        TabOrder = 12
       end
     end
   end
@@ -382,7 +366,6 @@ object FMain: TFMain
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
-      ExplicitLeft = 0
     end
     object btnAlterar: TButton
       Left = 151
@@ -393,7 +376,6 @@ object FMain: TFMain
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
-      ExplicitLeft = 149
     end
     object btnSalvar: TButton
       Left = 52
@@ -404,7 +386,6 @@ object FMain: TFMain
       Caption = 'Salvar'
       TabOrder = 2
       OnClick = btnSalvarClick
-      ExplicitLeft = 50
     end
     object btnCancelar: TButton
       Left = 102
@@ -415,7 +396,6 @@ object FMain: TFMain
       Caption = 'Cancelar'
       TabOrder = 3
       OnClick = btnCancelarClick
-      ExplicitLeft = 100
     end
     object btnExcluir: TButton
       Left = 201
@@ -426,7 +406,15 @@ object FMain: TFMain
       Caption = 'Excluir'
       TabOrder = 4
       OnClick = btnExcluirClick
-      ExplicitLeft = 199
+    end
+    object btnCadastroVoltar: TButton
+      Left = 729
+      Top = 2
+      Width = 51
+      Height = 51
+      Caption = 'Voltar'
+      TabOrder = 5
+      OnClick = btnCadastroVoltarClick
     end
   end
   object FDConnection1: TFDConnection
