@@ -15,7 +15,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  TStyleManager.TrySetStyle('Windows10 Blue');
+  TStyleManager.TrySetStyle('Amakrits');
   Application.CreateForm(TFMain, FMain);
   Application.Run;
 

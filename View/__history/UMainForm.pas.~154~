@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  UController;
+  UController, Data.SqlExpr;
 
 type
   TFMain = class(TForm)
@@ -110,33 +110,27 @@ procedure TFMain.btnAlterarClick(Sender: TObject);
 begin
 
   // Inicio regras de visibilidade/habilitação/edição //
+   btnSalvar.Enabled := True;
+  enableedits;
 
-  btnIncluir.Enabled := False;
-  btnAlterar.Enabled := False;
-  btnExcluir.Enabled := False;
-  btnSalvar.Enabled := True;
-  btnCancelar.Enabled := True;
-  btnCadastroVoltar.Enabled := False;
-  EditUsuarioInclusao.Visible := False;
-  EditUsuarioAlteracao.Visible := False;
-  DateTimePickerInclusao.Enabled := False;
-  DateTimePickerAlteracao.Enabled := False;
-  Label10.Visible := False;
-  Label11.Visible := False;
-  Label17.Visible := False;
-  Label18.Visible := False;
-  EditCurso.ReadOnly := False;
-  EditIdAluno.ReadOnly := True;
-  EditNomeAluno.ReadOnly := False;
-  EditCurso.ReadOnly := False;
-  EditTurno.ReadOnly := False;
-  EditPeriodo.ReadOnly := False;
-  DateTimePickerIngresso.Enabled := True;
-  ComboBoxCadeirante.Enabled := True;
-  EditSituacao.ReadOnly := False;
-  EditUsuarioInclusao.ReadOnly := False;
-  EditUsuarioAlteracao.ReadOnly := False;
-  MemoObservacao.ReadOnly := False;
+  controller := TController.Create;
+  controller.conn := FDConnection1;
+  controller.Query := FDQuery1;
+  controller.ID_Aluno :=  DataSource1.DataSet.Locate;
+  controller.Nome_Aluno := EditNomeAluno.Text;
+  controller.Curso := EditCurso.Text;
+  controller.Turno :=  EditTurno.Text;
+  controller.Periodo := StrToInt(EditPeriodo.Text);
+  controller.Data_Ingresso := now; // DateTimePickerIngresso.Date;
+  controller.Situacao :=  EditSituacao.Text;
+  controller.Cadeirante := False; // strtobool(ComboBoxCadeirante.Items.Text);
+  controller.Observacao := MemoObservacao.Text;
+  controller.Data_Hora_Inclusao := now; // DateTimePickerInclusao.Date;
+  controller.Usuario_Inclusao := 'Andriws';
+  controller.Data_Hora_Alteracao := now; // DateTimePickerAlteracao.Date;
+  controller.Usuario_Alteracao := 'Andriws'; // EditUsuarioAlteracao.Text;
+  controller.read(controller.ID_Aluno);
+
 
 end;
 
@@ -152,6 +146,8 @@ begin
   PageControl.ActivePageIndex := 0;
   ClearEdits;
   GenericSelect;
+  btnCadastroVoltar.Visible := False;
+  DataSource1.DataSet.Last;
 
 end;
 
@@ -239,6 +235,9 @@ begin
   controller.Free;
   GenericSelect;
   DisableEdits;
+
+  PageControl.ActivePageIndex := 0;
+  DataSource1.DataSet.Last;
 
 end;
 
@@ -337,6 +336,7 @@ begin
   btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := True;
   DisableEdits;
+  //Controller.Free;
 
 end;
 

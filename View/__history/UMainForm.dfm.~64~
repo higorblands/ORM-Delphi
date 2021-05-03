@@ -19,7 +19,7 @@ object FMain: TFMain
     Top = 0
     Width = 784
     Height = 422
-    ActivePage = TabSheetCadastro
+    ActivePage = TabSheetListagem
     Align = alClient
     TabOrder = 1
     object TabSheetListagem: TTabSheet
@@ -242,13 +242,6 @@ object FMain: TFMain
         Height = 13
         Caption = 'Cadeirante'
       end
-      object Label9: TLabel
-        Left = 414
-        Top = 214
-        Width = 95
-        Height = 13
-        Caption = 'Voltar para listagem'
-      end
       object MemoObservacao: TMemo
         Left = 342
         Top = 160
@@ -316,22 +309,13 @@ object FMain: TFMain
         Height = 21
         TabOrder = 8
       end
-      object btnCadastroVoltar: TButton
-        Left = 422
-        Top = 233
-        Width = 75
-        Height = 17
-        Caption = 'Voltar'
-        TabOrder = 9
-        OnClick = btnCadastroVoltarClick
-      end
       object ComboBoxCadeirante: TComboBox
         Left = 72
         Top = 167
         Width = 121
         Height = 21
         Style = csDropDownList
-        TabOrder = 10
+        TabOrder = 9
         Items.Strings = (
           'Indefinido'
           'Cadeirante'
@@ -342,27 +326,27 @@ object FMain: TFMain
         Top = 194
         Width = 121
         Height = 20
-        Date = 44225.618625092590000000
-        Time = 44225.618625092590000000
-        TabOrder = 11
+        Date = 44225.000000000000000000
+        Time = 0.618625092589354600
+        TabOrder = 10
       end
       object DateTimePickerInclusao: TDateTimePicker
         Left = 447
         Top = 78
         Width = 121
         Height = 20
-        Date = 44225.618625092590000000
-        Time = 44225.618625092590000000
-        TabOrder = 12
+        Date = 44225.000000000000000000
+        Time = 0.618625092589354600
+        TabOrder = 11
       end
       object DateTimePickerAlteracao: TDateTimePicker
         Left = 447
         Top = 104
         Width = 121
         Height = 20
-        Date = 44225.618625092590000000
-        Time = 44225.618625092590000000
-        TabOrder = 13
+        Date = 44225.000000000000000000
+        Time = 0.618625092589354600
+        TabOrder = 12
       end
     end
   end
@@ -376,15 +360,17 @@ object FMain: TFMain
     object btnIncluir: TButton
       Left = 1
       Top = 1
-      Width = 49
+      Width = 51
       Height = 53
       Align = alLeft
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
+      ExplicitLeft = -5
+      ExplicitTop = 2
     end
     object btnAlterar: TButton
-      Left = 149
+      Left = 151
       Top = 1
       Width = 50
       Height = 53
@@ -392,9 +378,11 @@ object FMain: TFMain
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
+      ExplicitLeft = 157
+      ExplicitTop = 2
     end
     object btnSalvar: TButton
-      Left = 50
+      Left = 52
       Top = 1
       Width = 50
       Height = 53
@@ -404,7 +392,7 @@ object FMain: TFMain
       OnClick = btnSalvarClick
     end
     object btnCancelar: TButton
-      Left = 100
+      Left = 102
       Top = 1
       Width = 49
       Height = 53
@@ -414,7 +402,7 @@ object FMain: TFMain
       OnClick = btnCancelarClick
     end
     object btnExcluir: TButton
-      Left = 199
+      Left = 201
       Top = 1
       Width = 51
       Height = 53
@@ -422,6 +410,15 @@ object FMain: TFMain
       Caption = 'Excluir'
       TabOrder = 4
       OnClick = btnExcluirClick
+    end
+    object btnCadastroVoltar: TButton
+      Left = 729
+      Top = 2
+      Width = 51
+      Height = 51
+      Caption = 'Voltar'
+      TabOrder = 5
+      OnClick = btnCadastroVoltarClick
     end
   end
   object FDConnection1: TFDConnection

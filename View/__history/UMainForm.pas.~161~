@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  UController;
+  UController, Data.SqlExpr;
 
 type
   TFMain = class(TForm)
@@ -55,7 +55,6 @@ type
     DateTimePickerIngresso: TDateTimePicker;
     ComboBoxCadeirante: TComboBox;
     MemoObservacao: TMemo;
-    Label9: TLabel;
     FDConnection1: TFDConnection;
     FDQuery1: TFDQuery;
     DataSource1: TDataSource;
@@ -111,34 +110,57 @@ procedure TFMain.btnAlterarClick(Sender: TObject);
 begin
 
   // Inicio regras de visibilidade/habilitação/edição //
-
-  btnIncluir.Enabled := False;
+   btnSalvar.Enabled := True;
+  btnCancelar.Enabled := False;
+  btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := False;
-  btnExcluir.Enabled := False;
-  btnSalvar.Enabled := True;
-  btnCancelar.Enabled := True;
-  btnCadastroVoltar.Enabled := False;
-  EditUsuarioInclusao.Visible := False;
-  EditUsuarioAlteracao.Visible := False;
-  DateTimePickerInclusao.Enabled := False;
-  DateTimePickerAlteracao.Enabled := False;
-  Label10.Visible := False;
-  Label11.Visible := False;
-  Label17.Visible := False;
-  Label18.Visible := False;
-  EditCurso.ReadOnly := False;
-  EditIdAluno.ReadOnly := True;
-  EditNomeAluno.ReadOnly := False;
-  EditCurso.ReadOnly := False;
-  EditTurno.ReadOnly := False;
-  EditPeriodo.ReadOnly := False;
-  DateTimePickerIngresso.Enabled := True;
-  ComboBoxCadeirante.Enabled := True;
-  EditSituacao.ReadOnly := False;
-  EditUsuarioInclusao.ReadOnly := False;
-  EditUsuarioAlteracao.ReadOnly := False;
-  MemoObservacao.ReadOnly := False;
+  DisableEdits;
+  ClearEdits;
+  PageControl.ActivePageIndex := 1;
 
+  controller := TController.Create;
+  controller.conn := FDConnection1;
+  controller.Query := FDQuery1;
+  controller.ID_Aluno := 1505; // StrToInt(EditIdAluno.Text);
+  controller.Nome_Aluno := 'Megaman'; // EditNomeAluno.Text;
+  controller.Curso := 'BDS'; // EditCurso.Text;
+  controller.Turno := 'E'; // EditTurno.Text;
+  controller.Periodo := 2; // StrToInt(EditPeriodo.Text);
+  controller.Data_Ingresso := now; // DateTimePickerIngresso.Date;
+  controller.Situacao := 'R'; // EditSituacao.Text;
+  controller.Cadeirante := False; // strtobool(ComboBoxCadeirante.Items.Text);
+  controller.Observacao := 'Aluno bom e novo !'; // MemoObservacao.Text;
+  controller.Data_Hora_Inclusao := now; // DateTimePickerInclusao.Date;
+  controller.Usuario_Inclusao := 'Andriws';
+  controller.Data_Hora_Alteracao := now; // DateTimePickerAlteracao.Date;
+  controller.Usuario_Alteracao := 'Andriws'; // EditUsuarioAlteracao.Text;
+
+  // Alimentando os edit
+  EditIdAluno.Text := IntToStr(controller.ID_Aluno);
+  EditNomeAluno.Text := controller.Nome_Aluno;
+  EditCurso.Text := controller.Curso;
+  EditTurno.Text := controller.Turno;
+  EditPeriodo.Text := IntToStr(controller.Periodo);
+  DateTimePickerIngresso.Date := controller.Data_Ingresso;
+  EditSituacao.Text := controller.Situacao;
+  case controller.Cadeirante of
+    False:
+      ComboBoxCadeirante.ItemIndex := 2;
+    True:
+      ComboBoxCadeirante.ItemIndex := 1;
+
+  end;
+  EditUsuarioInclusao.Text := controller.Usuario_Inclusao;
+  EditUsuarioAlteracao.Text := controller.Usuario_Alteracao;
+  DateTimePickerInclusao.DateTime := controller.Data_Hora_Inclusao;
+  DateTimePickerAlteracao.DateTime := controller.Data_Hora_Alteracao;
+  MemoObservacao.Lines.Add(controller.Observacao);
+
+
+  controller.Update;  /// Update
+
+  ShowMessage(controller.FORMMSG);
+  controller.Free;
 end;
 
 procedure TFMain.btnCadastroVoltarClick(Sender: TObject);
@@ -153,6 +175,8 @@ begin
   PageControl.ActivePageIndex := 0;
   ClearEdits;
   GenericSelect;
+  btnCadastroVoltar.Visible := False;
+  DataSource1.DataSet.Last;
 
 end;
 
@@ -225,6 +249,7 @@ begin
   MemoObservacao.Lines.Add(controller.Observacao);
   btnIncluir.Enabled := False;
   btnCancelar.Enabled := False;
+  DisableEdits;
 end;
 
 procedure TFMain.btnExcluirClick(Sender: TObject);
@@ -240,6 +265,9 @@ begin
   GenericSelect;
   DisableEdits;
 
+  PageControl.ActivePageIndex := 0;
+  DataSource1.DataSet.Last;
+
 end;
 
 procedure TFMain.btnFiltrarClick(Sender: TObject);
@@ -254,9 +282,6 @@ begin
   ClearEdits;
   enableedits;
   PageControl.ActivePageIndex := 1;
-  {
-
-  }
   controller := TController.Create;
   controller.conn := FDConnection1;
   controller.Query := FDQuery1;
@@ -298,12 +323,12 @@ begin
   MemoObservacao.Lines.Add(controller.Observacao);
 
   // Inicio regras de visibilidade/habilitação/edição //
+  btnCadastroVoltar.Visible := True;
   btnIncluir.Enabled := False;
   btnAlterar.Enabled := False;
   btnExcluir.Enabled := False;
   btnSalvar.Enabled := True;
   btnCancelar.Enabled := True;
-  btnCadastroVoltar.Enabled := False;
   EditCurso.ReadOnly := False;
   EditIdAluno.ReadOnly := True;
   EditNomeAluno.ReadOnly := False;
@@ -325,8 +350,7 @@ end;
 
 procedure TFMain.btnLimparClick(Sender: TObject);
 begin
-  ClearEdits;
-
+  ClearEditsFiltro;
 end;
 
 procedure TFMain.btnSalvarClick(Sender: TObject);
@@ -340,6 +364,7 @@ begin
   btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := True;
   DisableEdits;
+
 
 end;
 
@@ -382,11 +407,11 @@ end;
 
 procedure TFMain.ClearEditsFiltro;
 begin
-edtFiltroID.Clear;
-edtFiltroNome.Clear;
-edtFiltroCurso.Clear;
-edtFiltroPeriodo.Clear;
-edtFiltroSituacao.Clear;
+  edtFiltroID.Text := '';
+  edtFiltroNome.Text := '';
+  edtFiltroCurso.Text := '';
+  edtFiltroPeriodo.Text := '';
+  edtFiltroSituacao.Text := '';
 end;
 
 procedure TFMain.DBGrid1CellClick(Column: TColumn);
@@ -453,6 +478,7 @@ end;
 procedure TFMain.FormCreate(Sender: TObject);
 begin
   TabSheetCadastro.TabVisible := False;
+  btnCadastroVoltar.Visible := False;
   PageControl.ActivePageIndex := 0;
   ComboBoxCadeirante.ItemIndex := 0;
   btnSalvar.Enabled := False;

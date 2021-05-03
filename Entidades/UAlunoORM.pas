@@ -280,7 +280,6 @@ begin
     Result := True;
     FORMMSG := 'Operação realizada com sucesso !';
   end;
-  QueryORM.SQL.SaveToFile('d:\Reward2.txt');
   QueryORM.SQL.Clear;
   QueryORM.Close;
 

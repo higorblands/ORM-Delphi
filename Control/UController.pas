@@ -53,6 +53,7 @@ Type
     function Insert: String;
     function Delete: Boolean;
     function Read(ID: Integer): Boolean;
+    function Update: Boolean;
 
     property ID_Aluno: Integer read getID_Aluno write setID_Aluno;
     property Nome_Aluno: String read getNome_Aluno write setNome_Aluno;
@@ -71,7 +72,6 @@ Type
       write setData_Hora_Alteracao;
     property Usuario_Alteracao: String read getUsuario_Alteracao
       write setUsuario_alteracao;
-
 
     Procedure DataLoadSQL;
     function materialize(IDSelect: Integer): Integer;
@@ -100,13 +100,10 @@ begin
   Situacao := Query.FieldByName('Situacao').AsString;
   Cadeirante := Query.FieldByName('Cadeirante').AsBoolean;
   Observacao := Query.FieldByName('Observacao').AsString;
-  Data_Hora_Inclusao := Query.FieldByName('Data_Hora_Inclusao')
-    .AsDateTime;
+  Data_Hora_Inclusao := Query.FieldByName('Data_Hora_Inclusao').AsDateTime;
   Usuario_Inclusao := Query.FieldByName('Usuario_Inclusao').AsString;
-  Data_Hora_Alteracao := Query.FieldByName('Data_Hora_Alteracao')
-    .AsDateTime;
-Usuario_alteracao := Query.FieldByName('Usuario_Alteracao')
-    .AsString;
+  Data_Hora_Alteracao := Query.FieldByName('Data_Hora_Alteracao').AsDateTime;
+  Usuario_Alteracao := Query.FieldByName('Usuario_Alteracao').AsString;
 end;
 
 function TController.Delete: Boolean;
@@ -222,8 +219,6 @@ begin
       Add('INSERT INTO Aluno (' + Aluno.sColumnsBD + ')' + ' VALUES(' +
         Aluno.sValuesBD + ');');
     end;
-    Query.SQL.SaveToFile('D:\Rewards2.txt');
-
     Query.ExecSQL;
     Query.Close;
     FORMMSG := Aluno.FORMMSG;
@@ -342,6 +337,30 @@ end;
 procedure TController.setUsuario_Inclusao(const Value: String);
 begin
   Aluno.Usuario_Inclusao.Value := Value;
+end;
+
+function TController.Update: Boolean;
+begin
+  FORMMSG := '';
+  Query.SQL.Clear;
+  Query.SQL.Add(Aluno.PrepareSQLUpdate((Aluno.ID_Aluno.Value)));
+  Query.ExecSQL;
+  if Query.RowsAffected = 0 then
+  begin
+    FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
+  end;
+
+  if FORMMSG <> '' then
+  begin
+    Result := False;
+  end
+  else
+  begin
+    Result := True;
+    FORMMSG := 'Operação realizada com sucesso !';
+  end;
+  Query.SQL.Clear;
+  Query.Close;
 end;
 
 end.

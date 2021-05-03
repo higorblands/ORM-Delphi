@@ -19,7 +19,7 @@ object FMain: TFMain
     Top = 0
     Width = 784
     Height = 422
-    ActivePage = TabSheetCadastro
+    ActivePage = TabSheetListagem
     Align = alClient
     TabOrder = 1
     object TabSheetListagem: TTabSheet
@@ -326,8 +326,8 @@ object FMain: TFMain
         Top = 194
         Width = 121
         Height = 20
-        Date = 44225.618625092590000000
-        Time = 44225.618625092590000000
+        Date = 44225.000000000000000000
+        Time = 0.618625092589354600
         TabOrder = 10
       end
       object DateTimePickerInclusao: TDateTimePicker
@@ -335,8 +335,8 @@ object FMain: TFMain
         Top = 78
         Width = 121
         Height = 20
-        Date = 44225.618625092590000000
-        Time = 44225.618625092590000000
+        Date = 44225.000000000000000000
+        Time = 0.618625092589354600
         TabOrder = 11
       end
       object DateTimePickerAlteracao: TDateTimePicker
@@ -344,8 +344,8 @@ object FMain: TFMain
         Top = 104
         Width = 121
         Height = 20
-        Date = 44225.618625092590000000
-        Time = 44225.618625092590000000
+        Date = 44225.000000000000000000
+        Time = 0.618625092589354600
         TabOrder = 12
       end
     end
@@ -366,6 +366,8 @@ object FMain: TFMain
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
+      ExplicitLeft = -5
+      ExplicitTop = 2
     end
     object btnAlterar: TButton
       Left = 151
@@ -376,6 +378,8 @@ object FMain: TFMain
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
+      ExplicitLeft = 157
+      ExplicitTop = 2
     end
     object btnSalvar: TButton
       Left = 52
@@ -440,9 +444,5 @@ object FMain: TFMain
     DataSet = FDQuery1
     Left = 540
     Top = 304
-  end
-  object SQLConnection1: TSQLConnection
-    Left = 244
-    Top = 208
   end
 end

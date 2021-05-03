@@ -51,6 +51,8 @@ Type
     conn: TFDconnection;
     FORMMSG: String;
     function Insert: String;
+    function Delete: Boolean;
+    function Read(ID: Integer): Boolean;
 
     property ID_Aluno: Integer read getID_Aluno write setID_Aluno;
     property Nome_Aluno: String read getNome_Aluno write setNome_Aluno;
@@ -69,7 +71,10 @@ Type
       write setData_Hora_Alteracao;
     property Usuario_Alteracao: String read getUsuario_Alteracao
       write setUsuario_alteracao;
-    procedure genericSelect;
+
+
+    Procedure DataLoadSQL;
+    function materialize(IDSelect: Integer): Integer;
     constructor create; reintroduce;
 
   End;
@@ -84,11 +89,59 @@ begin
   Aluno := TAluno.create;
 end;
 
-procedure TController.genericSelect;
+procedure TController.DataLoadSQL;
 begin
-  Query.SQL.Clear;
-  Query.SQL.Add('select * from Aluno');
-  Query.Open;
+  ID_Aluno := Query.FieldByName('ID_Aluno').AsInteger;
+  Nome_Aluno := Query.FieldByName('Nome_Aluno').AsString;
+  Curso := Query.FieldByName('Curso').AsString;
+  Turno := Query.FieldByName('Turno').AsString;
+  Periodo := Query.FieldByName('Periodo').AsInteger;
+  Data_Ingresso := Query.FieldByName('Data_Ingresso').AsDateTime;
+  Situacao := Query.FieldByName('Situacao').AsString;
+  Cadeirante := Query.FieldByName('Cadeirante').AsBoolean;
+  Observacao := Query.FieldByName('Observacao').AsString;
+  Data_Hora_Inclusao := Query.FieldByName('Data_Hora_Inclusao')
+    .AsDateTime;
+  Usuario_Inclusao := Query.FieldByName('Usuario_Inclusao').AsString;
+  Data_Hora_Alteracao := Query.FieldByName('Data_Hora_Alteracao')
+    .AsDateTime;
+Usuario_alteracao := Query.FieldByName('Usuario_Alteracao')
+    .AsString;
+end;
+
+function TController.Delete: Boolean;
+begin
+  FORMMSG := '';
+  if Aluno.ID_Aluno.Assigned then
+  begin
+    with Query.SQL do
+    begin
+      Clear;
+      Add('DELETE FROM Aluno Where ID_Aluno = ' +
+        IntToStr(Aluno.ID_Aluno.Value) + ';');
+    end;
+    Query.ExecSQL;
+    if Query.RowsAffected = 0 then
+    begin
+      FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
+    end;
+  end
+  else
+  begin
+    FORMMSG :=
+      'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
+  end;
+  if FORMMSG <> '' then
+  begin
+    Result := False;
+  end
+  else
+  begin
+    Result := True;
+    FORMMSG := 'Operação realizada com sucesso !';
+  end;
+  Query.Close;
+
 end;
 
 function TController.getCadeirante: Boolean;
@@ -176,6 +229,52 @@ begin
     FORMMSG := Aluno.FORMMSG;
   end;
 
+end;
+
+function TController.materialize(IDSelect: Integer): Integer;
+begin
+
+end;
+
+function TController.Read(ID: Integer): Boolean;
+begin
+
+  FORMMSG := '';
+  if Aluno.ValidationPK.Assigned then
+  begin
+    with Query.SQL do
+    begin
+      Clear;
+      Add('SELECT * FROM Aluno Where ID_Aluno = ' + IntToStr(ID) + ';');
+
+    end;
+
+    Query.Open;
+
+    if Query.RowsAffected = 0 then
+    begin
+      FORMMSG := 'ID Aluno não encontrado, 0 linhas afetadas.';
+    end
+    else
+    begin
+      DataLoadSQL;
+    end;
+  end
+  else
+  begin
+    FORMMSG :=
+      'ID Aluno inválido ou não encontrado, favor digitar um ID válido';
+  end;
+  if FORMMSG <> '' then
+  begin
+    Result := False;
+  end
+  else
+  begin
+    Result := True;
+    FORMMSG := 'Operação realizada com sucesso !';
+  end;
+  Query.Close;
 end;
 
 procedure TController.setCadeirante(const Value: Boolean);
