@@ -326,8 +326,8 @@ object FMain: TFMain
         Top = 194
         Width = 121
         Height = 20
-        Date = 44225.000000000000000000
-        Time = 0.618625092589354600
+        Date = 44225.618625092590000000
+        Time = 44225.618625092590000000
         TabOrder = 10
       end
       object DateTimePickerInclusao: TDateTimePicker
@@ -335,8 +335,8 @@ object FMain: TFMain
         Top = 78
         Width = 121
         Height = 20
-        Date = 44225.000000000000000000
-        Time = 0.618625092589354600
+        Date = 44225.618625092590000000
+        Time = 44225.618625092590000000
         TabOrder = 11
       end
       object DateTimePickerAlteracao: TDateTimePicker
@@ -344,8 +344,8 @@ object FMain: TFMain
         Top = 104
         Width = 121
         Height = 20
-        Date = 44225.000000000000000000
-        Time = 0.618625092589354600
+        Date = 44225.618625092590000000
+        Time = 44225.618625092590000000
         TabOrder = 12
       end
     end
@@ -366,7 +366,6 @@ object FMain: TFMain
       Caption = 'Incluir'
       TabOrder = 0
       OnClick = btnIncluirClick
-      ExplicitTop = 249
     end
     object btnAlterar: TButton
       Left = 151
@@ -377,7 +376,6 @@ object FMain: TFMain
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = btnAlterarClick
-      ExplicitLeft = 145
     end
     object btnSalvar: TButton
       Left = 52
@@ -388,8 +386,6 @@ object FMain: TFMain
       Caption = 'Salvar'
       TabOrder = 2
       OnClick = btnSalvarClick
-      ExplicitLeft = 46
-      ExplicitTop = 2
     end
     object btnCancelar: TButton
       Left = 102

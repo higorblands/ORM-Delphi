@@ -110,7 +110,7 @@ procedure TFMain.btnAlterarClick(Sender: TObject);
 begin
 
   // Inicio regras de visibilidade/habilitação/edição //
-   btnSalvar.Enabled := True;
+  btnSalvar.Enabled := True;
   btnCancelar.Enabled := False;
   btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := False;
@@ -156,8 +156,8 @@ begin
   DateTimePickerAlteracao.DateTime := controller.Data_Hora_Alteracao;
   MemoObservacao.Lines.Add(controller.Observacao);
 
-
-  controller.Update;  /// Update
+  controller.Update;
+  /// Update
 
   ShowMessage(controller.FORMMSG);
   controller.Free;
@@ -182,7 +182,7 @@ end;
 
 procedure TFMain.btnCancelarClick(Sender: TObject);
 begin
-
+  PageControl.ActivePageIndex := 1;
   // Inicio regras de visibilidade/habilitação/edição //
 
   btnExcluir.Enabled := True;
@@ -214,9 +214,10 @@ begin
   DateTimePickerAlteracao.Enabled := True;
   MemoObservacao.ReadOnly := True;
   btnExcluir.Enabled := False;
+  DataSource1.DataSet.Last;
   // EditDataHoraInclusao.Enabled := True;
   // EditDataHoraAltecacao.Enabled := True;
-
+  controller.Free;
 end;
 
 procedure TFMain.btnDetalhesClick(Sender: TObject);
@@ -364,7 +365,6 @@ begin
   btnCadastroVoltar.Enabled := True;
   btnAlterar.Enabled := True;
   DisableEdits;
-
 
 end;
 
